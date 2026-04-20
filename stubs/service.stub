@@ -1,0 +1,22 @@
+<?php
+
+namespace {{ namespace }};
+
+class {{ class }}
+{
+    /**
+     * Create a new service instance.
+     */
+    public function __construct()
+    {
+        //
+    }
+
+    /**
+     * Handle the core business logic for this service.
+     */
+    public function handle(): void
+    {
+        //
+    }
+}
