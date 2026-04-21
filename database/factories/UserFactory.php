@@ -20,8 +20,6 @@ class UserFactory extends Factory
             'account_status' => AccountStatus::Inactive,
             'password' => Hash::make('12345678'),
             'profile_picture' => null,
-            'created_at' => now(),
-            'updated_at' => now(),
         ];
     }
 
@@ -32,6 +30,6 @@ class UserFactory extends Factory
 
     public function administrator(): self
     {
-        return $this->state(fn (): array => ['person_id' => Person::factory()->admin()->state(['type' => PersonType::Administrator])]);
+        return $this->state(fn (): array => ['person_id' => Person::factory()->administrator()->state(['type' => PersonType::Administrator])]);
     }
 }
