@@ -1,0 +1,6 @@
+services:
+  htcgscgorms:
+    image: htcgscgorms
+    build:
+      context: .
+      dockerfile: ./Dockerfile
