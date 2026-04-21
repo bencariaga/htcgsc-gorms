@@ -2,10 +2,13 @@
 
 namespace App\Enums\NonDB;
 
+use App\Traits\Has\HasValues;
 use Illuminate\Support\Collection;
 
 enum AuthenticationStyling: string
 {
+    use HasValues;
+
     case INPUT_CANVAS = 'w-full h-[3.5rem] pl-12 py-3 border-2 border-gray-400 rounded-xl bg-gray-200/80 focus:outline-none focus:border-emerald-500 focus:bg-white transition-all';
     case INPUT_ERROR = 'border-red-500';
     case PASSWORD_PADDING_RIGHT = 'pr-12';

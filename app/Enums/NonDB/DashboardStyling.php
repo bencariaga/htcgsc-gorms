@@ -2,8 +2,12 @@
 
 namespace App\Enums\NonDB;
 
+use App\Traits\Has\HasValues;
+
 enum DashboardStyling: string
 {
+    use HasValues;
+
     case TOTAL_STUDENTS = 'total_students';
     case TOTAL_SUBMISSIONS = 'total_submissions';
     case TODAY_APPOINTMENTS = 'today_appointments';

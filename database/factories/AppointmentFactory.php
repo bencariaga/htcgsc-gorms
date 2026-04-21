@@ -7,6 +7,7 @@ use Illuminate\{Database\Eloquent\Factories\Factory, Support\Number};
 
 class AppointmentFactory extends Factory
 {
+    /** @var string */
     protected $model = Appointment::class;
 
     public function definition(): array

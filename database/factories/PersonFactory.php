@@ -3,25 +3,31 @@
 namespace Database\Factories;
 
 use App\{Actions\Data\GenerateDatabaseTableRowId, Enums\PersonSuffix, Models\Person};
-use Illuminate\{Database\Eloquent\Factories\Factory, Support\Arr};
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PersonFactory extends Factory
 {
+    /** @var string */
     protected $model = Person::class;
 
     public function definition(): array
     {
         return [
             'person_id' => GenerateDatabaseTableRowId::execute('persons', 'person_id'),
-            'type' => 'Student',
+            'type' => null,
             'last_name' => fake()->lastName(),
             'first_name' => fake()->firstName(),
             'middle_name' => fake()->lastName(),
-            'suffix' => fake()->optional(0.1)->randomElement(Arr::pluck(PersonSuffix::cases(), 'value')),
+            'suffix' => fake()->boolean(20) ? collect(PersonSuffix::cases())->random() : null,
             'email_address' => fake()->unique()->safeEmail(),
-            'phone_number' => '09' . fake()->numerify('#########'),
+            'phone_number' => fake()->unique()->randomElement(['0908', '0917', '0918', '0919', '0920', '0998']) . fake()->numerify('#######'),
             'created_at' => now(),
             'updated_at' => now(),
         ];
+    }
+
+    public function administrator(): self
+    {
+        return $this->state(fn (): array => ['first_name' => 'Benhur', 'last_name' => 'Cariaga', 'middle_name' => 'Leproso', 'phone_number' => '09939597683', 'email_address' => config('mail.mailers.smtp.username')]);
     }
 }

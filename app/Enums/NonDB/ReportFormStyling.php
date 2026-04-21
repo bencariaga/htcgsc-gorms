@@ -2,10 +2,12 @@
 
 namespace App\Enums\NonDB;
 
-use App\{Enums\DataCategory};
+use App\{Enums\DataCategory, Traits\Has\HasValues};
 
 enum ReportFormStyling
 {
+    use HasValues;
+
     public static function getCategories(): array
     {
         $categories = ['' => 'Select category.'];

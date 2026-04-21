@@ -2,10 +2,13 @@
 
 namespace App\Enums\NonDB;
 
+use App\Traits\Has\HasValues;
 use Illuminate\Support\Arr;
 
 final class PaginationStyling
 {
+    use HasValues;
+
     private const DEFAULTS = ['search' => 'w-[20rem]', 'result' => 'min-w-[15rem]', 'open' => 'left-72', 'closed' => 'left-20'];
 
     private const CONFIG = ['audit-log' => ['search' => 'w-[12.5rem]', 'result' => 'w-[12.5rem]', 'alias' => 'log', 'open' => 'left-[36rem]', 'closed' => 'left-[23rem]']];

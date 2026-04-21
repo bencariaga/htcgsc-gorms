@@ -2,10 +2,12 @@
 
 namespace App\Enums\NonDB;
 
-use App\Contracts\Colorable;
+use App\{Contracts\Colorable, Traits\Has\HasValues};
 
 enum AuditLogsStyling: string implements Colorable
 {
+    use HasValues;
+
     case CONTAINER_BASE = 'w-full group flex items-center overflow-hidden justify-between pl-3 pr-2 py-2 rounded-xl border-2 transition-all duration-200';
     case CONTAINER_SELECTED = 'bg-emerald-50 border-emerald-300 dark:bg-emerald-900/20 dark:border-emerald-700 cursor-default';
     case CONTAINER_DEFAULT = 'bg-slate-100 border-gray-300 dark:bg-slate-700/50 dark:border-slate-700 hover:border-emerald-400 dark:hover:border-emerald-500';

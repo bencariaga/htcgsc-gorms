@@ -2,8 +2,12 @@
 
 namespace App\Enums\NonDB;
 
+use App\Traits\Has\HasValues;
+
 enum EmailNotice: string
 {
+    use HasValues;
+
     case ACTIVATION = 'activation';
     case DEACTIVATION = 'deactivation';
     case DELETION = 'deletion';

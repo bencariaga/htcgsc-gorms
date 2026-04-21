@@ -2,10 +2,13 @@
 
 namespace App\Enums\NonDB;
 
+use App\Traits\Has\HasValues;
 use Illuminate\Support\{Arr, Reflector, Str};
 
 enum GoogleFormsStyling: string
 {
+    use HasValues;
+
     public static function infoSections(?string $key = null): array|string|null
     {
         $sections = [

@@ -2,8 +2,12 @@
 
 namespace App\Enums\NonDB;
 
+use App\Traits\Has\HasValues;
+
 enum QrCodeStyling
 {
+    use HasValues;
+
     public static function getConfig(): array
     {
         return ['text' => '600', 'dark' => '400', 'bg' => '200', 'opacity' => '10'];

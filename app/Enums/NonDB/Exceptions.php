@@ -2,12 +2,15 @@
 
 namespace App\Enums\NonDB;
 
+use App\Traits\Has\HasValues;
 use Illuminate\{Database\QueryException, Encryption\MissingAppKeyException};
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Throwable;
 
 enum Exceptions
 {
+    use HasValues;
+
     public static function getErrorData(Throwable $e): ?array
     {
         return match (true) {

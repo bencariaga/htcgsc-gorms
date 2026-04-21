@@ -2,10 +2,13 @@
 
 namespace App\Enums\NonDB;
 
+use App\Traits\Has\HasValues;
 use Illuminate\Support\Facades\Blade;
 
 enum ListTypeModals: string
 {
+    use HasValues;
+
     case STUDENT = 'student';
     case APPOINTMENT = 'appointment';
     case AUDIT_LOG = 'audit-log';

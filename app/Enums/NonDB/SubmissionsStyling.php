@@ -2,10 +2,13 @@
 
 namespace App\Enums\NonDB;
 
+use App\Traits\Has\HasValues;
 use Illuminate\Support\{Collection, Str};
 
 enum SubmissionsStyling: string
 {
+    use HasValues;
+
     public static function filters(array|Collection $submissions): array
     {
         return collect(['All' => collect($submissions)->count(), 'Yourself' => $selfCount = collect($submissions)->where('referral_type', 'Yourself')->count(), 'Someone Else' => collect($submissions)->count() - $selfCount])->map(fn ($count, $label) => ['label' => $label, 'value' => $label, 'count' => $count])->values()->toArray();

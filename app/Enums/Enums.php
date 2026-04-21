@@ -5,12 +5,14 @@ namespace App\Enums;
 use BadMethodCallException;
 
 /**
- * @method static array personTypes()
- * @method static array suffixes()
- * @method static array referralTypes()
+ * @method static array accountStatuses()
  * @method static array appointmentStatuses()
  * @method static array appointmentTimes()
- * @method static array accountStatuses()
+ * @method static array dataCategories()
+ * @method static array fileOutputFormats()
+ * @method static array personTypes()
+ * @method static array referralTypes()
+ * @method static array suffixes()
  */
 final class Enums
 {
@@ -19,12 +21,14 @@ final class Enums
     public static function __callStatic(mixed $method, $arguments)
     {
         $enumClass = match ($method) {
-            'personTypes' => PersonType::class,
-            'suffixes' => PersonSuffix::class,
-            'referralTypes' => ReferralType::class,
+            'accountStatuses' => AccountStatus::class,
             'appointmentStatuses' => AppointmentStatus::class,
             'appointmentTimes' => AppointmentTime::class,
-            'accountStatuses' => AccountStatus::class,
+            'dataCategories' => DataCategory::class,
+            'fileOutputFormats' => FileOutputFormat::class,
+            'personTypes' => PersonType::class,
+            'referralTypes' => ReferralType::class,
+            'suffixes' => PersonSuffix::class,
             default => throw new BadMethodCallException("Method {$method} does not exist."),
         };
 

@@ -2,8 +2,12 @@
 
 namespace App\Enums\NonDB;
 
+use App\Traits\Has\HasValues;
+
 enum PageButtonStyling: string
 {
+    use HasValues;
+
     case SIDEBAR = 'sidebar';
     case HEADER = 'header';
 

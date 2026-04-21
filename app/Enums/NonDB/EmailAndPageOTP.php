@@ -2,10 +2,13 @@
 
 namespace App\Enums\NonDB;
 
+use App\Traits\Has\HasValues;
 use Illuminate\Support\Facades\Session;
 
 enum EmailAndPageOTP: string
 {
+    use HasValues;
+
     case LOGIN = 'login';
     case EMAIL_CHANGE = 'email_change';
     case PHONE_CHANGE = 'phone_change';
