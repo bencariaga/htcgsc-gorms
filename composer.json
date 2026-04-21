@@ -73,11 +73,16 @@
         "setup": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
             "@php artisan key:generate --ansi",
-            "@php artisan migrate:fresh --path=database/migrations/laravel --path=database/migrations/system --ansi",
-            "@php artisan db:seed --class=UserSeeder --ansi",
-            "@php artisan db:seed --class=StudentSeeder --ansi",
-            "@php artisan db:seed --class=AppointmentSeeder --ansi",
-            "@php artisan db:seed --class=ReportSeeder --ansi",
+            "@php artisan migrate:fresh --drop-views --path=database/migrations/laravel --ansi",
+            "@php artisan migrate --path=database/migrations/system/create_persons_table.php --ansi",
+            "@php artisan migrate --path=database/migrations/system/create_students_table.php --ansi",
+            "@php artisan migrate --path=database/migrations/system/create_users_table.php --ansi",
+            "@php artisan migrate --path=database/migrations/system/create_referrers_table.php --ansi",
+            "@php artisan migrate --path=database/migrations/system/create_referrals_table.php --ansi",
+            "@php artisan migrate --path=database/migrations/system/create_appointments_table.php --ansi",
+            "@php artisan migrate --path=database/migrations/system/create_reports_table.php --ansi",
+            "@php artisan migrate --path=database/migrations/system/create_all_activities_view.php --ansi",
+            "@php artisan db:seed --ansi",
             "@php artisan storage:link --ansi"
         ]
     },

@@ -20,7 +20,7 @@ return new class extends Migration {
                 SELECT
                     referrals.referral_id AS referral_id,
                     referrals.student_id AS student_id,
-                    referrals.referrer_id AS referrer_id,
+                    NULL AS referrer_id,
                     referrals.created_at AS created_at,
                     referrals.updated_at AS updated_at,
                     NULL AS appointment_id,

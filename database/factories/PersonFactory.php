@@ -12,6 +12,8 @@ class PersonFactory extends Factory
 
     public function definition(): array
     {
+        $prefixes = ['0908', '0917', '0918', '0919', '0920', '0998'];
+
         return [
             'person_id' => GenerateDatabaseTableRowId::execute('persons', 'person_id'),
             'type' => null,
@@ -20,7 +22,7 @@ class PersonFactory extends Factory
             'middle_name' => fake()->lastName(),
             'suffix' => fake()->boolean(20) ? collect(PersonSuffix::cases())->random() : null,
             'email_address' => fake()->unique()->safeEmail(),
-            'phone_number' => fake()->unique()->randomElement(['0908', '0917', '0918', '0919', '0920', '0998']) . fake()->numerify('#######'),
+            'phone_number' => fake()->unique()->numerify(fake()->randomElement($prefixes) . '#######'),
             'created_at' => now(),
             'updated_at' => now(),
         ];

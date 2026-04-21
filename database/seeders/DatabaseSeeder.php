@@ -11,7 +11,7 @@ class DatabaseSeeder extends Seeder
         $models = ['User', 'Student', 'Appointment', 'Report'];
 
         foreach ($models as $model) {
-            $this->call("App\\Seeders\\{$model}Seeder");
+            $this->call("Database\\Seeders\\{$model}Seeder");
         }
     }
 }
