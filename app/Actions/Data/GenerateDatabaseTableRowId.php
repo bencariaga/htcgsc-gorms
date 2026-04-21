@@ -8,17 +8,20 @@ class GenerateDatabaseTableRowId
 {
     public static function execute(string $table, string $primaryKey): int
     {
-        $id = DB::table("{$table} as t1")
-            ->selectRaw("t1.{$primaryKey} + 1 as next_id")
-            ->leftJoin("{$table} as t2", "t1.{$primaryKey}", '=', DB::raw("t2.{$primaryKey} - 1"))
-            ->whereNull("t2.{$primaryKey}")
-            ->orderBy("t1.{$primaryKey}")
-            ->value("t1.{$primaryKey} + 1");
+        $existingIds = DB::table($table)->pluck($primaryKey)->sort()->values();
 
-        if (!$id && DB::table($table)->where($primaryKey, 1)->doesntExist()) {
+        if ($existingIds->isEmpty() || $existingIds->first() > 1) {
             return 1;
         }
 
-        return $id ?? 1;
+        foreach ($existingIds as $index => $id) {
+            $nextExpectedId = $id + 1;
+
+            if (!$existingIds->has($index + 1) || $existingIds[$index + 1] !== $nextExpectedId) {
+                return $nextExpectedId;
+            }
+        }
+
+        return $existingIds->last() + 1;
     }
 }
