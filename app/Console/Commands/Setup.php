@@ -42,8 +42,6 @@ class Setup extends BaseCommand
         }
 
         $this->call('db:seed', ['--ansi' => true, '--force' => true]);
-        $this->call('storage:link', ['--ansi' => true]);
-
         $this->components->info('System setup has been completed successfully!');
 
         return Command::SUCCESS;
