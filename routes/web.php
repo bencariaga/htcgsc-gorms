@@ -4,9 +4,20 @@ use App\Http\Controllers\{StudentProfileController, UserProfileController};
 use Illuminate\Support\{Facades\Artisan, Facades\Auth, Facades\Route};
 
 Route::get('/setup', function () {
-    Artisan::call('setup');
+    try {
+        Artisan::call('setup');
 
-    return response()->json(['status' => 'Setup Executed', 'log' => Artisan::output()]);
+        return response()->json([
+            'status' => 'Success',
+            'log' => Artisan::output(),
+        ]);
+    } catch (Exception $e) {
+        return response()->json([
+            'status' => 'Failed',
+            'error' => $e->getMessage(),
+            'trace' => $e->getTraceAsString(),
+        ], 500);
+    }
 });
 
 Route::middleware('web')->group(function () {
