@@ -33,7 +33,7 @@ WORKDIR /var/www
 
 COPY . /var/www
 
-RUN composer install --no-dev --optimize-autoloader
+RUN composer update --no-dev --optimize-autoloader --no-interaction
 
 RUN npm install
 
