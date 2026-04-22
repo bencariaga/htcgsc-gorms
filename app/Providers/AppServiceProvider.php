@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use App\Services\Miscellaneous\TextBeeService;
 use BeyondCode\QueryDetector\QueryDetectorServiceProvider;
-use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\{Reflector, ServiceProvider};
 
 /** @property mixed $app */
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +13,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->singleton(TextBeeService::class, fn () => new TextBeeService);
 
-        if ($this->app->environment('local')) {
+        if ($this->app->environment('local') && !Reflector::isCallable(QueryDetectorServiceProvider::class)) {
             $this->app->register(QueryDetectorServiceProvider::class);
         }
     }
