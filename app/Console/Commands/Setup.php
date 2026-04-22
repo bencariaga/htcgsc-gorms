@@ -10,6 +10,8 @@ class Setup extends BaseCommand
 
     public function handle(): int
     {
+        $this->components->info('Setting up the system.');
+
         $this->call('key:generate', ['--ansi' => true]);
 
         $this->call('migrate', [
@@ -25,7 +27,7 @@ class Setup extends BaseCommand
             '--force' => true,
         ]);
 
-        $systemMigrations = [
+        $migrations = [
             'database/migrations/system/create_persons_table.php',
             'database/migrations/system/create_students_table.php',
             'database/migrations/system/create_users_table.php',
@@ -33,10 +35,11 @@ class Setup extends BaseCommand
             'database/migrations/system/create_referrals_table.php',
             'database/migrations/system/create_appointments_table.php',
             'database/migrations/system/create_reports_table.php',
+            'database/migrations/special/add_auto_increment.php',
             'database/migrations/system/create_all_activities_view.php',
         ];
 
-        foreach ($systemMigrations as $path) {
+        foreach ($migrations as $path) {
             $this->call('migrate', [
                 '--path' => $path,
                 '--ansi' => true,
@@ -44,17 +47,9 @@ class Setup extends BaseCommand
             ]);
         }
 
-        $this->call('migrate', [
-            '--path' => 'database/migrations/special/add_auto_increment.php',
-            '--ansi' => true,
-            '--force' => true,
-        ]);
-
         $this->call('db:seed', ['--ansi' => true, '--force' => true]);
-
         $this->call('storage:link', ['--ansi' => true]);
-
-        $this->components->info('System setup completed successfully!');
+        $this->components->info('System setup has been completed successfully!');
 
         return Command::SUCCESS;
     }
