@@ -10,6 +10,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.4",
+        "ext-pdo_pgsql": "*",
         "guzzlehttp/guzzle": "^7.10",
         "laravel/framework": "v13.0.0 as 12.99.99",
         "laravel/tinker": "^3.0",
