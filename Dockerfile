@@ -10,7 +10,15 @@ RUN apk add --no-cache \
     libzip-dev \
     unzip \
     nginx \
-    postgresql-dev
+    postgresql-dev \
+    nodejs \
+    npm \
+    chromium \
+    nss \
+    freetype \
+    harfbuzz \
+    ca-certificates \
+    ttf-freefont
 
 RUN docker-php-ext-install pdo_pgsql mbstring exif pcntl bcmath gd zip
 

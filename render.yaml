@@ -1,0 +1,48 @@
+services:
+    - type: web
+      name: htcgsc-gorms
+      env: docker
+      dockerContext: .
+      dockerfilePath: ./Dockerfile
+      plan: free
+      region: singapore
+      envVars:
+          - key: APP_ENV
+            value: production
+          - key: APP_DEBUG
+            value: 'false'
+          - key: APP_KEY
+            sync: false
+          - key: DB_CONNECTION
+            value: pgsql
+          - key: DB_HOST
+            fromDatabase:
+                name: htcgsc-db
+                property: host
+          - key: DB_PORT
+            value: '5432'
+          - key: DB_DATABASE
+            fromDatabase:
+                name: htcgsc-db
+                property: database
+          - key: DB_USERNAME
+            fromDatabase:
+                name: htcgsc-db
+                property: user
+          - key: DB_PASSWORD
+            fromDatabase:
+                name: htcgsc-db
+                property: password
+          - key: CHROME_PATH
+            value: /usr/bin/chromium-browser
+          - key: NODE_BINARY
+            value: /usr/bin/node
+          - key: NPM_BINARY
+            value: /usr/bin/npm
+
+databases:
+    - name: htcgsc-gorms
+      databaseName: htcgsc_gorms
+      user: htcgsc_gorms_user
+      plan: free
+      region: singapore
