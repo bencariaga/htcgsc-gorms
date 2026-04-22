@@ -22,6 +22,9 @@ RUN apk add --no-cache \
 
 RUN docker-php-ext-install pdo_pgsql mbstring exif pcntl bcmath gd zip
 
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
+
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -30,7 +33,9 @@ WORKDIR /var/www
 
 COPY . /var/www
 
-RUN composer update --no-dev --optimize-autoloader
+RUN composer install --no-dev --optimize-autoloader
+
+RUN npm install
 
 RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 
