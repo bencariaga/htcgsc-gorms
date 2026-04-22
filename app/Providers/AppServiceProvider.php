@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Services\Miscellaneous\TextBeeService;
+use BeyondCode\QueryDetector\QueryDetectorServiceProvider;
 use Illuminate\Support\ServiceProvider;
 
 /** @property mixed $app */
@@ -11,6 +12,10 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton(TextBeeService::class, fn () => new TextBeeService);
+
+        if ($this->app->environment('local')) {
+            $this->app->register(QueryDetectorServiceProvider::class);
+        }
     }
 
     public function boot(): void
