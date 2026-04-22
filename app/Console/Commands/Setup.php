@@ -12,7 +12,13 @@ class Setup extends BaseCommand
     {
         $this->call('key:generate', ['--ansi' => true]);
 
-        $this->call('migrate:fresh', [
+        $this->call('migrate', [
+            '--path' => 'database/migrations/special/nuke_database.php',
+            '--ansi' => true,
+            '--force' => true,
+        ]);
+
+        $this->call('migrate', [
             '--drop-views' => true,
             '--path' => 'database/migrations/laravel',
             '--ansi' => true,
