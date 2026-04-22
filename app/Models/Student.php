@@ -18,11 +18,8 @@ class Student extends Model
 {
     use HasCommonModelPattern, HasFormattedId;
 
-    /** @var string */
-    protected $primaryKey = 'student_id';
-
     /** @var array */
-    protected $fillable = ['person_id'];
+    protected $fillable = ['student_id', 'person_id'];
 
     protected function formattedStudentId(): Attribute
     {
@@ -51,10 +48,10 @@ class Student extends Model
 
     public function latestReferral(): HasOne
     {
-        return $this->hasOne(Referral::class, 'student_id', 'student_id')->latestOfMany('referral_id');
+        return $this->hasOne(Referral::class, 'student_id', 'student_id')->latestOfMany();
     }
 
-    public function allActivities(): MergedRelation
+    public function latestActivity(): MergedRelation
     {
         return $this->mergedRelation('all_activities');
     }

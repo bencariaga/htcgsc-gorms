@@ -17,11 +17,8 @@ class Referrer extends Model
 {
     use HasCommonModelPattern;
 
-    /** @var string */
-    protected $primaryKey = 'referrer_id';
-
     /** @var array */
-    protected $fillable = ['student_id'];
+    protected $fillable = ['referrer_id', 'student_id'];
 
     public function student(): BelongsTo
     {

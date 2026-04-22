@@ -13,7 +13,7 @@ class AppointmentFactory extends Factory
     public function definition(): array
     {
         return [
-            'reason' => fake()->sentence(),
+            'reason' => fake('en_PH')->sentence(),
             'appointment_date' => fake()->dateTimeBetween('now', '+1 month')->format('Y-m-d'),
             'appointment_time' => fake()->randomElement(AppointmentTime::cases()),
             'appointment_status' => AppointmentStatus::Scheduled,

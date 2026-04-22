@@ -22,11 +22,8 @@ class User extends Authenticatable
 {
     use HasCommonModelPattern, Notifiable, SetsDefaultStatus;
 
-    /** @var string */
-    protected $primaryKey = 'user_id';
-
     /** @var array */
-    protected $fillable = ['person_id', 'username', 'account_status', 'password', 'profile_picture'];
+    protected $fillable = ['user_id', 'person_id', 'username', 'account_status', 'password', 'profile_picture'];
 
     /** @var array */
     protected $hidden = ['password', 'remember_token'];
@@ -44,10 +41,5 @@ class User extends Authenticatable
     public function student()
     {
         return $this->belongsToThrough(Student::class, Person::class, null, '', [Student::class => 'person_id', Person::class => 'person_id']);
-    }
-
-    public function getRememberTokenName()
-    {
-        return null;
     }
 }

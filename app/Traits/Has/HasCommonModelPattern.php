@@ -27,20 +27,21 @@ trait HasCommonModelPattern
     public function initializeHasCommonModelPattern(): void
     {
         $className = class_basename($this);
-
-        $this->table = str($className)->snake() . 's';
-
-        $this->primaryKey = str($className)->snake() . '_id';
-
-        $this->keyType = 'string';
-
+        $this->table = str($className)->snake()->append('s')->toString();
+        $this->primaryKey = str($className)->snake()->append('_id')->toString();
+        $this->keyType = 'int';
         $this->incrementing = false;
-
-        $this->timestamps = true;
     }
 
     protected static function bootHasCommonModelPattern(): void
     {
-        static::creating(fn ($model) => str($model->{$model->getKeyName()})->isEmpty() && $model->{$model->getKeyName()} = GenerateDatabaseTableRowId::execute($model->getTable(), $model->getKeyName()));
+        static::creating(function ($model) {
+            if (!$model->{$model->getKeyName()}) {
+                $model->{$model->getKeyName()} = GenerateDatabaseTableRowId::execute(
+                    $model->getTable(),
+                    $model->getKeyName(),
+                );
+            }
+        });
     }
 }

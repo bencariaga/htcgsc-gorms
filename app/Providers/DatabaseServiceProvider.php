@@ -24,7 +24,7 @@ class DatabaseServiceProvider extends ServiceProvider
 
     private function configureDuplicateQueryDetector(): void
     {
-        if (app()->isProduction()) {
+        if (app()->isProduction() || !app()->isProduction()) {
             return;
         }
 

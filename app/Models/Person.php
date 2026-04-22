@@ -25,11 +25,8 @@ class Person extends Model
 {
     use HasCommonModelPattern, HasNameAttributes;
 
-    /** @var string */
-    protected $primaryKey = 'person_id';
-
     /** @var array */
-    protected $fillable = ['type', 'last_name', 'first_name', 'middle_name', 'suffix', 'email_address', 'phone_number'];
+    protected $fillable = ['person_id', 'type', 'last_name', 'first_name', 'middle_name', 'suffix', 'email_address', 'phone_number'];
 
     protected function casts(): array
     {
@@ -51,8 +48,8 @@ class Person extends Model
         return $this->hasManyDeep(Appointment::class, [Student::class, Referral::class], ['person_id', 'student_id', 'referral_id'], ['person_id', 'student_id', 'referral_id']);
     }
 
-    public function allStudentActivities(): MergedRelation
+    public function latestActivity(): MergedRelation
     {
-        return $this->mergedRelationWithModel(Student::class, 'all_activities');
+        return $this->mergedRelation('all_activities');
     }
 }

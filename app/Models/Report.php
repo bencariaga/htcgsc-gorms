@@ -19,17 +19,8 @@ class Report extends Model
 {
     use HasCommonModelPattern;
 
-    /** @var string */
-    protected $primaryKey = 'report_id';
-
-    /** @var bool */
-    public $incrementing = true;
-
-    /** @var string */
-    protected $keyType = 'int';
-
     /** @var array */
-    protected $fillable = ['title', 'start_date', 'end_date', 'data_category', 'file_output_format'];
+    protected $fillable = ['report_id', 'title', 'start_date', 'end_date', 'data_category', 'file_output_format'];
 
     protected function casts(): array
     {

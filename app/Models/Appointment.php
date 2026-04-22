@@ -25,15 +25,6 @@ class Appointment extends Model
 {
     use HasCommonModelPattern, HasFormattedId;
 
-    /** @var string */
-    protected $primaryKey = 'appointment_id';
-
-    /** @var bool */
-    public $incrementing = true;
-
-    /** @var string */
-    protected $keyType = 'int';
-
     /** @var array */
     protected $fillable = ['referrer_id', 'referral_id', 'referral_type', 'reason', 'appointment_date', 'appointment_time', 'appointment_status'];
 

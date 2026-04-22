@@ -82,6 +82,7 @@
             "@php artisan migrate --path=database/migrations/system/create_appointments_table.php --ansi",
             "@php artisan migrate --path=database/migrations/system/create_reports_table.php --ansi",
             "@php artisan migrate --path=database/migrations/system/create_all_activities_view.php --ansi",
+            "@php artisan migrate --path=database/migrations/special/add_auto_increment.php --ansi",
             "@php artisan db:seed --ansi",
             "@php artisan storage:link --ansi"
         ]

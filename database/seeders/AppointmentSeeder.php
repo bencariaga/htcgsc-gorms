@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\{Actions\Data\GenerateDatabaseTableRowId, Enums\ReferralType, Models\Appointment, Models\Student};
-use Illuminate\{Database\Seeder, Support\Collection};
+use App\Enums\{AppointmentStatus, AppointmentTime, ReferralType};
+use App\Models\{Appointment, Referral, Referrer, Student};
+use Illuminate\Database\Seeder;
 
 class AppointmentSeeder extends Seeder
 {
@@ -15,32 +16,35 @@ class AppointmentSeeder extends Seeder
             return;
         }
 
-        Collection::times(5, fn () => $this->createAppointment($students->random(), $students->random(), ReferralType::Yourself));
+        for ($i = 0; $i < 5; $i++) {
+            $this->generateAppointment($students->random(), $students->random(), ReferralType::Yourself);
+        }
 
-        Collection::times(5, function () use ($students) {
+        for ($i = 0; $i < 5; $i++) {
             $referrer = $students->random();
-            $referral = $students->where('student_id', '!=', $referrer->student_id);
+            $referral = $students->where('student_id', '!=', $referrer->student_id)->random();
 
-            if ($referral->isNotEmpty()) {
-                $this->createAppointment($referrer, $referral->random(), ReferralType::SomeoneElse);
-            }
-        });
+            $this->generateAppointment($referrer, $referral, ReferralType::SomeoneElse);
+        }
     }
 
-    private function createAppointment(Student $referrerStudent, Student $referralStudent, ReferralType $type): void
+    private function generateAppointment(Student $referrerStudent, Student $referralStudent, ReferralType $type): void
     {
-        $ids = [];
+        $referrer = Referrer::create([
+            'student_id' => $referrerStudent->student_id,
+        ]);
 
-        collect(['referrer' => $referrerStudent, 'referral' => $referralStudent])->each(function ($student, $key) use (&$ids) {
-            $model = str($key)->studly()->toString();
-            $ids["{$key}_id"] = GenerateDatabaseTableRowId::execute(str($key)->plural(), "{$key}_id");
-            ("App\\Models\\{$model}")::create(["{$key}_id" => $ids["{$key}_id"], 'student_id' => $student->student_id]);
-        });
+        $referral = Referral::create([
+            'student_id' => $referralStudent->student_id,
+        ]);
 
-        Appointment::factory()->create([
-            'appointment_id' => GenerateDatabaseTableRowId::execute('appointments', 'appointment_id'),
-            'referrer_id' => $ids['referrer_id'],
-            'referral_id' => $ids['referral_id'],
+        Appointment::create([
+            'reason' => fake('en_PH')->sentence(),
+            'appointment_date' => fake()->dateTimeBetween('now', '+1 month')->format('Y-m-d'),
+            'appointment_time' => fake()->randomElement(AppointmentTime::cases()),
+            'appointment_status' => AppointmentStatus::Scheduled,
+            'referrer_id' => $referrer->referrer_id,
+            'referral_id' => $referral->referral_id,
             'referral_type' => $type,
         ]);
     }

@@ -19,11 +19,8 @@ class Referral extends Model
 {
     use HasCommonModelPattern;
 
-    /** @var string */
-    protected $primaryKey = 'referral_id';
-
     /** @var array */
-    protected $fillable = ['student_id', 'referral_type', 'reason'];
+    protected $fillable = ['referral_id', 'student_id', 'referral_type', 'reason'];
 
     protected function casts(): array
     {
