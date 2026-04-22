@@ -13,7 +13,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->singleton(TextBeeService::class, fn () => new TextBeeService);
 
-        if ($this->app->environment('local') && !Reflector::isCallable(QueryDetectorServiceProvider::class)) {
+        if ($this->app->environment('local') && Reflector::isCallable(QueryDetectorServiceProvider::class)) {
             $this->app->register(QueryDetectorServiceProvider::class);
         }
     }
