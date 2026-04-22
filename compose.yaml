@@ -1,5 +1,6 @@
 services:
-    htcgscgorms:
+    htcgsc-gorms:
+        container_name: htcgsc-gorms
         image: htcgsc-gorms
         build:
             context: .
