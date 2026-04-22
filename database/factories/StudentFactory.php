@@ -12,6 +12,13 @@ class StudentFactory extends Factory
 
     public function definition(): array
     {
-        return ['person_id' => Person::factory()->state(['type' => PersonType::Student])];
+        $created_at = fake()->dateTimeBetween('-1 month', 'now');
+        $updated_at = fake()->dateTimeBetween($created_at, 'now');
+
+        return [
+            'person_id' => Person::factory()->state(['type' => PersonType::Student]),
+            'created_at' => $created_at,
+            'updated_at' => $updated_at,
+        ];
     }
 }

@@ -11,7 +11,7 @@ class ReportSeeder extends Seeder
     {
         for ($i = 0; $i < 10; $i++) {
             Report::create([
-                'title' => fake()->text(20),
+                'title' => str(fake()->text(20))->finish(''),
                 'start_date' => fake()->dateTimeBetween('-1 year', 'now')->format('Y-m-d'),
                 'end_date' => fake()->dateTimeBetween('now', '+1 month')->format('Y-m-d'),
                 'data_category' => collect(DataCategory::cases())->random(),

@@ -1,4 +1,31 @@
-FROM alpine:latest
-LABEL Name=htcgscgorms Version=0.0.1
-RUN apk add --no-cache fortune
-ENTRYPOINT ["sh", "-c", "fortune -a | cat"]
+FROM php:8.2-fpm-alpine
+
+RUN apk add --no-cache \
+    git \
+    curl \
+    libpng-dev \
+    oniguruma-dev \
+    libxml2-dev \
+    zip \
+    unzip \
+    nginx
+
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
+
+RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+WORKDIR /var/www
+
+COPY . /var/www
+
+RUN composer install --no-dev --optimize-autoloader
+
+RUN chown -R www-data:www-data /var/www/storage /var/www/cache
+
+COPY ./docker/nginx.conf /etc/nginx/http.d/default.conf
+
+EXPOSE 80
+
+CMD ["sh", "-c", "nginx && php-fpm"]

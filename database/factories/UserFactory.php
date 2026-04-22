@@ -13,11 +13,16 @@ class UserFactory extends Factory
 
     public function definition(): array
     {
+        $created_at = fake()->dateTimeBetween('-1 month', 'now');
+        $updated_at = fake()->dateTimeBetween($created_at, 'now');
+
         return [
             'person_id' => Person::factory()->state(['type' => PersonType::Employee]),
             'account_status' => AccountStatus::Inactive,
             'password' => Hash::make('12345678'),
             'profile_picture' => null,
+            'created_at' => $created_at,
+            'updated_at' => $updated_at,
         ];
     }
 
