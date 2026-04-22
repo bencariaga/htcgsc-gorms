@@ -6,6 +6,12 @@ use Illuminate\Support\{Facades\Artisan, Facades\Auth, Facades\Route};
 Route::middleware('web')->group(function () {
     Route::get('/refresh-csrf', fn () => response()->json(['token' => csrf_token(), 'status' => config('app.key') ? 'ok' : 'error']));
 
+    Route::get('/setup', function () {
+        Artisan::call('setup');
+
+        return response()->json(['status' => 'Setup Executed', 'log' => Artisan::output()]);
+    });
+
     require __DIR__ . '/auth.php';
 
     Route::middleware(['auth'])->group(function () {
