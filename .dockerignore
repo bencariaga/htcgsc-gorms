@@ -2,7 +2,9 @@ node_modules
 vendor
 public/storage
 public/build
-public/hot
+.git
+.env
+.env.*
 
 storage/*.key
 storage/logs/*
@@ -10,31 +12,10 @@ storage/framework/cache/*
 storage/framework/sessions/*
 storage/framework/views/*
 storage/debugbar/
-storage/pail
 *.log
 
-.env
-.env.*
-docker-compose*
-compose*
-Dockerfile*
-.dockerignore
-.gitignore
-
 .vscode
-.vs
 .idea
-.fleet
-.nova
-.zed
-.phpactor.json
 .phpunit.result.cache
-.phpunit.cache
 Thumbs.db
 .DS_Store
-
-charts/
-secrets.dev.yaml
-values.dev.yaml
-LICENSE
-README.md
