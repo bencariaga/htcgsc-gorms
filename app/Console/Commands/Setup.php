@@ -12,8 +12,6 @@ class Setup extends BaseCommand
     {
         $this->components->info('Setting up the system.');
 
-        $this->call('key:generate', ['--ansi' => true]);
-
         $this->components->task('Wiping database', function () {
             $this->callSilent('db:wipe', ['--force' => true]);
         });
