@@ -18,7 +18,15 @@ RUN apk add --no-cache \
     freetype \
     harfbuzz \
     ca-certificates \
-    ttf-freefont
+    ttf-freefont \
+    imagemagick \
+    imagemagick-dev \
+    autoconf \
+    g++ \
+    make
+
+RUN pecl install imagick \
+    && docker-php-ext-enable imagick
 
 RUN docker-php-ext-install pdo_pgsql mbstring exif pcntl bcmath gd zip
 
