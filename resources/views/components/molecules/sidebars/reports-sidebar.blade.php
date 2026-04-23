@@ -55,8 +55,8 @@
         </div>
     </nav>
 
-    <div class="mx-4 mb-4 pl-[2px]">
-        <span class="mt-2 font-medium text-[13px] text-black dark:text-white">
+    <div class="mx-4 mb-4 pl-[2px] pt-2">
+        <span class="font-medium text-[13px] text-black dark:text-white">
             <strong>NOTE</strong>: You can only create 99 reports.
         </span>
     </div>
