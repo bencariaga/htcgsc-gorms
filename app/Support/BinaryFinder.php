@@ -16,12 +16,20 @@ class BinaryFinder
 
     public static function node(): string
     {
-        return static::resolve('node', ['Windows' => 'C:/Program Files/nodejs/node.exe', 'Linux' => '/usr/bin/node', 'default' => 'node']);
+        return static::resolve('node', [
+            'Windows' => 'C:/Program Files/nodejs/node.exe',
+            'Linux' => '/usr/bin/node',
+            'default' => 'node'
+        ]);
     }
 
     public static function npm(): string
     {
-        return static::resolve('npm', ['Windows' => 'C:/Program Files/nodejs/npm.cmd', 'Linux' => '/usr/bin/npm', 'default' => 'npm']);
+        return static::resolve('npm', [
+            'Windows' => 'C:/Program Files/nodejs/npm.cmd',
+            'Linux' => '/usr/bin/npm',
+            'default' => 'npm'
+        ]);
     }
 
     private static function resolve(string $key, array $osPaths, string $suffix = 'binary'): string
