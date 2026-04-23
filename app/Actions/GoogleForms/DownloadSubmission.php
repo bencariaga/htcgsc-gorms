@@ -11,7 +11,7 @@ class DownloadSubmission
 {
     public function execute(array $submission, string $type = 'log')
     {
-        $cacheKey = "submission_data_{$type}_" . str(collect($submission)->toJson())->pipe(fn ($str) => Crypt::encrypt($str, false))->pipe('md5');
+        $cacheKey = "submission_data_{$type}_" . str(collect($submission)->toJson())->pipe(fn($str) => Crypt::encrypt($str, false))->pipe('md5');
 
         $method = 'generate' . str($type)->ucfirst() . 'Content';
 
@@ -92,7 +92,7 @@ class DownloadSubmission
 
         $names = ['Chrome', 'Node', 'Npm'];
 
-        $binaries = collect($names)->combine(collect($names)->map(fn ($name) => (string) str($name)->lower()))->toArray();
+        $binaries = collect($names)->combine(collect($names)->map(fn($name) => (string) str($name)->lower()))->toArray();
 
         foreach ($binaries as $method => $finder) {
             $setter = $method === 'Chrome' ? 'setChromePath' : "set{$method}Binary";
@@ -106,7 +106,7 @@ class DownloadSubmission
             $browser->addChromiumArguments($args);
         }
 
-        return $browser->showBackground()->waitUntilNetworkIdle()->emulateMedia('screen');
+        return $browser->showBackground()->waitUntilNetworkIdle()->noSandbox()->emulateMedia('screen');
     }
 
     public function generateFileName(array $submission, string $extension): string

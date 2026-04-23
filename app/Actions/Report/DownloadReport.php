@@ -74,7 +74,7 @@ class DownloadReport
             $html = view($targetView, compact('report', 'grid', 'results', 'showMonthNum'))->render();
 
             return $this->browser($html)->pdf();
-        } catch (ProcessFailedException|\Exception $e) {
+        } catch (ProcessFailedException | \Exception $e) {
             Log::error('PDF Generation failed: ' . $e->getMessage());
             throw $e;
         }
@@ -84,7 +84,7 @@ class DownloadReport
     {
         $browser = Browsershot::html($html);
         $names = ['Chrome', 'Node', 'Npm'];
-        $binaries = collect($names)->combine(collect($names)->map(fn ($name) => (string) str($name)->lower()))->toArray();
+        $binaries = collect($names)->combine(collect($names)->map(fn($name) => (string) str($name)->lower()))->toArray();
 
         foreach ($binaries as $method => $finder) {
             $setter = $method === 'Chrome' ? 'setChromePath' : "set{$method}Binary";
