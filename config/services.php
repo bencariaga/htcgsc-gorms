@@ -45,9 +45,9 @@ return [
     */
 
     'binaries' => [
-        'chrome_path' => env('CHROME_PATH'),
-        'node_binary' => env('NODE_BINARY'),
-        'npm_binary' => env('NPM_BINARY'),
+        'chrome_path' => env('CHROME_PATH', '/usr/bin/chromium-browser'),
+        'node_binary' => env('NODE_BINARY', '/usr/bin/node'),
+        'npm_binary' => env('NPM_BINARY', '/usr/bin/npm'),
     ],
 
     /*
