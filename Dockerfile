@@ -23,12 +23,13 @@ RUN apk add --no-cache \
     imagemagick-dev \
     autoconf \
     g++ \
-    make
+    make \
+    icu-dev
 
 RUN pecl install imagick \
     && docker-php-ext-enable imagick
 
-RUN docker-php-ext-install pdo_pgsql mbstring exif pcntl bcmath gd zip
+RUN docker-php-ext-install pdo_pgsql mbstring exif pcntl bcmath gd zip intl
 
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser

@@ -9,7 +9,7 @@ class BinaryFinder
         $Windows = 'C:/Program Files/Google/Chrome/Application/chrome.exe';
         $Darwin = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
         $Linux = '/usr/bin/chromium-browser';
-        $default = 'chromium-browser';
+        $default = '/usr/bin/chromium-browser';
 
         return static::resolve('chrome', compact('Windows', 'Darwin', 'Linux', 'default'), 'path');
     }
@@ -19,7 +19,7 @@ class BinaryFinder
         return static::resolve('node', [
             'Windows' => 'C:/Program Files/nodejs/node.exe',
             'Linux' => '/usr/bin/node',
-            'default' => 'node'
+            'default' => '/usr/bin/node',
         ]);
     }
 
@@ -28,7 +28,7 @@ class BinaryFinder
         return static::resolve('npm', [
             'Windows' => 'C:/Program Files/nodejs/npm.cmd',
             'Linux' => '/usr/bin/npm',
-            'default' => 'npm'
+            'default' => '/usr/bin/npm',
         ]);
     }
 
