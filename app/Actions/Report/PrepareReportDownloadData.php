@@ -14,7 +14,7 @@ class PrepareReportDownloadData
         return match ($dataCategory) {
             DataCategory::Users => User::with('person'),
             DataCategory::Students => Student::with(['person', 'referrals.appointment.referrer.person', 'referrals.appointment.person']),
-            DataCategory::Appointments => Appointment::with(['person', 'referrer.person']),
+            DataCategory::Appointments => Appointment::with(['person', 'referrer.student.person', 'referral.student.person']),
         };
     }
 }
