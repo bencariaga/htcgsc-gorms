@@ -4,9 +4,9 @@ namespace App\Actions\Report;
 
 use App\Actions\Data\RenderStatisticalData;
 use App\Enums\{DataCategory, FileOutputFormat};
-use App\{Exports\Report\Format, Models\Report, Support\BinaryFinder};
+use App\{Exports\Report\Format, Models\Report};
 use Carbon\CarbonInterface;
-use Illuminate\Support\{Facades\Log, Reflector};
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 use Spatie\Browsershot\Browsershot;
 use Symfony\Component\Process\Exception\ProcessFailedException;
@@ -27,7 +27,6 @@ class DownloadReport
     {
         $category = $report->data_category;
         $format = $report->file_output_format;
-
         $now = now();
 
         $reportTitle = str($report->title ?? 'report')->slug();
@@ -45,7 +44,7 @@ class DownloadReport
         return compact('content', 'filename');
     }
 
-    private function generateExcel(Report $report)
+    private function generateExcel(Report $report): string
     {
         $query = $this->prepareData->handle($report->data_category);
         $title = $report->title ?? 'Report';
@@ -55,7 +54,7 @@ class DownloadReport
         return Excel::raw(new Format($query, $report->data_category, $title, $startDate, $endDate), \Maatwebsite\Excel\Excel::XLSX);
     }
 
-    private function generatePDF(Report $report, DataCategory $category, CarbonInterface $now)
+    private function generatePDF(Report $report, DataCategory $category, CarbonInterface $now): string
     {
         try {
             $query = $this->prepareData->handle($category);
@@ -74,7 +73,7 @@ class DownloadReport
             $html = view($targetView, compact('report', 'grid', 'results', 'showMonthNum'))->render();
 
             return $this->browser($html)->pdf();
-        } catch (ProcessFailedException | \Exception $e) {
+        } catch (ProcessFailedException|\Exception $e) {
             Log::error('PDF Generation failed: ' . $e->getMessage());
             throw $e;
         }
@@ -82,17 +81,7 @@ class DownloadReport
 
     private function browser(string $html): Browsershot
     {
-        $browser = Browsershot::html($html);
-        $names = ['Chrome', 'Node', 'Npm'];
-        $binaries = collect($names)->combine(collect($names)->map(fn($name) => (string) str($name)->lower()))->toArray();
-
-        foreach ($binaries as $method => $finder) {
-            $setter = $method === 'Chrome' ? 'setChromePath' : "set{$method}Binary";
-
-            if (Reflector::isCallable([$browser, $setter])) {
-                $browser->$setter(BinaryFinder::$finder());
-            }
-        }
+        $browser = Browsershot::html($html)->setChromePath('/usr/bin/google-chrome')->setNodeBinary('/usr/bin/node')->setNpmBinary('/usr/bin/npm');
 
         if ($args = config('browsershot.chromium_arguments')) {
             $browser->addChromiumArguments($args);

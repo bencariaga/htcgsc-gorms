@@ -3,7 +3,7 @@
 namespace App\Actions\GoogleForms;
 
 use App\{Enums\NonDB\GoogleFormsStyling, Services\Miscellaneous\GoogleFormService};
-use App\Support\{BinaryFinder, VerticalFormatter};
+use App\Support\VerticalFormatter;
 use Illuminate\Support\{Carbon, Facades\Cache, Facades\Crypt, Facades\Response, Reflector};
 use Spatie\Browsershot\Browsershot;
 
@@ -11,7 +11,7 @@ class DownloadSubmission
 {
     public function execute(array $submission, string $type = 'log')
     {
-        $cacheKey = "submission_data_{$type}_" . str(collect($submission)->toJson())->pipe(fn($str) => Crypt::encrypt($str, false))->pipe('md5');
+        $cacheKey = "submission_data_{$type}_" . str(collect($submission)->toJson())->pipe(fn ($str) => Crypt::encrypt($str, false))->pipe('md5');
 
         $method = 'generate' . str($type)->ucfirst() . 'Content';
 
@@ -35,13 +35,10 @@ class DownloadSubmission
     protected function generateLogContent(array $submission): string
     {
         $rawDate = $submission['created_at'] ?? $submission['Timestamp'] ?? now();
-
         $datetime = Carbon::parse($rawDate)->format('Y-m-d H:i:s');
-
         $appDebug = config('app.env');
 
         $header = str(VerticalFormatter::LOG_FORMAT)->replace(['%datetime%', '%env%', '%level_name%', '%message%'], [$datetime, $appDebug, 'INFO', 'Google Form Submission Data:']);
-
         $jsonContent = collect($submission)->toJson(JSON_PRETTY_PRINT);
 
         return "{$header}\n{$jsonContent}\n";
@@ -64,21 +61,13 @@ class DownloadSubmission
     private function renderView(array $submission, string $extension): string
     {
         $activeSubmission = $submission;
-
         $service = app(GoogleFormService::class);
-
         $urls = $service->getSubmissionUrls();
-
         $gfs = GoogleFormsStyling::variables($urls);
-
         $contactReferrer = $service->getContactReferrerUrl();
-
         $selectedFileName = $this->generateFileName($submission, $extension);
-
         $submissions = [$submission];
-
         $newTab = '';
-
         $mode = $extension === 'pdf' ? 'pdf' : ($extension === 'png' ? 'image' : null);
 
         $data = compact('activeSubmission', 'gfs', 'contactReferrer', 'selectedFileName', 'submissions', 'newTab', 'mode');
@@ -88,19 +77,7 @@ class DownloadSubmission
 
     private function browser(string $html): Browsershot
     {
-        $browser = Browsershot::html($html);
-
-        $names = ['Chrome', 'Node', 'Npm'];
-
-        $binaries = collect($names)->combine(collect($names)->map(fn($name) => (string) str($name)->lower()))->toArray();
-
-        foreach ($binaries as $method => $finder) {
-            $setter = $method === 'Chrome' ? 'setChromePath' : "set{$method}Binary";
-
-            if (Reflector::isCallable([$browser, $setter])) {
-                $browser->$setter(BinaryFinder::$finder());
-            }
-        }
+        $browser = Browsershot::html($html)->setChromePath('/usr/bin/google-chrome')->setNodeBinary('/usr/bin/node')->setNpmBinary('/usr/bin/npm');
 
         if ($args = config('browsershot.chromium_arguments')) {
             $browser->addChromiumArguments($args);
@@ -112,13 +89,9 @@ class DownloadSubmission
     public function generateFileName(array $submission, string $extension): string
     {
         $gForm = 'google-form';
-
         $rawDate = $submission['created_at'] ?? $submission['Timestamp'] ?? now();
-
         $datetimeFormat = Carbon::parse($rawDate)->format('Y-m-d-H-i-s');
-
         $fields = ['lastName', 'firstName', 'middleName'];
-
         $names = [];
 
         foreach ($fields as $field) {
