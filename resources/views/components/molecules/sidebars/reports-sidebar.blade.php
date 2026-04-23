@@ -7,7 +7,7 @@
         <span class="text-xl">Saved Reports</span>
     </div>
 
-    <nav class="flex-1 flex flex-col overflow-y-auto px-4 py-2 space-y-2">
+    <nav class="flex-1 flex flex-col overflow-y-auto px-4 py-2 space-y-2 [scrollbar-width:thin] [scrollbar-color:rgba(107,114,128,0.8)_transparent] [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-500/80">
         <div class="flex-1 space-y-[6px]">
             @php $isCreateSelected = $selectedFile === null; @endphp
 
@@ -56,7 +56,7 @@
     </nav>
 
     <div class="mx-4 mb-4 pl-[2px]">
-        <span class="font-medium text-[13px] text-black dark:text-white">
+        <span class="mt-2 font-medium text-[13px] text-black dark:text-white">
             <strong>NOTE</strong>: You can only create 99 reports.
         </span>
     </div>
