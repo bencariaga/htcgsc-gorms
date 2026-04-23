@@ -81,7 +81,7 @@ class DownloadReport
 
     private function browser(string $html): Browsershot
     {
-        $browser = Browsershot::html($html)->setChromePath('/usr/bin/google-chrome')->setNodeBinary('/usr/bin/node')->setNpmBinary('/usr/bin/npm');
+        $browser = Browsershot::html($html)->setChromePath('/usr/bin/chromium-browser')->setNodeBinary('/usr/bin/node')->setNpmBinary('/usr/bin/npm');
 
         if ($args = config('browsershot.chromium_arguments')) {
             $browser->addChromiumArguments($args);
