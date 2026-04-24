@@ -20,7 +20,7 @@ Route::get('/setup', function () {
     }
 });
 
-Route::get('/delete-log', function () {
+Route::get('/delete-logs', function () {
     try {
         $gfLogPath = storage_path('logs/google-forms');
 
