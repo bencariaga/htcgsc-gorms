@@ -23,15 +23,15 @@ class UpdateUserProfile extends FormRequest
             default => Auth::user(),
         };
 
-        $personId = $targetUser->person->person_id;
+        $personId = $targetUser->person?->person_id;
 
         return [
             'first_name' => ['required', 'string', 'max:20', 'regex:' . Regex::firstName()],
             'last_name' => ['required', 'string', 'max:20'],
             'middle_name' => ['nullable', 'string', 'max:20'],
             'suffix' => ['nullable', 'string', Rule::in(PersonSuffix::values())],
-            'email_address' => ['required', 'email', 'max:60', new DuplicateContactDetails('email_address', $personId), new EmailAddressFormat],
-            'phone_number' => ['nullable', 'string', 'max:16', new DuplicateContactDetails('phone_number', $personId)],
+            'email_address' => ['required', 'email', 'max:60', new DuplicateContactDetails('email_address', $personId, 'user'), new EmailAddressFormat],
+            'phone_number' => ['nullable', 'string', 'max:16', new DuplicateContactDetails('phone_number', $personId, 'user')],
             'profile_picture' => ['nullable', 'image', 'max:8192'],
         ];
     }
