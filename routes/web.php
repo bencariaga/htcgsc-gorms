@@ -20,6 +20,32 @@ Route::get('/setup', function () {
     }
 });
 
+Route::get('/delete-log', function () {
+    try {
+        $gfLogPath = storage_path('logs/google-forms');
+
+        if (File::exists($gfLogPath)) {
+            File::put($gfLogPath, '');
+
+            return response()->json([
+                'status' => 'Success',
+                'message' => 'Log file cleared successfully.',
+            ]);
+        }
+
+        return response()->json([
+            'status' => 'Success',
+            'message' => 'Log file does not exist, nothing to clear.',
+        ]);
+    } catch (Exception $e) {
+        return response()->json([
+            'status' => 'Failed',
+            'error' => $e->getMessage(),
+            'trace' => $e->getTraceAsString(),
+        ], 500);
+    }
+});
+
 Route::middleware('web')->group(function () {
     Route::get('/refresh-csrf', fn () => response()->json(['token' => csrf_token(), 'status' => config('app.key') ? 'ok' : 'error']));
 
