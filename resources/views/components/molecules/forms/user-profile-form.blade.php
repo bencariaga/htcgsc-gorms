@@ -3,12 +3,12 @@
 <form id="profileForm" action="{{ route('user-profile.update', $user->user_id) }}" method="POST"
     enctype="multipart/form-data" class="space-y-6 py-[20px] px-[2rem]" x-data="{
         form: {
-            lastName: @js(old('lastName', $person->last_name)),
-            firstName: @js(old('firstName', $person->first_name)),
-            middleName: @js(old('middleName', $person->middle_name)),
+            lastName: @js(old('last_name', $person->last_name)),
+            firstName: @js(old('first_name', $person->first_name)),
+            middleName: @js(old('middle_name', $person->middle_name)),
             suffix: @js(old('suffix', $person->suffix ?? '')),
-            email: @js(old('email', $person->email_address)),
-            phoneNumber: @js(old('phoneNumber', $person->phone_number)),
+            email: @js(old('email_address', $person->email_address)),
+            phoneNumber: @js(old('phone_number', $person->phone_number)),
             remove_picture: '0',
             hasNewFile: false
         },
@@ -130,7 +130,7 @@
 
             <div class="relative flex items-center">
                 <i class="fas fa-user absolute left-4 text-slate-400"></i>
-                <input type="text" id="lastNameInput" name="lastName" x-model="form.lastName" data-original="{{ $person->last_name }}" :class="isDirty('lastName') ? 'bg-orange-50 border-orange-300 dark:bg-orange-900/20' : 'bg-gray-100 dark:bg-slate-900'" class="w-full h-[50px] pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all dark:text-white">
+                <input type="text" id="lastNameInput" name="last_name" x-model="form.lastName" data-original="{{ $person->last_name }}" :class="isDirty('lastName') ? 'bg-orange-50 border-orange-300 dark:bg-orange-900/20' : 'bg-gray-100 dark:bg-slate-900'" class="w-full h-[50px] pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all dark:text-white">
             </div>
         </div>
 
@@ -139,7 +139,7 @@
 
             <div class="relative flex items-center">
                 <i class="fas fa-user absolute left-4 text-slate-400"></i>
-                <input type="text" id="firstNameInput" name="firstName" x-model="form.firstName" data-original="{{ $person->first_name }}" @keydown.space.prevent @input="sanitize" @blur="sanitize" :class="isDirty('firstName') ? 'bg-orange-50 border-orange-300 dark:bg-orange-900/20' : 'bg-gray-100 dark:bg-slate-900'" class="w-full h-[50px] pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all dark:text-white">
+                <input type="text" id="firstNameInput" name="first_name" x-model="form.firstName" data-original="{{ $person->first_name }}" @keydown.space.prevent @input="sanitize" @blur="sanitize" :class="isDirty('firstName') ? 'bg-orange-50 border-orange-300 dark:bg-orange-900/20' : 'bg-gray-100 dark:bg-slate-900'" class="w-full h-[50px] pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all dark:text-white">
             </div>
         </div>
 
@@ -148,7 +148,7 @@
 
             <div class="relative flex items-center">
                 <i class="fas fa-user absolute left-4 text-slate-400"></i>
-                <input type="text" id="middleNameInput" name="middleName" x-model="form.middleName" data-original="{{ $person->middle_name }}" :class="isDirty('middleName') ? 'bg-orange-50 border-orange-300 dark:bg-orange-900/20' : 'bg-gray-100 dark:bg-slate-900'" class="w-full h-[50px] pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all dark:text-white">
+                <input type="text" id="middleNameInput" name="middle_name" x-model="form.middleName" data-original="{{ $person->middle_name }}" :class="isDirty('middleName') ? 'bg-orange-50 border-orange-300 dark:bg-orange-900/20' : 'bg-gray-100 dark:bg-slate-900'" class="w-full h-[50px] pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all dark:text-white">
             </div>
         </div>
 
@@ -191,7 +191,7 @@
 
             <div class="relative flex items-center">
                 <i class="fas fa-envelope absolute left-4 text-slate-400"></i>
-                <input type="email" id="emailInput" name="email" x-model="form.email" data-original="{{ $person->email_address }}" @keydown.space.prevent @input="sanitize" @blur="sanitize" :class="isDirty('email') ? 'bg-orange-50 border-orange-300 dark:bg-orange-900/20' : 'bg-gray-100 dark:bg-slate-900'" class="w-full h-[50px] pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all dark:text-white">
+                <input type="email" id="emailInput" name="email_address" x-model="form.email" data-original="{{ $person->email_address }}" @keydown.space.prevent @input="sanitize" @blur="sanitize" :class="isDirty('email') ? 'bg-orange-50 border-orange-300 dark:bg-orange-900/20' : 'bg-gray-100 dark:bg-slate-900'" class="w-full h-[50px] pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all dark:text-white">
             </div>
         </div>
 
@@ -200,7 +200,7 @@
 
             <div class="relative flex items-center">
                 <i class="fas fa-phone absolute left-4 text-slate-400"></i>
-                <input type="text" id="phoneInput" name="phoneNumber" x-model="form.phoneNumber" data-original="{{ $person->phone_number }}" inputmode="tel" @input="sanitize" @blur="sanitize" :class="isDirty('phoneNumber') ? 'bg-orange-50 border-orange-300 dark:bg-orange-900/20' : 'bg-gray-100 dark:bg-slate-900'" class="w-full h-[50px] pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all dark:text-white">
+                <input type="text" id="phoneInput" name="phone_number" x-model="form.phoneNumber" data-original="{{ $person->phone_number }}" inputmode="tel" @input="sanitize" @blur="sanitize" :class="isDirty('phoneNumber') ? 'bg-orange-50 border-orange-300 dark:bg-orange-900/20' : 'bg-gray-100 dark:bg-slate-900'" class="w-full h-[50px] pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all dark:text-white">
             </div>
         </div>
     </div>
