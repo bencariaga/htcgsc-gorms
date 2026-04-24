@@ -19,9 +19,13 @@ class UpdateUserProfile extends FormRequest
 
         $targetUser = match (true) {
             $routeUser instanceof User => $routeUser,
-            Str::of($routeUser)->isMatch(Regex::userName()) => User::find($routeUser),
+            Str::of($routeUser)->isMatch(Regex::userName()) => User::where('username', $routeUser)->first(),
             default => Auth::user(),
         };
+
+        if ($targetUser) {
+            $targetUser->loadMissing('person');
+        }
 
         $personId = $targetUser->person?->person_id;
 
