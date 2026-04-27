@@ -2,14 +2,13 @@
 
 namespace App\Sanitizers;
 
-use Illuminate\Support\Str;
 
 class EmailAddressFormat
 {
     public function handle(mixed $value): string
     {
-        $username = Str::before($value, '@');
+        $username = str($value)->before('@');
 
-        return Str::lower($username) . '@online.htcgsc.edu.ph';
+        return str($username)->lower() . '@online.htcgsc.edu.ph';
     }
 }

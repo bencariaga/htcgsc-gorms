@@ -2,8 +2,9 @@
 
 namespace App\Components;
 
+use App\Data\PersonData;
 use App\Enums\{AppointmentStatus, AppointmentTime, PersonType, ReferralType};
-use Illuminate\{Support\Carbon, Support\Reflector, Support\Str, View\Component};
+use Illuminate\{Support\Carbon, Support\Reflector, View\Component};
 
 class TableRow extends Component
 {
@@ -27,19 +28,58 @@ class TableRow extends Component
         public ?string $bookedTime = null,
         public ?string $modalBookedTime = null,
         public ?string $level = null,
+        public string $formalNameWithInitial = '—',
+        public ?string $phoneNumber = null,
+        public ?string $firstName = null,
     ) {
         $this->isUser = $type === 'user';
         $this->isStudent = $type === 'student';
         $this->isAppointment = $type === 'appointment';
         $this->isAuditLog = $type === 'audit-log';
 
+        if (!Reflector::isCallable($this->item) && !Reflector::isCallable([$this->item, 'person']) && $this->item->person instanceof PersonData) {
+            $this->mapPersonData($this->item->person);
+            $this->mapItemSpecifics();
+
+            return;
+        }
+
+        $this->resolveLegacyProperties();
+    }
+
+    private function mapPersonData(PersonData $personData): void
+    {
+        $this->person = $personData;
+        $this->fullName = $personData->full_name;
+        $this->formalNameWithInitial = $personData->formal_name_with_initial;
+        $this->phoneNumber = $personData->phone_number;
+        $this->firstName = $personData->first_name;
+        $this->emailAddress = $personData->email_address;
+        $this->emailAddressLineBreak = $personData->email_address_line_break;
+        $this->isAdmin = $personData->is_admin;
+    }
+
+    private function mapItemSpecifics(): void
+    {
+        $this->config = $this->resolveConfig();
+        $this->isActive = $this->item->is_active ?? true;
+        $this->isReschedulable = $this->item->is_reschedulable ?? false;
+        $this->bookedTime = $this->item->booked_time_table ?? null;
+        $this->modalBookedTime = $this->item->booked_time_modal ?? null;
+        $this->referrer = $this->item->referrer ?? '—';
+        $this->latestAppointment = $this->item->latest_appointment ?? null;
+    }
+
+    private function resolveLegacyProperties(): void
+    {
         $this->person = $this->resolvePerson();
         $this->fullName = $this->person?->full_name ?? '—';
-        $this->emailAddress = Str::replace('@online.htcgsc.edu.ph', '', $this->person?->email_address ?? '');
-        $this->emailAddressLineBreak = Str::replace('@', '<br>@', $this->person?->email_address ?? '');
+        $this->emailAddress = str($this->person?->email_address ?? '')->replace(['@online.htcgsc.edu.ph', '@gmail.com', '@example.com', '@example.net'], '')->toString();
+        $this->emailAddressLineBreak = str($this->person?->email_address ?? '')->replace('@', '<br>@')->toString();
+
         $personType = $this->person?->type instanceof \BackedEnum ? $this->person->type->value : $this->person?->type;
         $this->isAdmin = $personType === PersonType::Administrator->value;
-        $this->isActive = $this->isUser && (data_get($item, 'account_status') === 'Active');
+        $this->isActive = $this->isUser && (data_get($this->item, 'account_status') === 'Active');
         $this->config = $this->resolveConfig();
 
         if ($this->isAppointment) {
@@ -61,7 +101,7 @@ class TableRow extends Component
                 default => (string) $levelValue,
             };
 
-            $this->level = Str::lower($levelName);
+            $this->level = str($levelName)->lower()->toString();
         }
     }
 
@@ -93,17 +133,17 @@ class TableRow extends Component
             return $this->item->person?->formal_name_with_initial ?? 'Unknown';
         }
 
-        if ($this->isStudent) {
-            if (!$this->latestAppointment) {
-                return '<b>Never referred before</b>';
-            }
-
-            $person = ($this->latestAppointment->referral_type === ReferralType::Yourself) ? $this->item->person : $this->latestAppointment->referrer?->student?->person;
-
-            return $person?->formal_name_with_initial ?? 'Unknown';
+        if (!$this->isStudent) {
+            return '—';
         }
 
-        return '—';
+        if (!$this->latestAppointment) {
+            return '<b>Never referred before</b>';
+        }
+
+        $person = ($this->latestAppointment->referral_type === ReferralType::Yourself) ? $this->item->person : $this->latestAppointment->referrer?->student?->person;
+
+        return $person?->formal_name_with_initial ?? 'Unknown';
     }
 
     private function resolveBookedTimes(): array

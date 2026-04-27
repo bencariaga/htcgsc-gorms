@@ -2,7 +2,7 @@
 
 namespace App\Services\Miscellaneous;
 
-use Illuminate\Support\{Facades\Auth, Str};
+use Illuminate\Support\Facades\Auth;
 
 class DashboardService
 {
@@ -13,13 +13,13 @@ class DashboardService
         $types = ['charts', 'texts'];
 
         foreach ($types as $type) {
-            $formatted = Str::singular(Str::ucfirst($type));
+            $formatted = str($type)->ucfirst()->singular();
             $className = "\\App\\Actions\\Dashboard\\Render{$formatted}Statistics";
             $$type = (new $className)->handle($now);
         }
 
         extract($texts);
 
-        return compact('user', 'now', 'texts', 'charts', 'texts', 'nextAppointment', 'nextAppointmentTime');
+        return compact('user', 'now', 'texts', 'charts', 'nextAppointment', 'nextAppointmentTime');
     }
 }

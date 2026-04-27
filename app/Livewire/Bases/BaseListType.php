@@ -3,7 +3,6 @@
 namespace App\Livewire\Bases;
 
 use App\Traits\Handles\HandlesPostActionNotifications;
-use Illuminate\Support\Str;
 use Livewire\{Attributes\Layout, Component, WithPagination};
 use ReflectionClass;
 use ReflectionProperty;
@@ -60,19 +59,19 @@ abstract class BaseListType extends Component
             return $this->service;
         }
 
-        $serviceClass = 'App\\Services\\ListType\\' . Str::singular(class_basename($this)) . 'Service';
+        $serviceClass = 'App\\Services\\ListType\\' . str(class_basename($this))->singular()->toString() . 'Service';
 
         return app($serviceClass);
     }
 
     protected function getType(): string
     {
-        return $this->type ?? Str::snake(Str::singular(class_basename($this)));
+        return $this->type ?? str(class_basename($this))->singular()->snake()->toString();
     }
 
     protected function getRenderConfig(): array
     {
-        $plural = Str::snake(class_basename($this));
+        $plural = str(class_basename($this))->snake()->toString();
 
         return ['view' => $this->view ?? "livewire.pages.$plural", 'key' => $this->key ?? $plural];
     }

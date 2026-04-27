@@ -12,7 +12,9 @@ use Staudenmeir\LaravelMergedRelations\Eloquent\Relations\MergedRelation;
  * @property int $person_id
  * @property mixed $created_at
  * @property mixed $updated_at
- * @property mixed $person
+ * @property-read string $formatted_student_id
+ * @property Person $person
+ * @property mixed $referrals
  */
 class Student extends Model
 {

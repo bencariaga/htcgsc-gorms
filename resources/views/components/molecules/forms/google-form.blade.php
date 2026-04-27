@@ -53,7 +53,7 @@
             </div>
 
             @foreach($gfs->infoSections as $role => $description)
-                @php $type = Str::title(Str::lower($role)); @endphp
+                @php $type = str($role)->lower()->title(); @endphp
 
                 <div class="bg-white rounded-xl shadow-sm overflow-hidden mb-4">
                     <div class="bg-[#c7cf00] px-6 py-4">
@@ -76,7 +76,7 @@
                             @foreach($gfs->personSuffixes as $suffix)
                                 <label class="flex items-center gap-3">
                                     <div class="relative flex items-center">
-                                        <input type="radio" :checked="$store.formPreview.activeSubmission?.['Suffix ({{ $type }})'] === '{{ $suffix->value }}'" name="suffix_{{ Str::lower($role) }}" class="peer h-5 w-5 appearance-none rounded-full border-2 border-gray-400">
+                                        <input type="radio" :checked="$store.formPreview.activeSubmission?.['Suffix ({{ $type }})'] === '{{ $suffix->value }}'" name="suffix_{{ str($role)->lower() }}" class="peer h-5 w-5 appearance-none rounded-full border-2 border-gray-400">
                                         <div class="pointer-events-none absolute left-1/2 top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-500 opacity-0 transition-opacity peer-checked:opacity-100"></div>
                                     </div>
                                     <span class="text-base text-slate-800 cursor-default">{{ $suffix->value }}</span>
@@ -137,7 +137,7 @@
 
             <div class="text-center pt-6 space-y-2">
                 @foreach($gfs->footerLinks as $link)
-                    @if(\Illuminate\Support\Arr::has($link, 'isImage') && $link['isImage'])
+                    @if(collect($link)->has('isImage') && $link['isImage'])
                         <div class="flex justify-center pt-4">
                             <a href="{{ $link['url'] }}" {{ $newTab }} class="hover:opacity-80 transition-opacity">
                                 <img class="h-[2.5rem] object-contain" src="{{ asset('images/google-forms.png') }}" alt="Google Forms">

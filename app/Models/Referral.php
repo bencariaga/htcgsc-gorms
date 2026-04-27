@@ -14,6 +14,9 @@ use Znck\Eloquent\Relations\BelongsToThrough;
  * @property mixed $created_at
  * @property mixed $updated_at
  * @property Student $student
+ * @property Referrer $referrer
+ * @property Appointment $appointment
+ * @property Person $person
  */
 class Referral extends Model
 {
@@ -25,11 +28,6 @@ class Referral extends Model
     protected function casts(): array
     {
         return ['referral_type' => ReferralType::class];
-    }
-
-    public function referrer(): BelongsTo
-    {
-        return $this->belongsTo(Referrer::class, 'referrer_id', 'referrer_id');
     }
 
     public function student(): BelongsTo

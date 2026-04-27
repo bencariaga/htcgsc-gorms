@@ -195,7 +195,7 @@
 
                 @foreach($gfs->infoSections as $role => $description)
                     @php
-                        $type = Str::title(Str::lower($role));
+                        $type = str($role)->lower()->title();
 
                         $sectionPaddingTop = $mode === 'pdf' ? match($role) {
                             'REFERRER' => '9rem',
@@ -272,7 +272,7 @@
                             <div class="form-group">
                                 <label class="label-block">State the reason for seeking an appointment <span class="text-red-500">*</span></label>
                                 <div class="input-line">
-                                    {{ Str::finish(trim($activeSubmission['reason'] ?? ''), '.') }}
+                                    {{ str(trim($activeSubmission['reason'] ?? ''))->finish('.') }}
                                 </div>
                             </div>
 

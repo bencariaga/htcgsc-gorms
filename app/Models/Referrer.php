@@ -12,6 +12,8 @@ use Znck\Eloquent\Relations\BelongsToThrough;
  * @property int $student_id
  * @property mixed $created_at
  * @property mixed $updated_at
+ * @property Student $student
+ * @property Person $person
  */
 class Referrer extends Model
 {

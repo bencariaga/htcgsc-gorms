@@ -2,7 +2,7 @@
 
 namespace App\Traits\Has;
 
-use Illuminate\{Database\Eloquent\Casts\Attribute, Support\Str};
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 trait HasFormattedId
 {
@@ -13,6 +13,6 @@ trait HasFormattedId
 
     protected function getFormattedId(): string
     {
-        return Str::of($this->{$this->getKeyName()})->padLeft(6, '0')->substrReplace(' ', 3, 0)->toString();
+        return str($this->{$this->getKeyName()})->padLeft(6, '0')->substrReplace(' ', 3, 0)->toString();
     }
 }

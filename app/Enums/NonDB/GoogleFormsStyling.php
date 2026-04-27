@@ -3,7 +3,7 @@
 namespace App\Enums\NonDB;
 
 use App\Traits\Has\HasValues;
-use Illuminate\Support\{Arr, Reflector, Str};
+use Illuminate\Support\{Arr, Reflector};
 
 enum GoogleFormsStyling: string
 {
@@ -24,9 +24,9 @@ enum GoogleFormsStyling: string
         $fields = ['Last Name' => 'required', 'First Name' => 'required', 'Middle Name' => 'nullable', 'School Email Address' => ['required', 'email'], 'Phone Number' => 'nullable'];
 
         return collect($fields)->map(function ($rules, $label) {
-            $ruleString = Arr::accessible($rules) ? Arr::join($rules, '|') : $rules;
+            $ruleString = Arr::accessible($rules) ? collect($rules)->join('|') : $rules;
 
-            return ['label' => $label, 'required' => Str::contains($ruleString, 'required'), 'type' => Str::contains($ruleString, 'email') ? 'email' : 'text'];
+            return ['label' => $label, 'required' => str($ruleString)->contains('required'), 'type' => str($ruleString)->contains('email') ? 'email' : 'text'];
         })->values()->toArray();
     }
 
@@ -68,7 +68,7 @@ enum GoogleFormsStyling: string
             $data[$key] = match (true) {
                 $key === 'headerButtons' => self::headerButtons(),
                 $key === 'footerLinks' => self::footerLinks($urls),
-                Str::endsWith($key, 's') && !Reflector::isCallable([self::class, $key]) => ('App\\Enums\\' . Str::studly(Str::singular($key)))::cases(),
+                str($key)->endsWith('s') && !Reflector::isCallable([self::class, $key]) => ('App\\Enums\\' . str($key)->singular()->studly())::cases(),
                 default => self::$key(),
             };
         }

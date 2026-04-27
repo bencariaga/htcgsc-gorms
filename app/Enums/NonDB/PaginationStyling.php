@@ -3,7 +3,6 @@
 namespace App\Enums\NonDB;
 
 use App\Traits\Has\HasValues;
-use Illuminate\Support\Arr;
 
 final class PaginationStyling
 {
@@ -33,7 +32,7 @@ final class PaginationStyling
     {
         $config = self::CONFIG[$type] ?? self::DEFAULTS;
 
-        return Arr::collapse([$config, ['alias' => $config['alias'] ?? ($type ?? 'default')]]);
+        return collect([$config, ['alias' => $config['alias'] ?? ($type ?? 'default')]])->collapse()->all();
     }
 
     public static function getFilters(?string $type): ?array
@@ -41,7 +40,7 @@ final class PaginationStyling
         $filters = self::FILTERS[$type] ?? null;
 
         if ($filters) {
-            $filters['options'] = Arr::prepend($filters['options'], 'All');
+            $filters['options'] = collect($filters['options'])->prepend('All')->all();
         }
 
         return $filters;

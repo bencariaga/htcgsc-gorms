@@ -17,7 +17,7 @@ class OTPService
 
     public function generateAndSend(User $user, string $identifier, bool $isUpdate = false, bool $isResend = false): string
     {
-        $otp_code = str(collect()->range(0, 999999)->random())->padLeft(6, '0')->toString();
+        $otp_code = str(rand(0, 999999))->padLeft(6, '0')->toString();
 
         $otp_method = $this->sendOtp($user, $identifier, $otp_code, $isUpdate);
 
@@ -78,6 +78,6 @@ class OTPService
 
     public function findUserByIdentifier(string $identifier): ?User
     {
-        return User::whereRelation('person', fn ($q) => $q->whereAny(['email_address', 'phone_number'], $identifier))->first();
+        return User::with('person')->whereRelation('person', fn ($q) => $q->whereAny(['email_address', 'phone_number'], $identifier))->first();
     }
 }

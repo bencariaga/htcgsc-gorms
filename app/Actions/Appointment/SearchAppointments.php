@@ -2,10 +2,11 @@
 
 namespace App\Actions\Appointment;
 
-use App\{Models\Appointment, Services\ListType\DataFilteringService, Traits\Miscellaneous\Searchable};
+use App\{Contracts\SearchsAppointments, Services\ListType\DataFilteringService};
+use App\{Data\AppointmentData, Models\Appointment, Traits\Miscellaneous\Searchable};
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
-class SearchAppointments
+class SearchAppointments implements SearchsAppointments
 {
     use Searchable;
 
@@ -13,7 +14,7 @@ class SearchAppointments
 
     public function handle(string $search, string $filter, string $sortField, string $sortDirection, int $rowsPerPage): LengthAwarePaginator
     {
-        $query = Appointment::query()->with(['referral.student.person', 'person']);
+        $query = Appointment::query()->with(['person', 'referrerPerson']);
         $query = $this->filterService->filter($query, 'appointment', $filter);
 
         if ($sortField === 'appointment_date') {
@@ -21,7 +22,7 @@ class SearchAppointments
         }
 
         return $this->performSearch($query, 'appointment_id', $search, $sortField, $sortDirection, $rowsPerPage, function ($query) use ($search) {
-            $query->where('reason', 'like', "%$search%")->orWhere('appointment_status', 'like', "%$search%")->orWhere('appointment_date', 'like', "%$search%")->orWhereHas('student.person', fn ($q) => $this->wherePersonMatches($q, $search));
-        });
+            $query->where('reason', 'like', "%$search%")->orWhere('appointment_status', 'like', "%$search%")->orWhere('appointment_date', 'like', "%$search%")->orWhereHas('person', fn ($q) => $this->wherePersonMatches($q, $search));
+        })->through(AppointmentData::fromModel(...));
     }
 }

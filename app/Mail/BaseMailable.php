@@ -3,12 +3,12 @@
 namespace App\Mail;
 
 use App\{Models\User, Traits\Sets\SetsHighPriority};
-use Illuminate\{Bus\Queueable, Contracts\Queue\ShouldQueue, Queue\SerializesModels};
+use Illuminate\{Bus\Queueable, Contracts\Queue\ShouldQueue};
 use Illuminate\Mail\{Mailable, Mailables\Content, Mailables\Envelope};
 
 abstract class BaseMailable extends Mailable implements ShouldQueue
 {
-    use Queueable, SerializesModels, SetsHighPriority;
+    use Queueable, SetsHighPriority;
 
     protected string $subjectText;
 

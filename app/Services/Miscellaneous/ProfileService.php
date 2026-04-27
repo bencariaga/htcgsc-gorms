@@ -12,14 +12,14 @@ class ProfileService
         $user->loadMissing('person');
         $person = $user->person()->firstOrFail();
 
-        foreach (['email' => 'otp_email', 'phoneNumber' => 'otp_phone'] as $field => $type) {
-            $currentValue = ($field === 'email') ? $person->email_address : $person->phone_number;
+        foreach (['email_address' => 'otp_email', 'phone_number' => 'otp_phone'] as $field => $type) {
+            $currentValue = ($field === 'email_address') ? $person->email_address : $person->phone_number;
 
             if (filled($validated[$field] ?? null) && $validated[$field] !== $currentValue) {
                 $this->storePendingUpdate($user->getAttribute('user_id'), $type, $validated[$field], collect($validated)->except($field)->toArray());
                 $otpService->generateAndSend($user, $validated[$field], true);
 
-                return 'user-profile.' . ($field === 'email' ? 'otpEmail' : 'otpPhone');
+                return 'user-profile.' . ($field === 'email_address' ? 'otpEmail' : 'otpPhone');
             }
         }
 
@@ -44,17 +44,12 @@ class ProfileService
         /** @var mixed $person */
         $person = $user->person()->firstOrFail();
 
-        $last_name = $data['lastName'];
-
-        $first_name = $data['firstName'];
-
-        $middle_name = $data['middleName'] ?: null;
-
+        $last_name = $data['last_name'];
+        $first_name = $data['first_name'];
+        $middle_name = $data['middle_name'] ?: null;
         $suffix = $data['suffix'] ?: null;
-
-        $email_address = $data['email'] ?? $person->email_address;
-
-        $phone_number = $data['phoneNumber'] ?? $person->phone_number;
+        $email_address = $data['email_address'] ?? $person->email_address;
+        $phone_number = $data['phone_number'] ?? $person->phone_number;
 
         $person->update(compact('last_name', 'first_name', 'middle_name', 'suffix', 'email_address', 'phone_number'));
     }

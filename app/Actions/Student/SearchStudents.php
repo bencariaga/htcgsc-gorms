@@ -2,10 +2,11 @@
 
 namespace App\Actions\Student;
 
-use App\{Models\Student, Services\ListType\DataFilteringService, Traits\Miscellaneous\Searchable};
+use App\{Contracts\SearchsStudents, Services\ListType\DataFilteringService};
+use App\{Data\StudentData, Models\Student, Traits\Miscellaneous\Searchable};
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
-class SearchStudents
+class SearchStudents implements SearchsStudents
 {
     use Searchable;
 
@@ -16,6 +17,6 @@ class SearchStudents
         $query = Student::query()->with(['person', 'referrals.appointment.referrer.student.person', 'referrals.appointment.referrer.person']);
         $query = $this->filterService->filter($query, 'student', $filter);
 
-        return $this->performSearch($query, 'student_id', $search, $sortField, $sortDirection, $rowsPerPage, fn ($query) => $query->whereHas('person', fn ($q) => $this->wherePersonMatches($q, $search)));
+        return $this->performSearch($query, 'student_id', $search, $sortField, $sortDirection, $rowsPerPage, fn ($query) => $query->whereHas('person', fn ($q) => $this->wherePersonMatches($q, $search)))->through(StudentData::fromModel(...));
     }
 }

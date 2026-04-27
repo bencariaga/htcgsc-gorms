@@ -2,7 +2,6 @@
 
 namespace App\Actions\AuditLog;
 
-use Illuminate\Support\Str;
 
 class PrepareAuditLogData
 {
@@ -12,7 +11,7 @@ class PrepareAuditLogData
         $time = $item->datetime ? $item->datetime->format('h:i:s A') : '';
 
         return [
-            'level' => Str::upper((string) ($item->level ?? 'INFO')),
+            'level' => str((string) ($item->level ?? 'INFO'))->upper(),
             'date' => $date,
             'time' => $time,
             'datetime' => ($date && $time) ? "{$date} | {$time}" : '',

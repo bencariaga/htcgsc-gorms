@@ -4,7 +4,7 @@ namespace App\Rules;
 
 use App\Models\Person;
 use Closure;
-use Illuminate\{Contracts\Validation\ValidationRule, Support\Arr, Support\Str};
+use Illuminate\Contracts\Validation\ValidationRule;
 
 class DuplicateContactDetails implements ValidationRule
 {
@@ -23,7 +23,7 @@ class DuplicateContactDetails implements ValidationRule
 
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        if (Str::of($value)->isEmpty()) {
+        if (str($value)->isEmpty()) {
             return;
         }
 
@@ -47,7 +47,7 @@ class DuplicateContactDetails implements ValidationRule
         }
 
         if (filled($errors)) {
-            $fail(Arr::join($errors, ' '));
+            $fail(collect($errors)->join(' '));
         }
     }
 }

@@ -4,7 +4,7 @@ namespace App\Rules;
 
 use App\Models\Person;
 use Closure;
-use Illuminate\{Contracts\Validation\ValidationRule, Support\Str};
+use Illuminate\Contracts\Validation\ValidationRule;
 
 class MatchesCurrentFullName implements ValidationRule
 {
@@ -17,7 +17,7 @@ class MatchesCurrentFullName implements ValidationRule
 
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        if (Str::of($this->identifier)->isEmpty()) {
+        if (str($this->identifier)->isEmpty()) {
             $fail('Please enter your email or phone number first.');
 
             return;

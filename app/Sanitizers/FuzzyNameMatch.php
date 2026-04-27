@@ -3,7 +3,7 @@
 namespace App\Sanitizers;
 
 use App\Support\LevenshteinAlgorithm;
-use Illuminate\Support\{Facades\DB, Str};
+use Illuminate\Support\Facades\DB;
 
 class FuzzyNameMatch
 {
@@ -27,6 +27,6 @@ class FuzzyNameMatch
             }
         }
 
-        return Str::title(Str::trim($value));
+        return str($value)->trim()->title();
     }
 }

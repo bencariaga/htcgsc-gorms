@@ -19,14 +19,18 @@ use Znck\Eloquent\Relations\BelongsToThrough;
  * @property AppointmentStatus $appointment_status
  * @property mixed $created_at
  * @property mixed $updated_at
+ * @property-read string $formatted_appointment_id
  * @property Referral $referral
+ * @property Person $person
+ * @property Referrer $referrer
+ * @property-read Person $referrerPerson
  */
 class Appointment extends Model
 {
     use HasCommonModelPattern, HasFormattedId;
 
     /** @var array */
-    protected $fillable = ['referrer_id', 'referral_id', 'referral_type', 'reason', 'appointment_date', 'appointment_time', 'appointment_status'];
+    protected $fillable = ['referrer_id', 'referral_id', 'person_id', 'referral_type', 'reason', 'appointment_date', 'appointment_time', 'appointment_status'];
 
     protected function casts(): array
     {
@@ -53,8 +57,13 @@ class Appointment extends Model
         return $this->belongsToThrough(Student::class, Referral::class, null, '', [Student::class => 'student_id', Referral::class => 'referral_id']);
     }
 
-    public function person()
+    public function person(): BelongsTo
     {
-        return $this->hasOneDeep(Person::class, [Referral::class, Student::class], ['referral_id', 'student_id', 'person_id'], ['referral_id', 'student_id', 'person_id']);
+        return $this->belongsTo(Person::class, 'person_id', 'person_id');
+    }
+
+    public function referrerPerson(): BelongsToThrough
+    {
+        return $this->belongsToThrough(Person::class, [Student::class, Referrer::class], null, '', [Person::class => 'person_id', Student::class => 'student_id', Referrer::class => 'referrer_id']);
     }
 }

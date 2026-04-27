@@ -55,7 +55,7 @@ class RenderStatisticalData
             $is_self = $s->self_count > 0;
             $is_non_self = $s->non_self_count > 0;
 
-            return collect([$created_at, $is_referral, $is_self, $is_non_self])->values()->all();
+            return compact('created_at', 'is_referral', 'is_self', 'is_non_self');
         });
 
         $mapping = ['total' => [null, ReportDownloadDataStyling::TOTAL_STUDENTS], 'referrals' => [true, ReportDownloadDataStyling::TOTAL_REFERRALS, 'is_referral'], 'self' => [true, ReportDownloadDataStyling::TOTAL_SELF_REFERRERS, 'is_self'], 'non_self' => [true, ReportDownloadDataStyling::TOTAL_NON_SELF_REFERRERS, 'is_non_self']];

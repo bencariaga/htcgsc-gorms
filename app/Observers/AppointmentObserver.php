@@ -7,6 +7,13 @@ use Illuminate\Support\Facades\Log;
 
 class AppointmentObserver
 {
+    public function creating(Appointment $appointment): void
+    {
+        if ($appointment->referral_id) {
+            $appointment->person_id = $appointment->referral->student->person_id;
+        }
+    }
+
     public function updated(Appointment $appointment): void
     {
         if ($appointment->wasChanged('appointment_date') || $appointment->wasChanged('appointment_time')) {

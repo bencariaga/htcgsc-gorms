@@ -3,7 +3,7 @@
 namespace App\Rules;
 
 use Closure;
-use Illuminate\{Contracts\Validation\ValidationRule, Support\Str};
+use Illuminate\Contracts\Validation\ValidationRule;
 
 class EmailAddressFormat implements ValidationRule
 {
@@ -11,7 +11,7 @@ class EmailAddressFormat implements ValidationRule
     {
         $allowedDomains = ['@gmail.com', '@online.htcgsc.edu.ph'];
 
-        if (!Str::endsWith($value, $allowedDomains)) {
+        if (!str($value)->endsWith($allowedDomains)) {
             $fail('Please use a Gmail or an HTCGSC email address.');
         }
     }

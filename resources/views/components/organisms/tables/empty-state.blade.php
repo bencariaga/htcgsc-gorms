@@ -2,10 +2,9 @@
 
 @php
     use App\Enums\NonDB\PaginationStyling;
-    use Illuminate\Support\Str;
 
     $alias = PaginationStyling::getAlias($type);
-    $displayTitle = Str::plural($alias);
+    $displayTitle = str($alias)->plural();
 @endphp
 
 <div class="flex flex-col items-center justify-center text-center bg-white dark:bg-slate-800">

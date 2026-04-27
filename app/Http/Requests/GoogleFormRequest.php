@@ -48,7 +48,7 @@ class GoogleFormRequest extends FormRequest
         $errors = $validator->errors();
 
         /** @var mixed $exception */
-        $exception = new HttpResponseException(response()->json(collect([$success, $errors])->values()->all(), 422));
+        $exception = new HttpResponseException(response()->json(compact('success', 'errors'), 422));
 
         throw $exception;
     }

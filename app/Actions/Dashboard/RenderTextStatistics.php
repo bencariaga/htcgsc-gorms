@@ -5,7 +5,7 @@ namespace App\Actions\Dashboard;
 use App\Enums\{AppointmentTime, NonDB\DashboardStyling};
 use App\Models\{Appointment, Student};
 use Carbon\CarbonInterface;
-use Illuminate\Support\{Arr, Carbon, Str};
+use Illuminate\Support\Carbon;
 
 class RenderTextStatistics
 {
@@ -41,25 +41,25 @@ class RenderTextStatistics
             $query = $model::query();
             $relations = ['referrals' => fn ($q) => $q->has('referrals'), 'no_referrals' => fn ($q) => $q->doesntHave('referrals'), 'self_referrals' => fn ($q) => $q->whereHas('referrals.appointment', fn ($sub) => $sub->where('referral_type', 'Yourself'))];
 
-            if (Arr::has($relations, $relation)) {
+            if (collect($relations)->has($relation)) {
                 $relations[$relation]($query);
             }
 
-            $type = (new \ReflectionClass(DashboardStyling::class))->getConstant('TOTAL_' . Str::upper(Str::snake($key)));
+            $type = (new \ReflectionClass(DashboardStyling::class))->getConstant('TOTAL_' . str($key)->snake()->upper());
             $rawStats[] = ['type' => $type, 'total' => (clone $query)->count(), 'subtext' => $type->generateSubtext((clone $query)->whereYear('created_at', $now->year)->count())];
         }
 
-        $texts = Arr::map($rawStats, function ($stats) {
+        $texts = collect($rawStats)->map(function ($stats) {
             $properties = ['total', 'subtext', 'label', 'icon', 'iconSize', 'subIcon', 'subIconSize', 'colors'];
             $result = [];
 
             foreach ($properties as $property) {
-                $result[$property] = Arr::has($stats, $property) ? $stats[$property] : $stats['type']->$property();
+                $result[$property] = collect($stats)->has($property) ? $stats[$property] : $stats['type']->$property();
             }
 
             return $result;
-        });
+        })->all();
 
-        return compact(['texts', 'nextAppointment', 'nextAppointmentTime']);
+        return compact('texts', 'nextAppointment', 'nextAppointmentTime');
     }
 }

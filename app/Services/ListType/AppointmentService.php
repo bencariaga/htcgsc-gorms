@@ -12,8 +12,6 @@ class AppointmentService implements AppointmentServiceContract
 
     public function handle(string $search, string $filter, string $sortField, string $sortDirection, int $rowsPerPage): LengthAwarePaginator
     {
-        $this->markMissed->handle();
-
         return $this->searchAppointments->handle($search, $filter, $sortField, $sortDirection, $rowsPerPage);
     }
 

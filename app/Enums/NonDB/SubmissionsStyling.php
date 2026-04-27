@@ -3,7 +3,7 @@
 namespace App\Enums\NonDB;
 
 use App\Traits\Has\HasValues;
-use Illuminate\Support\{Collection, Str};
+use Illuminate\Support\Collection;
 
 enum SubmissionsStyling: string
 {
@@ -37,12 +37,12 @@ enum SubmissionsStyling: string
         $targets = [];
 
         foreach ($actions as $type) {
-            $targets["{$type}File"] = Str::ucfirst($type) . 'ing log file...';
+            $targets["{$type}File"] = str($type)->ucfirst() . 'ing log file...';
         }
 
         foreach ($types as $type) {
             $label = ($type === 'pdf') ? 'PDF' : $type;
-            $targets['download' . Str::ucfirst($type)] = "Downloading as {$label} file...";
+            $targets['download' . str($type)->ucfirst()] = "Downloading as {$label} file...";
         }
 
         return $targets;

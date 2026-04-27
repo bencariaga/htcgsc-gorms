@@ -2,7 +2,6 @@
 
 namespace App\Traits\Has;
 
-use Illuminate\Support\Str;
 
 trait HasProfanityList
 {
@@ -13,7 +12,7 @@ trait HasProfanityList
 
     public function hasProfanity(string $text): bool
     {
-        return Str::contains(Str::lower($text), $this->getProfanities());
+        return str($text)->lower()->contains($this->getProfanities());
     }
 
     public function maskProfanity(string $text, string $character = '*'): string
@@ -21,11 +20,10 @@ trait HasProfanityList
         $profanities = $this->getProfanities();
 
         foreach ($profanities as $word) {
-            $text = Str::replaceMatches(
-                '/\b' . Str::replace(['/', '\\', '.', '*', '+', '?', '^', '$', '[', ']', '(', ')', '{', '}', '=', '!', '<', '>', '|', ':', '-'], ['\/', '\\\\', '\.', '\*', '\+', '\?', '\^', '\$', '\[', '\]', '\(', '\)', '\{', '\}', '\=', '\!', '\<', '\>', '\|', '\:', '\-'], $word) . '\b/i',
-                fn ($matches) => Str::mask($matches[0], $character, 0),
-                $text,
-            );
+            $text = str($text)->replaceMatches(
+                '/\b' . str($word)->replace(['/', '\\', '.', '*', '+', '?', '^', '$', '[', ']', '(', ')', '{', '}', '=', '!', '<', '>', '|', ':', '-'], ['\/', '\\\\', '\.', '\*', '\+', '\?', '\^', '\$', '\[', '\]', '\(', '\)', '\{', '\}', '\=', '\!', '\<', '\>', '\|', '\:', '\-'])->toString() . '\b/i',
+                fn ($matches) => str($matches[0])->mask($character, 0)
+            )->toString();
         }
 
         return $text;

@@ -2,7 +2,7 @@
 
 namespace App\Sanitizers;
 
-use Illuminate\Support\{Facades\Auth, Str};
+use Illuminate\Support\Facades\Auth;
 
 class MatchesCurrentFullName
 {
@@ -12,6 +12,6 @@ class MatchesCurrentFullName
             return Auth::user()->person->full_name;
         }
 
-        return Str::title(Str::trim($value));
+        return str($value)->trim()->title();
     }
 }

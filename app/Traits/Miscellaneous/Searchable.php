@@ -19,7 +19,9 @@ trait Searchable
     protected function searchAndPaginate(Builder $query, int $limit, string $sortField, string $sortDirection, string $idField, callable $searchLogic): LengthAwarePaginator
     {
         $validSortField = ($sortField === 'id') ? $idField : $sortField;
+
         $query->where($searchLogic);
+
         $table = $query->getModel()->getTable();
 
         if ($query->getQuery()->orders) {
@@ -31,7 +33,7 @@ trait Searchable
         }
 
         $query->join('persons', function ($join) use ($table) {
-            $column = collect(['users', 'students'])->contains($table) ? 'person_id' : 'referrer_id';
+            $column = collect(['users', 'students', 'appointments'])->contains($table) ? 'person_id' : 'referrer_id';
             $join->on("{$table}.{$column}", '=', 'persons.person_id');
         });
 

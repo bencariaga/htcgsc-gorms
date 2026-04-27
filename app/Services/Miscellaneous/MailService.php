@@ -33,7 +33,7 @@ class MailService
     protected function safeSend(Mailable $mailable, string $email): void
     {
         try {
-            Mail::to($email)->queue($mailable);
+            Mail::to($email)->send($mailable);
         } catch (TransportException) {
             throw new NoInternetConnectionException;
         }

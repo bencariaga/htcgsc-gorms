@@ -2,17 +2,17 @@
 
 namespace App\Traits\Has;
 
-use Illuminate\Support\Arr;
-
 trait HasValues
 {
+    /** @return array<int, string|int> */
     public static function values(): array
     {
-        return Arr::pluck(self::cases(), 'value');
+        return collect(self::cases())->pluck('value')->all();
     }
 
+    /** @return array<string|int, string|int> */
     public static function toSelectArray(): array
     {
-        return Arr::pluck(self::cases(), 'value', 'value');
+        return collect(self::cases())->pluck('value', 'value')->all();
     }
 }

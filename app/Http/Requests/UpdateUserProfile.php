@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\{Enums\PersonSuffix, Models\User, Support\Regex};
 use App\Rules\{DuplicateContactDetails, EmailAddressFormat};
-use Illuminate\{Foundation\Http\FormRequest, Support\Facades\Auth, Support\Str, Validation\Rule};
+use Illuminate\{Foundation\Http\FormRequest, Support\Facades\Auth, Validation\Rule};
 
 class UpdateUserProfile extends FormRequest
 {
@@ -19,7 +19,7 @@ class UpdateUserProfile extends FormRequest
 
         $targetUser = match (true) {
             $routeUser instanceof User => $routeUser,
-            Str::of($routeUser)->isMatch(Regex::userName()) => User::where('username', $routeUser)->first(),
+            str($routeUser)->isMatch(Regex::userName()) => User::where('username', $routeUser)->first(),
             default => Auth::user(),
         };
 

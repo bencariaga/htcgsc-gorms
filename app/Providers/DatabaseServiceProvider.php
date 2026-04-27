@@ -20,11 +20,12 @@ class DatabaseServiceProvider extends ServiceProvider
         DB::prohibitDestructiveCommands(app()->isProduction());
 
         $this->configureDuplicateQueryDetector();
+        $this->configureQueryRequestDurationDetector();
     }
 
     private function configureDuplicateQueryDetector(): void
     {
-        if (app()->isProduction() || !app()->isProduction()) {
+        if (app()->isProduction() || app()->isLocal()) {
             return;
         }
 
@@ -42,10 +43,25 @@ class DatabaseServiceProvider extends ServiceProvider
 
                 $url = request()->fullUrl();
 
-                Log::warning('Duplicate Database Query Detected:', collect([$sql, $bindings, $time, $url])->values()->all());
+                Log::warning('Duplicate Database Query Detected:', compact('sql', 'bindings', 'time', 'url'));
             }
 
             $recordedQueries[$signature] = true;
+        });
+    }
+
+    private function configureQueryRequestDurationDetector(): void
+    {
+        if (app()->isProduction()) {
+            return;
+        }
+
+        DB::listen(function ($query) {
+            $sql = $query->sql;
+            $bindings = $query->bindings;
+            $duration_ms = "{$query->time}ms";
+
+            Log::info('Database Query Detected:', compact('sql', 'bindings', 'duration_ms'));
         });
     }
 }

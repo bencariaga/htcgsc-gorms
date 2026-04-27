@@ -14,6 +14,9 @@ use Staudenmeir\LaravelMergedRelations\Eloquent\Relations\MergedRelation;
  * @property string $first_name
  * @property string|null $middle_name
  * @property mixed $full_name
+ * @property string $formal_name
+ * @property string $full_name_with_initial
+ * @property string $formal_name_with_initial
  * @property string $email_address
  * @property string $phone_number
  * @property PersonSuffix|null $suffix

@@ -2,11 +2,10 @@
 
 @use('App\Contracts\Colorable')
 @use('App\Enums\NonDB\AuditLogsStyling')
-@use('Illuminate\Support\Str')
 
 @php
     [$label, $classes] = match (true) {
-        $level !== null => [Str::upper($level), AuditLogsStyling::getLevelClasses($level)],
+        $level !== null => [str($level)->upper(), AuditLogsStyling::getLevelClasses($level)],
         $status !== null => [$status instanceof \BackedEnum ? $status->value : $status, $status instanceof Colorable ? $status->color() : 'bg-slate-500 text-white'],
         default => ['Unknown', 'bg-slate-500 text-white border-slate-300 dark:bg-slate-400 dark:text-white dark:border-slate-200'],
     };

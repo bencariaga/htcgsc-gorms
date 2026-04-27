@@ -2,15 +2,14 @@
 
 namespace App\Traits\Handles;
 
-use Illuminate\Support\Str;
 
 trait HandlesPostActionNotifications
 {
-    protected function handlePostActionNotification($action)
+    protected function handlePostActionNotification(string $action)
     {
         $type = $this->getType();
         $isUser = $type === 'user';
-        $entity = Str::of($type);
+        $entity = str($type);
 
         $alertType = 'success';
 

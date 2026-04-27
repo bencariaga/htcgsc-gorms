@@ -3,7 +3,7 @@
 namespace App\Enums;
 
 use App\Traits\Has\HasValues;
-use Illuminate\Support\{Carbon, Str};
+use Illuminate\Support\Carbon;
 
 enum AppointmentTime: string
 {
@@ -18,7 +18,7 @@ enum AppointmentTime: string
 
     public function toFormattedDisplay(): string
     {
-        $times = Str::of($this->value)->explode(' - ')->toArray();
+        $times = str($this->value)->explode(' - ')->toArray();
 
         $start = Carbon::parse($times[0])->format('h:i A');
         $end = Carbon::parse($times[1])->format('h:i A');
@@ -33,7 +33,7 @@ enum AppointmentTime: string
 
     public function toTwentyFourHour(): string
     {
-        return Carbon::parse(Str::before($this->value, ' -'))->format('H:i');
+        return Carbon::parse(str($this->value)->before(' -'))->format('H:i');
     }
 
     public function toIsoTime(): string

@@ -2,7 +2,7 @@
 
 namespace App\Support;
 
-use Illuminate\Support\{Arr, Js, Reflector, Str};
+use Illuminate\Support\{Arr, Js, Reflector};
 use Illuminate\Support\Facades\{App, Request, Validator};
 
 class LogToMarkdownConverter
@@ -31,7 +31,7 @@ class LogToMarkdownConverter
 
     private function formatStandardLog(mixed $item): string
     {
-        $level = Str::upper((string) ($item->level ?? 'INFO'));
+        $level = str((string) ($item->level ?? 'INFO'))->upper();
         $message = (string) ($item->message ?? 'No message provided.');
         $timestamp = $item->datetime?->format('F j, Y | h:i:s A') ?? 'N/A';
 
@@ -111,7 +111,7 @@ class LogToMarkdownConverter
     private function formatRequestDetails(): string
     {
         $method = Request::method();
-        $path = Str::start(Request::path(), '/');
+        $path = str(Request::path())->start('/');
         $headers = $this->formatHeaderData(Request::header());
 
         return "\n## Request\n\n**Method:** {$method} | **Path:** {$path}\n\n## Headers\n\n{$headers}";
@@ -131,7 +131,7 @@ class LogToMarkdownConverter
         $output = '';
 
         foreach ($headers as $key => $value) {
-            $val = Arr::accessible($value) ? Arr::join($value, ', ') : (string) $value;
+            $val = Arr::accessible($value) ? collect($value)->join(', ') : (string) $value;
             $output .= "* **{$key}**: {$val}\n";
         }
 

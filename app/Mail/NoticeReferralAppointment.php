@@ -4,12 +4,12 @@ namespace App\Mail;
 
 use App\Models\{Appointment, Referral};
 use App\Traits\Sets\SetsHighPriority;
-use Illuminate\{Bus\Queueable, Contracts\Queue\ShouldQueue, Queue\SerializesModels};
+use Illuminate\{Bus\Queueable, Contracts\Queue\ShouldQueue};
 use Illuminate\Mail\{Mailable, Mailables\Content, Mailables\Envelope};
 
 class NoticeReferralAppointment extends Mailable implements ShouldQueue
 {
-    use Queueable, SerializesModels, SetsHighPriority;
+    use Queueable, SetsHighPriority;
 
     public function __construct(public Referral $referral, public Appointment $appointment, public string $reminderType) {}
 

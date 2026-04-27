@@ -10,13 +10,18 @@ class MarkMissedAppointments
     public function handle(): void
     {
         $now = Carbon::now();
+        $today = $now->toDateString();
 
-        Appointment::where('appointment_status', AppointmentStatus::Scheduled)->get()->each(function ($appointment) use ($now) {
-            $expirationTime = Carbon::parse($appointment->appointment_date)->setTimeFromTimeString($appointment->appointment_time->toTwentyFourHour())->addHour();
+        Appointment::where('appointment_status', AppointmentStatus::Scheduled)->where('appointment_date', '<', $today)->update(['appointment_status' => AppointmentStatus::Missed]);
 
-            if ($now->greaterThan($expirationTime)) {
-                $appointment->update(['appointment_status' => AppointmentStatus::Missed]);
-            }
-        });
+        $todayLapsedIds = Appointment::where('appointment_status', AppointmentStatus::Scheduled)->where('appointment_date', $today)->get()->filter(function ($appointment) use ($now) {
+            $startTimeString = str($appointment->appointment_time->value)->before(' -')->toString();
+
+            return Carbon::createFromFormat('g:i A', $startTimeString)->setDateFrom($now)->addHour()->lt($now);
+        })->pluck('appointment_id');
+
+        if ($todayLapsedIds->isNotEmpty()) {
+            Appointment::whereIn('appointment_id', $todayLapsedIds)->update(['appointment_status' => AppointmentStatus::Missed]);
+        }
     }
 }
