@@ -24,16 +24,19 @@ class EnvCheck extends BaseCommand
             File::copy($examplePath, $envPath);
             $this->call('key:generate');
             $this->components->info('.env.example and .env have been generated!');
+
             return;
         }
 
         if (!$envExists) {
             $this->generateFile($examplePath, $envPath, '.env', true);
+
             return;
         }
 
         if (!$exampleExists) {
             $this->generateExampleFromEnv($envPath, $examplePath);
+
             return;
         }
 
@@ -51,9 +54,11 @@ class EnvCheck extends BaseCommand
         $this->components->warn("No {$name} detected.");
         $this->components->info("Generating {$name}...");
         File::copy($source, $target);
+
         if ($generateKey) {
             $this->call('key:generate');
         }
+
         $this->components->info("{$name} has been generated!");
     }
 

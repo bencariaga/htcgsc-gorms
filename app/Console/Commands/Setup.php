@@ -12,28 +12,24 @@ class Setup extends BaseCommand
     {
         $this->components->info('Setting up the system.');
 
-        $this->components->task('Wiping database', function () {
-            $this->callSilent('db:wipe', ['--force' => true]);
-        });
+        $this->components->task('Wiping database and dropping views', fn () => $this->callSilent('db:wipe', ['--force' => true, '--drop-views' => true]));
 
-        $this->call('migrate', ['--path' => 'database/migrations/laravel', '--ansi' => true, '--force' => true]);
+        $this->components->task('Running system migrations', fn () => $this->callSilent('migrate', ['--path' => 'database/migrations/laravel', '--ansi' => true, '--force' => true]));
 
-        $migrations = [
-            'database/migrations/system/create_persons_table.php',
-            'database/migrations/system/create_students_table.php',
-            'database/migrations/system/create_users_table.php',
-            'database/migrations/system/create_referrers_table.php',
-            'database/migrations/system/create_referrals_table.php',
-            'database/migrations/system/create_appointments_table.php',
-            'database/migrations/system/create_reports_table.php',
-            'database/migrations/system/create_all_activities_view.php',
-        ];
+        $tables = ['persons', 'students', 'users', 'referrers', 'referrals', 'appointments', 'reports', 'all_activities'];
 
-        foreach ($migrations as $path) {
-            $this->call('migrate', ['--path' => $path, '--ansi' => true, '--force' => true]);
-        }
+        $migrations = collect($tables)->map(fn ($table) => "database/migrations/system/create_{$table}_" . ($table === 'all_activities' ? 'view' : 'table') . '.php')->all();
 
-        $this->call('db:seed', ['--ansi' => true, '--force' => true]);
+        $this->newLine();
+
+        $this->withProgressBar($migrations, fn ($path) => $this->callSilent('migrate', ['--path' => $path, '--ansi' => true, '--force' => true]));
+
+        $this->newLine(2);
+
+        $this->components->task('Seeding database....', fn () => $this->callSilent('db:seed', ['--ansi' => true, '--force' => true]) === 0);
+
+        $this->newLine();
+
         $this->components->info('System setup has been completed successfully!');
 
         return Command::SUCCESS;

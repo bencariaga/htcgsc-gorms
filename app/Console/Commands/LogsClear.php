@@ -10,7 +10,7 @@ class LogsClear extends BaseCommand
 
     public function handle(): int
     {
-        if (!$this->confirm('Are you sure you want to clear all the log files? This action cannot be undone:', false)) {
+        if (!$this->components->confirm('Are you sure you want to clear all the log files?', false)) {
             $this->components->info('Log deletion operation cancelled.');
 
             return 0;

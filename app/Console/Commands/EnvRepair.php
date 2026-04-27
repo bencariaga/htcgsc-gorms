@@ -22,7 +22,7 @@ class EnvRepair extends BaseCommand
         }
 
         if (!$this->shouldGenerateKey()) {
-            $this->info('APP_KEY is present and healthy.');
+            $this->components->info('APP_KEY is present and healthy.');
         } else {
             $this->components->warn('APP_KEY is missing or invalid. Generating a new one...');
             $this->removeExistingKey();
