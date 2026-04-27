@@ -19,16 +19,12 @@
     </nav>
 
     <div class="h-20 px-4 bg-black/20 flex items-center overflow-hidden">
-        @php
-            $user = auth()->user();
-            $person = $user->person;
-        @endphp
 
         <x-atoms.images.user-avatar :user="$user" :person="$person" class="h-12 w-12" />
 
         <div class="ml-4 overflow-hidden" x-show="sidebarOpen" x-cloak x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100">
-            <p class="text-[14px] font-semibold truncate">{{ $person->formal_name_with_initial }}</p>
-            <p class="text-[12px] mt-1 uppercase tracking-wider text-emerald-300 font-bold leading-none">{{ $person->type }}</p>
+            <p class="text-[14px] font-semibold truncate">{{ $formalName }}</p>
+            <p class="text-[12px] mt-1 uppercase tracking-wider text-emerald-300 font-bold leading-none">{{ $userType }}</p>
         </div>
     </div>
 </aside>

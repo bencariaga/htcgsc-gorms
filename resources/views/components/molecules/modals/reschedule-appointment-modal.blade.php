@@ -1,19 +1,13 @@
 @props(['id'])
 
-@php
-    use App\Enums\{AppointmentTime, NonDB\PhilippineHolidays};
-
-    $rawHolidays = PhilippineHolidays::all(now()->year);
-    $holidayLookup = collect($rawHolidays)->flip()->all();
-    $timeZone = config('app.timezone');
-@endphp
+@use('App\Enums\AppointmentTime')
 
 <script src="{{ asset('js/appointments.js') }}"></script>
 
 <div id="{{ $id }}"
     x-data="rescheduleModal({
         holidays: {{ Js::from($holidayLookup) }},
-        totalSlots: {{ collect(AppointmentTime::cases())->count() }},
+        totalSlots: {{ $totalSlots }},
         modalId: '{{ $id }}'
     })"
     x-show="show"

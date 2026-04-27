@@ -3,7 +3,7 @@
 namespace App\Livewire\Pages;
 
 use App\{Actions\Appointment\UpdateNewDate, Data\AppointmentRescheduleData, Livewire\Bases\BaseListType};
-use App\{Contracts\AppointmentServiceContract, Traits\Concerns\HandlesAppointments};
+use App\{Contracts\AppointmentServiceContract, Traits\Handles\HandlesAppointmentActions};
 use Exception;
 use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Title;
@@ -12,7 +12,7 @@ use Throwable;
 #[Title('Appointments')]
 class Appointments extends BaseListType
 {
-    use HandlesAppointments;
+    use HandlesAppointmentActions;
 
     public ?string $newDate = null;
 

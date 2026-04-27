@@ -1,18 +1,4 @@
-@props(['fullName', 'user'])
-
-@php
-    $passwordErrorKeys = ['newPassword', 'full_name'];
-    $hasPasswordErrors = false;
-
-    foreach ($passwordErrorKeys as $key) {
-        if ($errors->has($key)) {
-            $hasPasswordErrors = true;
-            break;
-        }
-    }
-@endphp
-
-<div id="passwordModal" x-data="{ showErrors: {{ $hasPasswordErrors ? 'true' : 'false' }} }" x-init="if (showErrors) { setTimeout(() => showErrors = false, 5000) }" class="{{ $hasPasswordErrors ? 'flex' : 'hidden' }} fixed inset-0 z-[100] items-center justify-center p-4">
+<div id="passwordModal" x-data="{ showErrors: @js($hasPasswordErrors) }" x-init="if (showErrors) { setTimeout(() => showErrors = false, 5000) }" class="{{ $hasPasswordErrors ? 'flex' : 'hidden' }} fixed inset-0 z-[100] items-center justify-center p-4">
     <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm" @click="toggleModal(false)"></div>
 
     <div class="max-w-md w-full relative z-10 bg-white dark:bg-slate-800 shadow-xl border border-gray-300 dark:border-slate-700 rounded-2xl overflow-hidden">

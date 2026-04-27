@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use App\{Contracts\CommonModel, Enums\AccountStatus};
-use App\Traits\{Concerns\IsCommonModel, Sets\SetsDefaultStatus};
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Traits\{Miscellaneous\IsCommonModel, Sets\SetsDefaultStatus};
+use Illuminate\Database\Eloquent\{Casts\Attribute, Relations\BelongsTo};
 use Illuminate\{Foundation\Auth\User as Authenticatable, Notifications\Notifiable};
 
 /**
@@ -17,6 +17,7 @@ use Illuminate\{Foundation\Auth\User as Authenticatable, Notifications\Notifiabl
  * @property mixed $created_at
  * @property mixed $updated_at
  * @property mixed $person
+ * @property-read string|null $profile_picture_url
  */
 class User extends Authenticatable implements CommonModel
 {
@@ -41,5 +42,12 @@ class User extends Authenticatable implements CommonModel
     public function student()
     {
         return $this->belongsToThrough(Student::class, Person::class, null, '', [Student::class => 'person_id', Person::class => 'person_id']);
+    }
+
+    protected function profilePictureUrl(): Attribute
+    {
+        $asset = "storage/{$this->profile_picture}";
+
+        return Attribute::make(get: fn () => $this->profile_picture ? asset($asset) : null);
     }
 }

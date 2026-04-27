@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Traits\Concerns;
+namespace App\Traits\Handles;
 
-trait HandlesAppointments
+trait HandlesAppointmentActions
 {
     public function complete(int|string $id): void
     {

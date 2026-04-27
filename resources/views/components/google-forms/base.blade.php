@@ -194,72 +194,25 @@
                 </div>
 
                 @foreach($gfs->infoSections as $role => $description)
-                    @php
-                        $type = str($role)->lower()->title();
-
-                        $sectionPaddingTop = $mode === 'pdf' ? match($role) {
-                            'REFERRER' => '9rem',
-                            'REFERRAL' => '4rem',
-                            default => '0',
-                        } : '0';
-                    @endphp
-
-                    <div style="padding-top: {{ $sectionPaddingTop }};">
-                        <div class="card">
-                            <div class="card-banner">
-                                <h2>BASIC INFORMATION ({{ $type }})</h2>
-                            </div>
-
-                            <div class="p-6">
-                                @if($mode !== 'pdf')
-                                    <p class="text-slate-800" style="margin-bottom: 2rem;">{{ $description }}</p>
-                                @endif
-
-                                @foreach($gfs->fields as $field)
-                                    <div class="form-group">
-                                        <label class="label-block">{{ $field['label'] }} ({{ $type }}) @if($field['required']) <span class="text-red-500">*</span> @endif</label>
-                                        <div class="input-line" style="width: 50%;">
-                                            {{ $activeSubmission["{$field['label']} ({$type})"] ?? '' }}
-                                        </div>
-                                    </div>
-                                @endforeach
-
-                                <div class="form-group">
-                                    <label class="label-block">Suffix ({{ $type }})</label>
-                                    <div class="radio-group" @if($mode === 'pdf') style="grid-template-columns: repeat(4, 1fr);" @endif>
-                                        @foreach($gfs->personSuffixes as $suffix)
-                                            <div class="radio-container">
-                                                <div class="radio-outer">
-                                                    @if(($activeSubmission["Suffix ({$type})"] ?? '') === $suffix->value)
-                                                        <div class="radio-inner"></div>
-                                                    @endif
-                                                </div>
-                                                <span>{{ $suffix->value }}</span>
+                    <x-google-form-section :role="$role" :description="$description" :mode="$mode" :activeSubmission="$activeSubmission" :gfs="$gfs">
+                        @if($loop->first)
+                            <div class="form-group">
+                                <label class="label-block">REFERRAL TYPE <span class="text-red-500">*</span></label>
+                                <div class="radio-group" @if($mode === 'pdf') style="grid-template-columns: repeat(2, 1fr);" @endif>
+                                    @foreach($gfs->referralTypes as $option)
+                                        <div class="radio-container">
+                                            <div class="radio-outer">
+                                                @if(($activeSubmission['referral_type'] ?? '') === $option->value)
+                                                    <div class="radio-inner"></div>
+                                                @endif
                                             </div>
-                                        @endforeach
-                                    </div>
-                                </div>
-
-                                @if($loop->first)
-                                    <div class="form-group">
-                                        <label class="label-block">REFERRAL TYPE <span class="text-red-500">*</span></label>
-                                        <div class="radio-group" @if($mode === 'pdf') style="grid-template-columns: repeat(2, 1fr);" @endif>
-                                            @foreach($gfs->referralTypes as $option)
-                                                <div class="radio-container">
-                                                    <div class="radio-outer">
-                                                        @if(($activeSubmission['referral_type'] ?? '') === $option->value)
-                                                            <div class="radio-inner"></div>
-                                                        @endif
-                                                    </div>
-                                                    <span>{{ $option->value }}</span>
-                                                </div>
-                                            @endforeach
+                                            <span>{{ $option->value }}</span>
                                         </div>
-                                    </div>
-                                @endif
+                                    @endforeach
+                                </div>
                             </div>
-                        </div>
-                    </div>
+                        @endif
+                    </x-google-form-section>
                 @endforeach
 
                 <div @if($mode === 'pdf') style="padding-top: 11rem;" @endif>

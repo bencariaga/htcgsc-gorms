@@ -17,4 +17,9 @@ trait HasValues
 
         return array_combine($values, $values);
     }
+
+    public static function count(): int
+    {
+        return count(self::cases());
+    }
 }

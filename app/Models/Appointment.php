@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Contracts\CommonModel;
 use App\Enums\{AppointmentStatus, AppointmentTime, ReferralType};
-use App\Traits\{Concerns\IsCommonModel, Has\HasFormattedId};
+use App\Traits\{Has\HasFormattedId, Miscellaneous\IsCommonModel};
 use Illuminate\Database\Eloquent\{Casts\Attribute, Model, Relations\BelongsTo};
 use Znck\Eloquent\Relations\BelongsToThrough;
 
@@ -66,5 +66,10 @@ class Appointment extends Model implements CommonModel
     public function referrerPerson(): BelongsToThrough
     {
         return $this->belongsToThrough(Person::class, [Student::class, Referrer::class], null, '', [Person::class => 'person_id', Student::class => 'student_id', Referrer::class => 'referrer_id']);
+    }
+
+    protected function isFinalized(): Attribute
+    {
+        return Attribute::make(get: fn () => collect([AppointmentStatus::Done, AppointmentStatus::Cancelled])->contains($this->appointment_status));
     }
 }

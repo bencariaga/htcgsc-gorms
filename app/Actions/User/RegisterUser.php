@@ -2,7 +2,7 @@
 
 namespace App\Actions\User;
 
-use App\{Contracts\RegistersUser, Data\UserRegistrationData, Traits\Concerns\ManagesTransactions};
+use App\{Contracts\RegistersUser, Data\UserRegistrationData, Traits\Miscellaneous\ManagesTransactions};
 use App\Enums\{AccountStatus, PersonType};
 use App\Models\{Person, User};
 use Illuminate\Support\Facades\{Hash, Log};

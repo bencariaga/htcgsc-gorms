@@ -2,7 +2,7 @@
 
 namespace App\Actions\Appointment;
 
-use App\{Enums\AppointmentStatus, Models\Appointment, Traits\Concerns\ManagesTransactions};
+use App\{Enums\AppointmentStatus, Models\Appointment, Traits\Miscellaneous\ManagesTransactions};
 use Illuminate\Support\Facades\Log;
 
 class CompleteAppointment

@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\{Contracts\CommonModel, Traits\Concerns\IsCommonModel};
+use App\{Contracts\CommonModel, Traits\Miscellaneous\IsCommonModel};
 use Illuminate\Database\Eloquent\{Model, Relations\BelongsTo, Relations\HasMany};
 use Staudenmeir\EloquentHasManyDeep\HasManyDeep;
 use Znck\Eloquent\Relations\BelongsToThrough;

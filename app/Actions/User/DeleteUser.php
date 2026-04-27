@@ -4,7 +4,7 @@ namespace App\Actions\User;
 
 use App\{Exceptions\NoInternetConnectionException, Models\User};
 use App\Services\Miscellaneous\{MailService, TextBeeService};
-use App\Traits\Concerns\ManagesTransactions;
+use App\Traits\Miscellaneous\ManagesTransactions;
 use Illuminate\Support\Facades\{Log, Validator};
 
 class DeleteUser
@@ -35,7 +35,7 @@ class DeleteUser
             $person->delete();
 
             Log::info("User and associated person record deleted successfully for User ID: {$userId}");
-        }, "Failed to delete user record", ['user_id' => $userId]);
+        }, 'Failed to delete user record', ['user_id' => $userId]);
     }
 
     protected function isEmailValid(?string $email): bool

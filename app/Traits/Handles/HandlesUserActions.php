@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Traits\Concerns;
+namespace App\Traits\Handles;
 
-trait HandlesUsers
+trait HandlesUserActions
 {
     public function activate(int|string $id): void
     {

@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\{Contracts\CommonModel, Enums\ReferralType, Traits\Concerns\IsCommonModel};
+use App\{Contracts\CommonModel, Enums\ReferralType, Traits\Miscellaneous\IsCommonModel};
 use Illuminate\Database\Eloquent\{Model, Relations\BelongsTo, Relations\HasOne};
 use Znck\Eloquent\Relations\BelongsToThrough;
 

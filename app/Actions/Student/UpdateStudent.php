@@ -2,7 +2,7 @@
 
 namespace App\Actions\Student;
 
-use App\{Models\Student, Traits\Concerns\ManagesTransactions};
+use App\{Models\Student, Traits\Miscellaneous\ManagesTransactions};
 use Illuminate\Support\Facades\Log;
 
 class UpdateStudent

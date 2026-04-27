@@ -1,5 +1,3 @@
-@props(['gfs', 'selectedFileName', 'loadingMessage', 'submissions', 'contactReferrer', 'newTab'])
-
 <main x-data x-show="$store.formPreview.activeSubmission" x-cloak class="flex-1 flex flex-col min-w-0 overflow-y-auto [scrollbar-width:thin] [scrollbar-color:rgba(107,114,128,0.8)_transparent] [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-500/80">
     <div class="sticky top-0 z-20 bg-[#e9ec99] px-8 py-[18px] border-b border-slate-400/30 flex flex-row justify-between">
         @foreach($gfs->headerButtons as $group => $buttons)
@@ -52,8 +50,12 @@
                 </label>
             </div>
 
-            @foreach($gfs->infoSections as $role => $description)
-                @php $type = str($role)->lower()->title(); @endphp
+            @foreach($component->getInfoSectionsWithTypes() as $section)
+                @php
+                    $role = $section['role'];
+                    $description = $section['description'];
+                    $type = $section['type'];
+                @endphp
 
                 <div class="bg-white rounded-xl shadow-sm overflow-hidden mb-4">
                     <div class="bg-[#c7cf00] px-6 py-4">

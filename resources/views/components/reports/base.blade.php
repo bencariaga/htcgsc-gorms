@@ -1,5 +1,3 @@
-@props(['report', 'grid', 'slot'])
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -132,31 +130,27 @@
 
         <div class="stats-grid">
             @foreach((array) $grid as $item)
-                @php
-                    $item = (array) $item;
-                    $label = Arr::accessible($item['label'] ?? null) ? (string) collect($item['label'])->implode(' ') : (string) ($item['label'] ?? '');
-                    $value = Arr::accessible($item['value'] ?? null) ? (string) collect($item['value'])->implode(', ') : (string) ($item['value'] ?? '');
-                @endphp
+                @php $details = $component->getGridItemDetails($item); @endphp
 
                 <div class="stat-card">
-                    @if(filled($item['icon']))
-                        <div class="stat-icon" style="background-color: {{ (string) ($item['colors']['icon_bg'] ?? '#e2e8f0') }}; color: {{ (string) ($item['colors']['icon_text'] ?? '#475569') }}; border: 2px solid {{ (string) ($item['colors']['icon_border'] ?? '#cbd5e1') }};">
-                            <i class="{{ (string) ($item['icon'] ?? '') }}" style="font-size: 2rem;"></i>
+                    @if(filled($details['icon']))
+                        <div class="stat-icon" style="background-color: {{ (string) ($details['colors']['icon_bg'] ?? '#e2e8f0') }}; color: {{ (string) ($details['colors']['icon_text'] ?? '#475569') }}; border: 2px solid {{ (string) ($details['colors']['icon_border'] ?? '#cbd5e1') }};">
+                            <i class="{{ (string) ($details['icon'] ?? '') }}" style="font-size: 2rem;"></i>
                         </div>
                     @endif
 
                     <div class="stat-info">
                         <div class="stat-label">
-                            {!! $label !!}
+                            {!! $details['label'] !!}
                         </div>
 
                         <div class="stat-value">
-                            {{ $value }}
+                            {{ $details['value'] }}
                         </div>
 
-                        @if(collect($item)->has('subtext'))
+                        @if(filled($details['subtext']))
                             <div style="font-size: 1rem; color: #4b5563; font-weight: 600; margin-top: 0.5rem;">
-                                {{ (string) $item['subtext'] }}
+                                {{ (string) $details['subtext'] }}
                             </div>
                         @endif
                     </div>

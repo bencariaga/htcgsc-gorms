@@ -1,11 +1,3 @@
-@props(['sortField', 'sortDirection', 'idColumn', 'alphaColumn', 'type'])
-
-@use('App\Enums\NonDB\PaginationStyling')
-
-@php
-    $options = PaginationStyling::getSortOptions($idColumn, $alphaColumn);
-@endphp
-
 <div x-data="{
     open: false,
     currentField: @entangle('sortField').live,

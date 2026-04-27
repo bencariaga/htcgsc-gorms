@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Contracts\CommonModel;
-use App\Traits\{Concerns\IsCommonModel, Has\HasFormattedId};
+use App\Traits\{Has\HasFormattedId, Miscellaneous\IsCommonModel};
 use Illuminate\Database\Eloquent\{Casts\Attribute, Model};
 use Illuminate\Database\Eloquent\Relations\{BelongsTo, HasMany, HasOne};
 use Staudenmeir\LaravelMergedRelations\Eloquent\Relations\MergedRelation;

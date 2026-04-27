@@ -3,7 +3,7 @@
 namespace App\Actions\User;
 
 use App\{Contracts\AuthenticatesUser, Data\AuthenticateUserData, Models\User};
-use App\{Services\Miscellaneous\OTPService, Traits\Concerns\ManagesTransactions};
+use App\{Services\Miscellaneous\OTPService, Traits\Miscellaneous\ManagesTransactions};
 use Illuminate\Support\Facades\{Log, Session};
 
 class AuthenticateUser implements AuthenticatesUser

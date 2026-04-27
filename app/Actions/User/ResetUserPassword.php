@@ -2,7 +2,7 @@
 
 namespace App\Actions\User;
 
-use App\{Contracts\ResetsUserPassword, Data\PasswordResetData, Traits\Concerns\ManagesTransactions};
+use App\{Contracts\ResetsUserPassword, Data\PasswordResetData, Traits\Miscellaneous\ManagesTransactions};
 use App\Models\{Person, User};
 use Illuminate\Support\Facades\{Hash, Log};
 

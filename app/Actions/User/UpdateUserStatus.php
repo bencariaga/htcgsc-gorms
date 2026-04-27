@@ -4,7 +4,7 @@ namespace App\Actions\User;
 
 use App\{Contracts\UpdatesUserStatus, Data\UserStatusData, Enums\AccountStatus, Models\User};
 use App\Mail\{NoticeAccountActivation, NoticeAccountDeactivation};
-use App\{Services\Miscellaneous\TextBeeService, Traits\Concerns\ManagesTransactions};
+use App\{Services\Miscellaneous\TextBeeService, Traits\Miscellaneous\ManagesTransactions};
 use Illuminate\Support\Facades\{Log, Mail};
 
 class UpdateUserStatus implements UpdatesUserStatus

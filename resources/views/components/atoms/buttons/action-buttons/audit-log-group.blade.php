@@ -1,13 +1,3 @@
-@php
-    use App\{Enums\NonDB\AuditLogsStyling, Support\MarkdownToHtmlConverter};
-
-    $rawText = $item['raw_text'] ?? '';
-    $message = $item['message'] ?? '';
-    $level = $item['level'] ?? 'INFO';
-    $markdownSource = $item['markdown'] ?? $rawText;
-    $htmlContent = MarkdownToHtmlConverter::parse($markdownSource);
-@endphp
-
 <div x-data="{
     copiedText: false,
     copiedMd: false,
@@ -62,9 +52,9 @@
             htmlContent: @js($htmlContent),
             plainText: @js($message),
             rawMarkdown: @js($markdownSource),
-            levelClass: @js(AuditLogsStyling::getLevelClasses($level)),
-            date: @js($item['date'] ?? ''),
-            time: @js($item['time'] ?? ''),
+            levelClass: @js($levelClass),
+            date: @js(data_get($item, 'date', '')),
+            time: @js(data_get($item, 'time', '')),
         });
     }
 }" class="relative group w-full h-[2.5rem] flex items-center">

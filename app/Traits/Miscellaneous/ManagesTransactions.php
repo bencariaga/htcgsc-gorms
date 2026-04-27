@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits\Concerns;
+namespace App\Traits\Miscellaneous;
 
 use Illuminate\Support\Facades\{DB, Log};
 use Throwable;

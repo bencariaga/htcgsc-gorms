@@ -5,7 +5,7 @@
 
     <tbody class="divide-y-2 divide-gray-300 dark:divide-slate-700 text-sm">
         @forelse($items as $item)
-            <x-organisms.tables.table-row :item="$item" :type="$type" />
+            <x-dynamic-component :component="'organisms.tables.rows.' . $type" :item="$item" />
         @empty
             <tr>
                 <td colspan="{{ collect($columns)->count() }}" class="px-5 py-10">

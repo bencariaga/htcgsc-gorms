@@ -1,11 +1,3 @@
-@props(['perPage', 'type' => null])
-
-@use('App\Enums\NonDB\PaginationStyling')
-
-@php
-    $options = PaginationStyling::getRowsPerPageOptions();
-@endphp
-
 <div x-data="{
     open: false,
     currentPerPage: @js($perPage),

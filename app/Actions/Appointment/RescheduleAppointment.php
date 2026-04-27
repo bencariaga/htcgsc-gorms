@@ -3,7 +3,7 @@
 namespace App\Actions\Appointment;
 
 use App\{Data\AppointmentRescheduleData, Enums\AppointmentStatus, Models\Appointment};
-use App\{Http\Requests\UpdateAppointmentTime, Traits\Concerns\ManagesTransactions};
+use App\{Http\Requests\UpdateAppointmentTime, Traits\Miscellaneous\ManagesTransactions};
 use Illuminate\Support\Facades\{Log, Validator};
 
 class RescheduleAppointment

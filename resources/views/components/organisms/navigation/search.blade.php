@@ -1,11 +1,3 @@
-@props(['type' => 'default'])
-
-@use('App\Enums\NonDB\PaginationStyling')
-
-@php
-    $width = PaginationStyling::getSearchWidth($type);
-@endphp
-
 <div class="flex items-center gap-3 h-[2.5rem]">
     <div class="relative flex items-center">
         <i class="fas fa-search absolute left-4 text-slate-400"></i>

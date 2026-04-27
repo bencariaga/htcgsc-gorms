@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits\Concerns;
+namespace App\Traits\Miscellaneous;
 
 use App\Actions\Data\GenerateDatabaseTableRowId;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

@@ -75,6 +75,8 @@ class TableRow extends Component
     {
         $this->person = $this->resolvePerson();
         $this->fullName = $this->person?->full_name ?? '—';
+        $this->formalNameWithInitial = $this->person?->formal_name_with_initial ?? '—';
+        $this->phoneNumber = $this->person?->phone_number ?? '—';
         $this->emailAddress = str($this->person?->email_address ?? '')->replace(['@online.htcgsc.edu.ph', '@gmail.com', '@example.com', '@example.net'], '')->toString();
         $this->emailAddressLineBreak = str($this->person?->email_address ?? '')->replace('@', '<br>@')->toString();
 

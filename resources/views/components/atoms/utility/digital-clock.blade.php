@@ -1,7 +1,3 @@
-@php
-    $time = now()->format('M. d, Y | h:i:s A');
-@endphp
-
 <div x-data="{
         time: '{{ $time }}',
         updateClock() {

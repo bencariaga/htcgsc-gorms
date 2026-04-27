@@ -1,12 +1,3 @@
-@props(['type'])
-
-@php
-    use App\Enums\NonDB\PaginationStyling;
-
-    $alias = PaginationStyling::getAlias($type);
-    $displayTitle = str($alias)->plural();
-@endphp
-
 <div class="flex flex-col items-center justify-center text-center bg-white dark:bg-slate-800">
     <div class="bg-slate-200 dark:bg-slate-900/50 flex justify-center items-center rounded-full h-20 w-20 text-slate-400 dark:text-slate-500 text-3xl mb-6">
         <i class="fas fa-box-open"></i>

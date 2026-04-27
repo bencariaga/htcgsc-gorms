@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\{Contracts\CommonModel, Traits\Concerns\IsCommonModel};
+use App\{Contracts\CommonModel, Traits\Miscellaneous\IsCommonModel};
 use App\Enums\{DataCategory, FileOutputFormat};
 use Illuminate\Database\Eloquent\Model;
 

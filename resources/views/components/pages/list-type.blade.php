@@ -1,6 +1,5 @@
 @props(['filter', 'items', 'perPage', 'sortField', 'sortDirection', 'columns', 'type', 'modalParam' => 'id', 'modalConfig' => [], 'idColumn' => 'id', 'alphaColumn' => 'name', 'selectedFileName' => null])
 
-@use('App\Enums\NonDB\ListTypeModals')
 @use('Illuminate\Support\Js')
 
 <div class="px-6 py-3 transition-colors duration-300">
@@ -14,10 +13,6 @@
         <div x-data="{ itemId: null, personName: '', actionType: '', config: {{ Js::from($modalConfig) }} }" x-on:open-modal.window="if($event.detail.id === 'confirmationModal') { itemId = $event.detail.{{ $modalParam }}; personName = $event.detail.name; actionType = $event.detail.action; }">
             <x-molecules.modals.confirmation-modal id="confirmationModal" :param="'itemId'" />
         </div>
-
-        @php
-            $modalEnum = ListTypeModals::tryFrom($type ?? '');
-        @endphp
 
         @if($modalEnum)
             {!! $modalEnum->renderModal() !!}

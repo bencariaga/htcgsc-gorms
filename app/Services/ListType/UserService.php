@@ -3,7 +3,7 @@
 namespace App\Services\ListType;
 
 use App\{Actions\User\DeleteUser, Actions\User\SearchUsers, Actions\User\UpdateUserStatus};
-use App\{Enums\AccountStatus, Models\User, Traits\Concerns\ManagesTransactions};
+use App\{Data\UserStatusData, Enums\AccountStatus, Models\User, Traits\Miscellaneous\ManagesTransactions};
 use Illuminate\{Contracts\Pagination\LengthAwarePaginator, Support\Facades\Log};
 
 class UserService
@@ -32,12 +32,12 @@ class UserService
 
     public function activate(int|string $userId): void
     {
-        $this->updateStatus->handle($userId, AccountStatus::Active);
+        $this->updateStatus->handle(UserStatusData::from(['userId' => (int) $userId, 'status' => AccountStatus::Active]));
     }
 
     public function deactivate(int|string $userId): void
     {
-        $this->updateStatus->handle($userId, AccountStatus::Inactive);
+        $this->updateStatus->handle(UserStatusData::from(['userId' => (int) $userId, 'status' => AccountStatus::Inactive]));
     }
 
     public function delete(int $userId): void

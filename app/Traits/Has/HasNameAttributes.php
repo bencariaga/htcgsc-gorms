@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits\Concerns;
+namespace App\Traits\Has;
 
 use App\Enums\PersonSuffix;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
  * @property string|null $last_name
  * @property string|PersonSuffix|null $suffix
  */
-trait HasName
+trait HasNameAttributes
 {
     protected function fullName(): Attribute
     {

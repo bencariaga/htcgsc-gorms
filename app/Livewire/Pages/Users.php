@@ -2,13 +2,13 @@
 
 namespace App\Livewire\Pages;
 
-use App\{Livewire\Bases\BaseListType, Traits\Concerns\HandlesUsers};
+use App\{Livewire\Bases\BaseListType, Traits\Handles\HandlesUserActions};
 use Livewire\Attributes\Title;
 
 #[Title('Users')]
 class Users extends BaseListType
 {
-    use HandlesUsers;
+    use HandlesUserActions;
 
     protected function defaultSortField(): string
     {

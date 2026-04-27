@@ -1,5 +1,3 @@
-@php $profilePicture = $user->profile_picture ? asset("storage/{$user->profile_picture}") : null; @endphp
-
 <form id="profileForm" action="{{ route('user-profile.update', $user->user_id) }}" method="POST"
     enctype="multipart/form-data" class="space-y-6 py-[20px] px-[2rem]" x-data="{
         form: {
@@ -20,7 +18,7 @@
             email: @js($person->email_address),
             phoneNumber: @js($person->phone_number)
         },
-        previewUrl: @js($profilePicture),
+        previewUrl: @js($user->profile_picture_url),
         suffixOpen: false,
         isLoaded: false,
 
@@ -75,7 +73,7 @@
 
             this.form.hasNewFile = false;
             this.form.remove_picture = '0';
-            this.previewUrl = @js($profilePicture);
+            this.previewUrl = @js($user->profile_picture_url);
             const fileInput = document.getElementById('profilePictureFileInput');
             if (fileInput) fileInput.value = '';
         },
@@ -174,7 +172,7 @@
                             N / A
                         </button>
 
-                        @foreach(App\Enums\Enums::suffixes() as $value => $label)
+                        @foreach($suffixes as $value => $label)
                             <button type="button" @click="form.suffix = '{{ $value }}'; suffixOpen = false" class="w-full text-left px-4 py-2 text-lg transition-colors rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800" :class="form.suffix === '{{ $value }}' ? 'bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 font-bold' : 'text-slate-700 dark:text-slate-300'">
                                 {{ $label }}
                             </button>
