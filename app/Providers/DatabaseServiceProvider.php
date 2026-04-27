@@ -25,7 +25,7 @@ class DatabaseServiceProvider extends ServiceProvider
 
     private function configureDuplicateQueryDetector(): void
     {
-        if (app()->isProduction() || app()->isLocal()) {
+        if (app()->isProduction()) {
             return;
         }
 
@@ -36,11 +36,8 @@ class DatabaseServiceProvider extends ServiceProvider
 
             if (collect($recordedQueries)->has($signature)) {
                 $sql = $query->sql;
-
                 $bindings = $query->bindings;
-
                 $time = "{$query->time}ms";
-
                 $url = request()->fullUrl();
 
                 Log::warning('Duplicate Database Query Detected:', compact('sql', 'bindings', 'time', 'url'));
