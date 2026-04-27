@@ -17,6 +17,7 @@
         "laravel/framework": "v13.0.0 as 12.99.99",
         "laravel/tinker": "^3.0",
         "livewire/livewire": "^3.7.14",
+        "livewire/blaze": "^1.0.11",
         "maatwebsite/excel": "^3.1.68",
         "opcodesio/log-viewer": "^3.21",
         "san103/php-holiday-api": "^1.3",
