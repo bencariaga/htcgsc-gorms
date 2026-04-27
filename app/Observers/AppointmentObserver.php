@@ -2,10 +2,10 @@
 
 namespace App\Observers;
 
-use App\Models\Appointment;
+use App\{Contracts\HandlesAppointmentEvents, Data\AppointmentData, Models\Appointment};
 use Illuminate\Support\Facades\Log;
 
-class AppointmentObserver
+class AppointmentObserver implements HandlesAppointmentEvents
 {
     public function creating(Appointment $appointment): void
     {
@@ -17,7 +17,7 @@ class AppointmentObserver
     public function updated(Appointment $appointment): void
     {
         if ($appointment->wasChanged('appointment_date') || $appointment->wasChanged('appointment_time')) {
-            Log::info("Appointment {$appointment->appointment_id} was rescheduled to {$appointment->appointment_date->format('Y-m-d')} at {$appointment->appointment_time->value}.");
+            Log::info('Appointment rescheduled.', AppointmentData::fromModel($appointment)->toArray());
         }
     }
 }

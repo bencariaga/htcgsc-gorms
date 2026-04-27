@@ -1,10 +1,11 @@
 @props(['status'])
 
-@php
-    use App\Contracts\Colorable;
-    use Illuminate\Support\Reflector;
+@use('App\Contracts\Colorable')
+@use('Illuminate\Support\Reflector')
 
-    $color = $status instanceof Colorable ? $status->color() : 'bg-slate-500';
+@php
+    $colorClasses = $status instanceof Colorable ? $status->color() : 'bg-slate-500';
+    $color = collect(explode(' ', $colorClasses))->first(fn($c) => str_starts_with($c, 'bg-')) ?? 'bg-slate-500';
     $label = Reflector::isCallable([$status, 'label']) ? $status->label() : ($status instanceof \BackedEnum ? $status->value : $status);
 @endphp
 

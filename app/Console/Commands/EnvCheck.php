@@ -13,38 +13,27 @@ class EnvCheck extends BaseCommand
         $envPath = base_path('.env');
         $examplePath = base_path('.env.example');
 
-        if (!File::exists($envPath) && !File::exists($examplePath)) {
+        $envExists = File::exists($envPath);
+        $exampleExists = File::exists($examplePath);
+
+        if (!$envExists && !$exampleExists) {
             $this->components->warn('No .env.example and .env detected.');
             $this->components->info('Generating .env.example and .env...');
             $stub = "# Created automatically\nAPP_NAME=Laravel\nAPP_ENV=local\nAPP_KEY=\nAPP_DEBUG=true\nAPP_URL=http://localhost";
-
             File::put($examplePath, $stub);
             File::copy($examplePath, $envPath);
-
             $this->call('key:generate');
             $this->components->info('.env.example and .env have been generated!');
-
             return;
         }
 
-        if (!File::exists($envPath)) {
-            $this->components->warn('No .env detected.');
-            $this->components->info('Generating .env...');
-            File::copy($examplePath, $envPath);
-            $this->call('key:generate');
-            $this->components->info('.env has been generated!');
-
+        if (!$envExists) {
+            $this->generateFile($examplePath, $envPath, '.env', true);
             return;
         }
 
-        if (!File::exists($examplePath)) {
-            $this->components->warn('No .env.example detected.');
-            $this->components->info('Generating .env.example from .env...');
-            $envContent = File::get($envPath);
-            $exampleContent = str($envContent)->replaceMatches('/=.*$/m', '=');
-            File::put($examplePath, $exampleContent);
-            $this->components->info('.env.example has been generated!');
-
+        if (!$exampleExists) {
+            $this->generateExampleFromEnv($envPath, $examplePath);
             return;
         }
 
@@ -55,5 +44,26 @@ class EnvCheck extends BaseCommand
         }
 
         $this->components->info('Both .env and .env.example are present.');
+    }
+
+    private function generateFile(string $source, string $target, string $name, bool $generateKey = false): void
+    {
+        $this->components->warn("No {$name} detected.");
+        $this->components->info("Generating {$name}...");
+        File::copy($source, $target);
+        if ($generateKey) {
+            $this->call('key:generate');
+        }
+        $this->components->info("{$name} has been generated!");
+    }
+
+    private function generateExampleFromEnv(string $envPath, string $examplePath): void
+    {
+        $this->components->warn('No .env.example detected.');
+        $this->components->info('Generating .env.example from .env...');
+        $envContent = File::get($envPath);
+        $exampleContent = str($envContent)->replaceMatches('/=.*$/m', '=');
+        File::put($examplePath, $exampleContent);
+        $this->components->info('.env.example has been generated!');
     }
 }

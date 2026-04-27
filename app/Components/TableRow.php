@@ -3,8 +3,9 @@
 namespace App\Components;
 
 use App\Data\PersonData;
-use App\Enums\{AppointmentStatus, AppointmentTime, PersonType, ReferralType};
+use App\Enums\{AccountStatus, AppointmentStatus, AppointmentTime, PersonType, ReferralType};
 use Illuminate\{Support\Carbon, Support\Reflector, View\Component};
+use Illuminate\Support\Stringable;
 
 class TableRow extends Component
 {
@@ -37,7 +38,7 @@ class TableRow extends Component
         $this->isAppointment = $type === 'appointment';
         $this->isAuditLog = $type === 'audit-log';
 
-        if (!Reflector::isCallable($this->item) && !Reflector::isCallable([$this->item, 'person']) && $this->item->person instanceof PersonData) {
+        if (!$this->isAuditLog && !Reflector::isCallable($this->item) && collect($this->item)->has('person') && $this->item->person instanceof PersonData) {
             $this->mapPersonData($this->item->person);
             $this->mapItemSpecifics();
 
@@ -79,7 +80,8 @@ class TableRow extends Component
 
         $personType = $this->person?->type instanceof \BackedEnum ? $this->person->type->value : $this->person?->type;
         $this->isAdmin = $personType === PersonType::Administrator->value;
-        $this->isActive = $this->isUser && (data_get($this->item, 'account_status') === 'Active');
+        $status = data_get($this->item, 'account_status');
+        $this->isActive = $this->isUser && ($status instanceof AccountStatus ? $status === AccountStatus::Active : $status === 'Active');
         $this->config = $this->resolveConfig();
 
         if ($this->isAppointment) {
@@ -97,7 +99,7 @@ class TableRow extends Component
 
             $levelName = match (true) {
                 $levelValue instanceof \UnitEnum => $levelValue->name,
-                Reflector::isCallable([$levelValue, 'getName']) => $levelValue->getName(),
+                Reflector::isCallable($levelValue) && !($levelValue instanceof Stringable) && method_exists($levelValue, 'getName') => $levelValue->getName(),
                 default => (string) $levelValue,
             };
 

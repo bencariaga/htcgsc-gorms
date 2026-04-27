@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
+use App\Contracts\{CommonModel, Nameable};
 use App\Enums\{PersonSuffix, PersonType};
-use App\Traits\Has\{HasCommonModelPattern, HasNameAttributes};
+use App\Traits\Concerns\{HasName, IsCommonModel};
 use Illuminate\Database\Eloquent\{Model, Relations\HasOne};
 use Staudenmeir\LaravelMergedRelations\Eloquent\Relations\MergedRelation;
 
@@ -24,9 +25,9 @@ use Staudenmeir\LaravelMergedRelations\Eloquent\Relations\MergedRelation;
  * @property mixed $created_at
  * @property mixed $updated_at
  */
-class Person extends Model
+class Person extends Model implements CommonModel, Nameable
 {
-    use HasCommonModelPattern, HasNameAttributes;
+    use HasName, IsCommonModel;
 
     /** @var array */
     protected $fillable = ['person_id', 'type', 'last_name', 'first_name', 'middle_name', 'suffix', 'email_address', 'phone_number'];

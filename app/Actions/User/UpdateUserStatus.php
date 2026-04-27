@@ -4,26 +4,23 @@ namespace App\Actions\User;
 
 use App\{Contracts\UpdatesUserStatus, Data\UserStatusData, Enums\AccountStatus, Models\User};
 use App\Mail\{NoticeAccountActivation, NoticeAccountDeactivation};
-use App\Services\Miscellaneous\TextBeeService;
-use Illuminate\Support\Facades\{DB, Log, Mail};
-use Throwable;
+use App\{Services\Miscellaneous\TextBeeService, Traits\Concerns\ManagesTransactions};
+use Illuminate\Support\Facades\{Log, Mail};
 
 class UpdateUserStatus implements UpdatesUserStatus
 {
+    use ManagesTransactions;
+
     public function handle(UserStatusData $data): void
     {
-        DB::transaction(function () use ($data) {
-            try {
-                $user = User::with('person')->findOrFail($data->userId);
-                $user->update(['account_status' => $data->status]);
-                $this->notifyUser($user, $data->status);
-                DB::commit();
-            } catch (Throwable $e) {
-                DB::rollBack();
-                Log::error("Status Update Failed for User {$data->userId}: {$e->getMessage()}");
-                throw $e;
-            }
-        });
+        $this->executeTransaction(function () use ($data) {
+            $user = User::with('person')->findOrFail($data->userId);
+
+            $user->update(['account_status' => $data->status]);
+            $this->notifyUser($user, $data->status);
+
+            Log::info("Account status updated to {$data->status->value} for User ID: {$data->userId}");
+        }, "Status Update Failed for User {$data->userId}", ['user_id' => $data->userId, 'status' => $data->status->value]);
     }
 
     protected function notifyUser(User $user, AccountStatus $status): void

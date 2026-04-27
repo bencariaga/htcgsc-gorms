@@ -15,13 +15,13 @@ enum AppointmentStatus: string implements Colorable
 
     public function color(): string
     {
-        $color = match ($this) {
-            self::Scheduled => 'orange-500',
-            self::Done => 'blue-500',
-            self::Cancelled => 'gray-500',
-            self::Missed => 'red-700',
+        $classes = match ($this) {
+            self::Scheduled => 'bg-orange-500 text-white border-orange-300 dark:bg-orange-900/40 dark:text-orange-300 dark:border-orange-800',
+            self::Done => 'bg-blue-500 text-white border-blue-300 dark:bg-blue-900/40 dark:text-blue-300 dark:border-blue-800',
+            self::Cancelled => 'bg-gray-500 text-white border-gray-300 dark:bg-gray-700/50 dark:text-gray-300 dark:border-gray-600',
+            self::Missed => 'bg-red-700 text-white border-red-500 dark:bg-red-900/40 dark:text-red-300 dark:border-red-800',
         };
 
-        return "bg-{$color}";
+        return $classes;
     }
 }

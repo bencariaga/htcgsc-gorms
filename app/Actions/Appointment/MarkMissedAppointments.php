@@ -2,26 +2,38 @@
 
 namespace App\Actions\Appointment;
 
-use App\{Enums\AppointmentStatus, Models\Appointment};
-use Illuminate\Support\Carbon;
+use App\{Enums\AppointmentStatus, Models\Appointment, Traits\Concerns\ManagesTransactions};
+use Illuminate\Support\{Carbon, Facades\Log};
 
 class MarkMissedAppointments
 {
+    use ManagesTransactions;
+
     public function handle(): void
     {
-        $now = Carbon::now();
-        $today = $now->toDateString();
+        $this->executeTransaction(function () {
+            $now = Carbon::now();
 
-        Appointment::where('appointment_status', AppointmentStatus::Scheduled)->where('appointment_date', '<', $today)->update(['appointment_status' => AppointmentStatus::Missed]);
+            $today = $now->toDateString();
 
-        $todayLapsedIds = Appointment::where('appointment_status', AppointmentStatus::Scheduled)->where('appointment_date', $today)->get()->filter(function ($appointment) use ($now) {
-            $startTimeString = str($appointment->appointment_time->value)->before(' -')->toString();
+            $pastCount = Appointment::where('appointment_status', AppointmentStatus::Scheduled)->where('appointment_date', '<', $today)->update(['appointment_status' => AppointmentStatus::Missed]);
 
-            return Carbon::createFromFormat('g:i A', $startTimeString)->setDateFrom($now)->addHour()->lt($now);
-        })->pluck('appointment_id');
+            $todayLapsedIds = $this->getTodayLapsedIds($now, $today);
 
-        if ($todayLapsedIds->isNotEmpty()) {
-            Appointment::whereIn('appointment_id', $todayLapsedIds)->update(['appointment_status' => AppointmentStatus::Missed]);
-        }
+            if ($todayLapsedIds->isNotEmpty()) {
+                Appointment::whereIn('appointment_id', $todayLapsedIds)->update(['appointment_status' => AppointmentStatus::Missed]);
+            }
+
+            $totalMissed = $pastCount + $todayLapsedIds->count();
+
+            if ($totalMissed > 0) {
+                Log::info("Successfully marked {$totalMissed} appointments as missed.");
+            }
+        }, 'Failed to mark missed appointments');
+    }
+
+    protected function getTodayLapsedIds(Carbon $now, string $today)
+    {
+        return Appointment::where('appointment_status', AppointmentStatus::Scheduled)->where('appointment_date', $today)->get()->filter(fn ($appointment) => Carbon::createFromFormat('g:i A', str($appointment->appointment_time->value)->before(' -')->toString())->setDateFrom($now)->addHour()->lt($now))->pluck('appointment_id');
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits\Has;
+namespace App\Traits\Concerns;
 
 use App\Enums\PersonSuffix;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -11,11 +11,16 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
  * @property string|null $last_name
  * @property string|PersonSuffix|null $suffix
  */
-trait HasNameAttributes
+trait HasName
 {
     protected function fullName(): Attribute
     {
         return Attribute::make(get: fn () => $this->formatName('full'));
+    }
+
+    public function name(): Attribute
+    {
+        return $this->fullName();
     }
 
     protected function formalName(): Attribute

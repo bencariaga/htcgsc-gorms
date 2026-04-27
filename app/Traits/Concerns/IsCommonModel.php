@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits\Has;
+namespace App\Traits\Concerns;
 
 use App\Actions\Data\GenerateDatabaseTableRowId;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,13 +18,13 @@ use Znck\Eloquent\Traits\BelongsToThrough;
  * @property bool $incrementing
  * @property bool $timestamps
  */
-trait HasCommonModelPattern
+trait IsCommonModel
 {
     use BelongsToThrough, HasEagerLimit, HasFactory, HasMergedRelationships, HasParamLimitFixAndRecursiveRelationships, HasRelationships, QueriesExpressions {
         HasEagerLimit::newBaseQueryBuilder insteadof HasParamLimitFixAndRecursiveRelationships, QueriesExpressions;
     }
 
-    public function initializeHasCommonModelPattern(): void
+    public function initializeIsCommonModel(): void
     {
         $className = class_basename($this);
         $this->table = str($className)->snake()->append('s')->toString();
@@ -33,7 +33,7 @@ trait HasCommonModelPattern
         $this->incrementing = false;
     }
 
-    protected static function bootHasCommonModelPattern(): void
+    protected static function bootIsCommonModel(): void
     {
         static::creating(function ($model) {
             if (!$model->{$model->getKeyName()}) {

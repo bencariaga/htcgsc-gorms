@@ -2,7 +2,8 @@
 
 namespace App\Models;
 
-use App\{Enums\DataCategory, Enums\FileOutputFormat, Traits\Has\HasCommonModelPattern};
+use App\{Contracts\CommonModel, Traits\Concerns\IsCommonModel};
+use App\Enums\{DataCategory, FileOutputFormat};
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -15,9 +16,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property mixed $created_at
  * @property mixed $updated_at
  */
-class Report extends Model
+class Report extends Model implements CommonModel
 {
-    use HasCommonModelPattern;
+    use IsCommonModel;
 
     /** @var array */
     protected $fillable = ['report_id', 'title', 'start_date', 'end_date', 'data_category', 'file_output_format'];

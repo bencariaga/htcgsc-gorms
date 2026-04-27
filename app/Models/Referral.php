@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\{Enums\ReferralType, Traits\Has\HasCommonModelPattern};
+use App\{Contracts\CommonModel, Enums\ReferralType, Traits\Concerns\IsCommonModel};
 use Illuminate\Database\Eloquent\{Model, Relations\BelongsTo, Relations\HasOne};
 use Znck\Eloquent\Relations\BelongsToThrough;
 
@@ -18,9 +18,9 @@ use Znck\Eloquent\Relations\BelongsToThrough;
  * @property Appointment $appointment
  * @property Person $person
  */
-class Referral extends Model
+class Referral extends Model implements CommonModel
 {
-    use HasCommonModelPattern;
+    use IsCommonModel;
 
     /** @var array */
     protected $fillable = ['referral_id', 'student_id', 'referral_type', 'reason'];

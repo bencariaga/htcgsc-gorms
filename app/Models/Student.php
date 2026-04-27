@@ -2,7 +2,8 @@
 
 namespace App\Models;
 
-use App\Traits\Has\{HasCommonModelPattern, HasFormattedId};
+use App\Contracts\CommonModel;
+use App\Traits\{Concerns\IsCommonModel, Has\HasFormattedId};
 use Illuminate\Database\Eloquent\{Casts\Attribute, Model};
 use Illuminate\Database\Eloquent\Relations\{BelongsTo, HasMany, HasOne};
 use Staudenmeir\LaravelMergedRelations\Eloquent\Relations\MergedRelation;
@@ -16,9 +17,9 @@ use Staudenmeir\LaravelMergedRelations\Eloquent\Relations\MergedRelation;
  * @property Person $person
  * @property mixed $referrals
  */
-class Student extends Model
+class Student extends Model implements CommonModel
 {
-    use HasCommonModelPattern, HasFormattedId;
+    use HasFormattedId, IsCommonModel;
 
     /** @var array */
     protected $fillable = ['student_id', 'person_id'];

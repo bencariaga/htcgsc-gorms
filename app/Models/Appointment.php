@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
+use App\Contracts\CommonModel;
 use App\Enums\{AppointmentStatus, AppointmentTime, ReferralType};
-use App\Traits\Has\{HasCommonModelPattern, HasFormattedId};
+use App\Traits\{Concerns\IsCommonModel, Has\HasFormattedId};
 use Illuminate\Database\Eloquent\{Casts\Attribute, Model, Relations\BelongsTo};
 use Znck\Eloquent\Relations\BelongsToThrough;
 
@@ -25,9 +26,9 @@ use Znck\Eloquent\Relations\BelongsToThrough;
  * @property Referrer $referrer
  * @property-read Person $referrerPerson
  */
-class Appointment extends Model
+class Appointment extends Model implements CommonModel
 {
-    use HasCommonModelPattern, HasFormattedId;
+    use HasFormattedId, IsCommonModel;
 
     /** @var array */
     protected $fillable = ['referrer_id', 'referral_id', 'person_id', 'referral_type', 'reason', 'appointment_date', 'appointment_time', 'appointment_status'];

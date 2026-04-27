@@ -42,7 +42,7 @@
                 <script>
                     window.addEventListener('DOMContentLoaded', () => {
                         window.dispatchEvent(new CustomEvent('notify', {
-                            detail: { type: '{{ $type }}', message: "{!! session($type) !!}" }
+                            detail: { type: '{{ $type }}', message: @js(session($type)) }
                         }));
                     });
                 </script>

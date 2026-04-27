@@ -47,6 +47,7 @@ class AppointmentSeeder extends Seeder
             'appointment_status' => AppointmentStatus::Scheduled,
             'referrer_id' => $referrer->referrer_id,
             'referral_id' => $referral->referral_id,
+            'person_id' => $referralStudent->person_id,
             'referral_type' => $type,
             'created_at' => $created_at,
             'updated_at' => $updated_at,

@@ -25,7 +25,7 @@ class PersonData extends Data
         public string $email_address,
         public string $email_address_line_break,
         public ?string $phone_number,
-        public string $type,
+        public PersonType $type,
         public bool $is_admin,
     ) {}
 
@@ -38,7 +38,7 @@ class PersonData extends Data
             email_address: str($person?->email_address ?? '')->replace(['@online.htcgsc.edu.ph', '@gmail.com', '@example.com', '@example.net'], '')->toString(),
             email_address_line_break: str($person?->email_address ?? '')->replace('@', '<br>@')->toString(),
             phone_number: $person?->phone_number,
-            type: $person?->type->value ?? '—',
+            type: $person?->type ?? PersonType::Student,
             is_admin: ($person?->type ?? null) === PersonType::Administrator,
         );
     }

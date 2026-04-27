@@ -21,17 +21,16 @@ class EnvRepair extends BaseCommand
             File::copy(base_path('.env.example'), base_path('.env'));
         }
 
-        if ($this->shouldGenerateKey()) {
+        if (!$this->shouldGenerateKey()) {
+            $this->info('APP_KEY is present and healthy.');
+        } else {
             $this->components->warn('APP_KEY is missing or invalid. Generating a new one...');
             $this->removeExistingKey();
             Artisan::call('key:generate', ['--force' => true]);
             $this->info('New APP_KEY generated successfully.');
-        } else {
-            $this->info('APP_KEY is present and healthy.');
         }
 
         $this->info('Clearing cached configurations to sync changes...');
-
         Artisan::call('config:clear');
 
         try {

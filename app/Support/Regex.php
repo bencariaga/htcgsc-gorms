@@ -109,4 +109,14 @@ class Regex
     {
         return '/(?<=[a-z])(?=[A-Z])|$/';
     }
+
+    public static function phpBlock(): string
+    {
+        return '/<php>.*?<\/php>/s';
+    }
+
+    public static function phpBlockReplacement(): string
+    {
+        return "<php>\n        <env name=\"TERMINATE_ON_WARNING\" value=\"false\"/>\n    </php>";
+    }
 }

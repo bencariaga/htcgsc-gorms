@@ -20,7 +20,7 @@ class UserData extends Data
         public int $user_id,
         public PersonData $person,
         public ?string $profile_picture,
-        public string $account_status,
+        public AccountStatus $account_status,
         public bool $is_admin,
         public bool $is_active,
     ) {}
@@ -31,7 +31,7 @@ class UserData extends Data
             user_id: $user->user_id,
             person: PersonData::fromModel($user->person),
             profile_picture: $user->profile_picture,
-            account_status: $user->account_status->value,
+            account_status: $user->account_status,
             is_admin: $user->person?->type === PersonType::Administrator,
             is_active: $user->account_status === AccountStatus::Active,
         );

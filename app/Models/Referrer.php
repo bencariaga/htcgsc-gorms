@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Traits\Has\HasCommonModelPattern;
+use App\{Contracts\CommonModel, Traits\Concerns\IsCommonModel};
 use Illuminate\Database\Eloquent\{Model, Relations\BelongsTo, Relations\HasMany};
 use Staudenmeir\EloquentHasManyDeep\HasManyDeep;
 use Znck\Eloquent\Relations\BelongsToThrough;
@@ -15,9 +15,9 @@ use Znck\Eloquent\Relations\BelongsToThrough;
  * @property Student $student
  * @property Person $person
  */
-class Referrer extends Model
+class Referrer extends Model implements CommonModel
 {
-    use HasCommonModelPattern;
+    use IsCommonModel;
 
     /** @var array */
     protected $fillable = ['referrer_id', 'student_id'];

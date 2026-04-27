@@ -16,11 +16,7 @@ class Setup extends BaseCommand
             $this->callSilent('db:wipe', ['--force' => true]);
         });
 
-        $this->call('migrate', [
-            '--path' => 'database/migrations/laravel',
-            '--ansi' => true,
-            '--force' => true,
-        ]);
+        $this->call('migrate', ['--path' => 'database/migrations/laravel', '--ansi' => true, '--force' => true]);
 
         $migrations = [
             'database/migrations/system/create_persons_table.php',
@@ -34,11 +30,7 @@ class Setup extends BaseCommand
         ];
 
         foreach ($migrations as $path) {
-            $this->call('migrate', [
-                '--path' => $path,
-                '--ansi' => true,
-                '--force' => true,
-            ]);
+            $this->call('migrate', ['--path' => $path, '--ansi' => true, '--force' => true]);
         }
 
         $this->call('db:seed', ['--ansi' => true, '--force' => true]);

@@ -6,8 +6,11 @@
 @php
     [$label, $classes] = match (true) {
         $level !== null => [str($level)->upper(), AuditLogsStyling::getLevelClasses($level)],
-        $status !== null => [$status instanceof \BackedEnum ? $status->value : $status, $status instanceof Colorable ? $status->color() : 'bg-slate-500 text-white'],
-        default => ['Unknown', 'bg-slate-500 text-white border-slate-300 dark:bg-slate-400 dark:text-white dark:border-slate-200'],
+        $status !== null => [
+            $status instanceof \BackedEnum ? $status->value : $status,
+            $status instanceof Colorable ? $status->color() : 'bg-slate-500 text-white border-slate-600'
+        ],
+        default => ['Unknown', 'bg-slate-500 text-white border-slate-600 dark:bg-slate-400 dark:text-white dark:border-slate-200'],
     };
 @endphp
 

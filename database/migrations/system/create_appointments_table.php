@@ -10,6 +10,7 @@ return new class extends Migration {
             $table->integer('appointment_id')->primary();
             $table->integer('referrer_id');
             $table->integer('referral_id');
+            $table->integer('person_id')->nullable();
             $table->enum('referral_type', ReferralType::values());
             $table->string('reason');
             $table->date('appointment_date');
@@ -18,6 +19,7 @@ return new class extends Migration {
             $table->timestamps();
             $table->foreign('referrer_id')->references('referrer_id')->on('referrers')->onDelete('cascade');
             $table->foreign('referral_id')->references('referral_id')->on('referrals')->onDelete('cascade');
+            $table->foreign('person_id')->references('person_id')->on('persons')->onDelete('cascade');
         });
     }
 

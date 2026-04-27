@@ -2,19 +2,18 @@
 
 namespace App\Actions\User;
 
-use App\{Contracts\RegistersUser, Data\UserRegistrationData};
+use App\{Contracts\RegistersUser, Data\UserRegistrationData, Traits\Concerns\ManagesTransactions};
 use App\Enums\{AccountStatus, PersonType};
 use App\Models\{Person, User};
-use Illuminate\Support\Facades\{DB, Hash, Log};
-use Throwable;
+use Illuminate\Support\Facades\{Hash, Log};
 
 class RegisterUser implements RegistersUser
 {
+    use ManagesTransactions;
+
     public function execute(UserRegistrationData $data): void
     {
-        DB::beginTransaction();
-
-        try {
+        $this->executeTransaction(function () use ($data) {
             $person = Person::create([
                 'type' => PersonType::Employee,
                 'last_name' => $data->lastName,
@@ -25,17 +24,9 @@ class RegisterUser implements RegistersUser
                 'phone_number' => $data->phoneNumber,
             ]);
 
-            User::create([
-                'person_id' => $person->person_id,
-                'password' => Hash::make($data->password),
-                'account_status' => AccountStatus::Inactive,
-            ]);
+            User::create(['person_id' => $person->person_id, 'password' => Hash::make($data->password), 'account_status' => AccountStatus::Inactive]);
 
-            DB::commit();
-        } catch (Throwable $e) {
-            DB::rollBack();
-            Log::error("User registration failed: {$e->getMessage()}", ['exception' => $e]);
-            throw $e;
-        }
+            Log::info("User successfully registered for Email: {$data->email}");
+        }, 'User registration failed', ['email' => $data->email]);
     }
 }

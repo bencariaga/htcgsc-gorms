@@ -2,29 +2,28 @@
 
 namespace App\Actions\User;
 
-use App\{Contracts\AuthenticatesUser, Data\AuthenticateUserData};
-use App\{Models\User, Services\Miscellaneous\OTPService};
-use Illuminate\Support\Facades\{DB, Log, Session};
-use Throwable;
+use App\{Contracts\AuthenticatesUser, Data\AuthenticateUserData, Models\User};
+use App\{Services\Miscellaneous\OTPService, Traits\Concerns\ManagesTransactions};
+use Illuminate\Support\Facades\{Log, Session};
 
 class AuthenticateUser implements AuthenticatesUser
 {
+    use ManagesTransactions;
+
     public function execute(AuthenticateUserData $data): ?string
     {
-        return DB::transaction(function () use ($data) {
+        return $this->executeTransaction(function () use ($data) {
             $method = fn ($q) => $q->whereAny(['email_address', 'phone_number'], $data->identifier);
 
-            try {
-                $user = User::with('person')->whereRelation('person', $method)->firstOrFail();
-                app(OTPService::class)->generateAndSend($user, $data->identifier);
-                Session::put(['otp_email' => $data->identifier, 'otp_remember' => $data->remember]);
+            $user = User::with('person')->whereRelation('person', $method)->firstOrFail();
 
-                return null;
-            } catch (Throwable $e) {
-                Log::error("Authentication Action Failed: {$e->getMessage()}", ['identifier' => $data->identifier, 'exception' => $e]);
+            app(OTPService::class)->generateAndSend($user, $data->identifier);
 
-                return 'A system error occurred during authentication.';
-            }
-        });
+            Session::put(['otp_email' => $data->identifier, 'otp_remember' => $data->remember]);
+
+            Log::info("OTP generated and sent for authentication attempt: {$data->identifier}");
+
+            return null;
+        }, 'Authentication Action Failed', ['identifier' => $data->identifier]);
     }
 }

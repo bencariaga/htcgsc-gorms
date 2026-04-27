@@ -2,47 +2,18 @@
 
 namespace App\Observers;
 
-use App\Models\Person;
+use App\{Contracts\HandlesPersonEvents, Data\PersonData, Models\Person};
+use Illuminate\Support\Facades\Log;
 
-class PersonObserver
+class PersonObserver implements HandlesPersonEvents
 {
-    /**
-     * Handle the Person "created" event.
-     */
     public function created(Person $person): void
     {
-        //
+        Log::info('Person created.', PersonData::fromModel($person)->toArray());
     }
 
-    /**
-     * Handle the Person "updated" event.
-     */
     public function updated(Person $person): void
     {
-        //
-    }
-
-    /**
-     * Handle the Person "deleted" event.
-     */
-    public function deleted(Person $person): void
-    {
-        //
-    }
-
-    /**
-     * Handle the Person "restored" event.
-     */
-    public function restored(Person $person): void
-    {
-        //
-    }
-
-    /**
-     * Handle the Person "force deleted" event.
-     */
-    public function forceDeleted(Person $person): void
-    {
-        //
+        Log::info('Person updated.', PersonData::fromModel($person)->toArray());
     }
 }

@@ -2,47 +2,13 @@
 
 namespace App\Observers;
 
-use App\Models\Referral;
+use App\{Contracts\HandlesReferralEvents, Data\ReferralData, Models\Referral};
+use Illuminate\Support\Facades\Log;
 
-class ReferralObserver
+class ReferralObserver implements HandlesReferralEvents
 {
-    /**
-     * Handle the Referral "created" event.
-     */
     public function created(Referral $referral): void
     {
-        //
-    }
-
-    /**
-     * Handle the Referral "updated" event.
-     */
-    public function updated(Referral $referral): void
-    {
-        //
-    }
-
-    /**
-     * Handle the Referral "deleted" event.
-     */
-    public function deleted(Referral $referral): void
-    {
-        //
-    }
-
-    /**
-     * Handle the Referral "restored" event.
-     */
-    public function restored(Referral $referral): void
-    {
-        //
-    }
-
-    /**
-     * Handle the Referral "force deleted" event.
-     */
-    public function forceDeleted(Referral $referral): void
-    {
-        //
+        Log::info('Referral created.', ReferralData::fromModel($referral)->toArray());
     }
 }

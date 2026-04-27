@@ -2,11 +2,14 @@
 
 namespace App\Services\ListType;
 
-use App\{Actions\User\DeleteUser, Actions\User\SearchUsers, Actions\User\UpdateUserStatus, Models\User};
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use App\{Actions\User\DeleteUser, Actions\User\SearchUsers, Actions\User\UpdateUserStatus};
+use App\{Enums\AccountStatus, Models\User, Traits\Concerns\ManagesTransactions};
+use Illuminate\{Contracts\Pagination\LengthAwarePaginator, Support\Facades\Log};
 
 class UserService
 {
+    use ManagesTransactions;
+
     public function __construct(protected SearchUsers $searchUsers, protected UpdateUserStatus $updateStatus, protected DeleteUser $deleteUser) {}
 
     public function handle(string $search, string $filter, string $sortField, string $sortDirection, int $rowsPerPage): LengthAwarePaginator
@@ -21,17 +24,20 @@ class UserService
 
     public function update(User $user, array $data): void
     {
-        $user->update($data);
+        $this->executeTransaction(function () use ($user, $data) {
+            $user->update($data);
+            Log::info("User record updated successfully for User ID: {$user->user_id}");
+        }, 'Failed to update user record', ['user_id' => $user->user_id]);
     }
 
-    public function activate(int $userId): void
+    public function activate(int|string $userId): void
     {
-        $this->updateStatus->handle($userId, 'Active');
+        $this->updateStatus->handle($userId, AccountStatus::Active);
     }
 
-    public function deactivate(int $userId): void
+    public function deactivate(int|string $userId): void
     {
-        $this->updateStatus->handle($userId, 'Inactive');
+        $this->updateStatus->handle($userId, AccountStatus::Inactive);
     }
 
     public function delete(int $userId): void

@@ -95,7 +95,7 @@ enum AuditLogsStyling: string implements Colorable
     {
         $levelLower = str($level)->lower();
 
-        $color = match ($levelLower->value()) {
+        $color = match ($levelLower->toString()) {
             'success' => 'emerald',
             'info' => 'blue',
             'warning' => 'yellow',
@@ -104,7 +104,7 @@ enum AuditLogsStyling: string implements Colorable
         };
 
         $isWarning = $levelLower->is('warning') ? 'text-black dark:text-gray-300' : "text-white dark:text-{$color}-300";
-        $isConcerning = !collect(['info', 'success', 'slate'])->contains($levelLower->value()) ? 'animate-pulse' : '';
+        $isConcerning = !collect(['info', 'success', 'slate'])->contains($levelLower->toString()) ? 'animate-pulse' : '';
 
         return "bg-{$color}-500 dark:bg-{$color}-900/40 {$isWarning} {$isConcerning} border-{$color}-300 dark:border-{$color}-800";
     }

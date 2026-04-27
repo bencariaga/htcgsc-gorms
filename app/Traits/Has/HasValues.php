@@ -7,12 +7,14 @@ trait HasValues
     /** @return array<int, string|int> */
     public static function values(): array
     {
-        return collect(self::cases())->pluck('value')->all();
+        return array_column(self::cases(), 'value');
     }
 
     /** @return array<string|int, string|int> */
     public static function toSelectArray(): array
     {
-        return collect(self::cases())->pluck('value', 'value')->all();
+        $values = array_column(self::cases(), 'value');
+
+        return array_combine($values, $values);
     }
 }

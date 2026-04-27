@@ -49,7 +49,7 @@ class DatabaseServiceProvider extends ServiceProvider
 
     private function configureQueryRequestDurationDetector(): void
     {
-        if (app()->isProduction()) {
+        if (app()->isProduction() || app()->isLocal()) {
             return;
         }
 

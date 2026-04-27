@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Enums\AccountStatus;
-use App\Traits\{Has\HasCommonModelPattern, Sets\SetsDefaultStatus};
+use App\{Contracts\CommonModel, Enums\AccountStatus};
+use App\Traits\{Concerns\IsCommonModel, Sets\SetsDefaultStatus};
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\{Foundation\Auth\User as Authenticatable, Notifications\Notifiable};
 
@@ -18,9 +18,9 @@ use Illuminate\{Foundation\Auth\User as Authenticatable, Notifications\Notifiabl
  * @property mixed $updated_at
  * @property mixed $person
  */
-class User extends Authenticatable
+class User extends Authenticatable implements CommonModel
 {
-    use HasCommonModelPattern, Notifiable, SetsDefaultStatus;
+    use IsCommonModel, Notifiable, SetsDefaultStatus;
 
     /** @var array */
     protected $fillable = ['user_id', 'person_id', 'username', 'account_status', 'password', 'profile_picture'];
