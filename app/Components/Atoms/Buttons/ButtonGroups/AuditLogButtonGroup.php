@@ -16,7 +16,7 @@ class AuditLogButtonGroup extends Component
     public function __construct(public string $action, public ?string $click = null, public ?string $activeCondition = null, public ?string $activeText = null)
     {
         $this->config = AuditLogsStyling::getButtonConfig($this->action);
-        $this->baseClasses = 'relative h-[48px] px-6 text-sm font-bold uppercase tracking-widest rounded-xl transition-all duration-300 border-2 overflow-hidden whitespace-nowrap shadow-sm';
+        $this->baseClasses = 'relative h-[48px] px-3 text-sm font-bold tracking-normal border-none transition-all duration-300 overflow-hidden whitespace-nowrap';
         $this->hoverClass = AuditLogsStyling::getHoverClasses($this->action);
     }
 

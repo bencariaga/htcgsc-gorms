@@ -108,6 +108,7 @@ enum AuditLogsStyling: string implements Colorable
 
         return "bg-{$color}-500 dark:bg-{$color}-900/40 {$isWarning} {$isConcerning} border-{$color}-300 dark:border-{$color}-800";
     }
+
     public static function getButtonConfig(string $action): array
     {
         return self::ACTIONS[$action] ?? [];
