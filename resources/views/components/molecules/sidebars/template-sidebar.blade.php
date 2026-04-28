@@ -4,7 +4,7 @@
 @use('Illuminate\Support\Reflector')
 
 <aside class="w-72 bg-white dark:bg-slate-800 border-r-2 border-gray-300 dark:border-slate-700 flex flex-col h-full">
-    @if($title && !request()->routeIs('audit-logs.index'))
+    @if($title && (request()->routeIs('submissions.index') || request()->routeIs('reports.index')))
         <div class="flex justify-center font-bold text-black dark:text-white py-[15.75px] border-b-2 border-gray-300 dark:border-slate-700">
             <span class="text-xl">{{ $title }}</span>
         </div>
