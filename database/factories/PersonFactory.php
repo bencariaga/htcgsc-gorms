@@ -24,7 +24,7 @@ class PersonFactory extends Factory
             'middle_name' => fake($locale)->lastName(),
             'suffix' => fake()->boolean(20) ? collect(PersonSuffix::cases())->random() : null,
             'email_address' => fn (array $attributes) => match ($attributes['type']) {
-                PersonType::Student => str(fake()->unique()->userName())->append('@htcgsc.edu.ph')->toString(),
+                PersonType::Student => str(fake()->unique()->userName())->append('@online.htcgsc.edu.ph')->toString(),
                 default => str(fake()->unique()->userName())->append('@gmail.com')->toString(),
             },
             'phone_number' => fake()->unique()->numerify(fake()->randomElement($prefixes) . '#######'),
