@@ -73,7 +73,7 @@ enum AuditLogsStyling: string implements Colorable
     {
         $color = self::ACTIONS[$action]['color'] ?? 'slate';
 
-        return "text-{$color}-600 dark:text-{$color}-400";
+        return "text-{$color}-600 dark:text-{$color}-400 hover:text-{$color}-800 dark:hover:text-{$color}-600";
     }
 
     public static function getContainerClasses(bool $isSelected): array

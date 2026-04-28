@@ -21,9 +21,9 @@
                     @if(Arr::accessible($element))
                         @foreach ($element as $page => $url)
                             @if($page == $paginator->currentPage())
-                                <span class="flex items-center justify-center h-[2.5rem] w-[2.5rem] bg-emerald-600 text-white rounded-lg font-bold shadow-md border-2 border-emerald-600">{{ $page }}</span>
+                                <span class="flex items-center justify-center h-[2.5rem] min-w-[2.5rem] px-3 bg-emerald-600 text-white rounded-lg font-bold shadow-md border-2 border-emerald-600">{{ $page }}</span>
                             @else
-                                <button type="button" wire:click="gotoPage({{ $page }})" wire:loading.attr="disabled" class="flex items-center justify-center h-[2.5rem] w-[2.5rem] text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900 border-2 border-gray-400 dark:border-slate-600 rounded-lg hover:border-emerald-500 hover:text-emerald-500 transition-all font-semibold">{{ $page }}</button>
+                                <button type="button" wire:click="gotoPage({{ $page }})" wire:loading.attr="disabled" class="flex items-center justify-center h-[2.5rem] min-w-[2.5rem] px-3 text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900 border-2 border-gray-400 dark:border-slate-600 rounded-lg hover:border-emerald-500 hover:text-emerald-500 transition-all font-semibold">{{ $page }}</button>
                             @endif
                         @endforeach
                     @endif
