@@ -4,7 +4,7 @@
 @use('Illuminate\Support\Reflector')
 
 <aside class="w-72 bg-white dark:bg-slate-800 border-r-2 border-gray-300 dark:border-slate-700 flex flex-col h-full">
-    @if($title || !request()->routeIs('submissions.index'))
+    @if($title && !request()->routeIs('audit-logs.index'))
         <div class="flex justify-center font-bold text-black dark:text-white py-[15.75px] border-b-2 border-gray-300 dark:border-slate-700">
             <span class="text-xl">{{ $title }}</span>
         </div>
@@ -23,7 +23,7 @@
         </div>
     @endif
 
-    <nav class="flex-1 flex flex-col {{ !request()->routeIs('audit-logs.index') ? 'overflow-y-auto' : 'overflow-hidden' }} px-4 py-2 space-y-2">
+    <nav class="flex-1 flex flex-col {{ request()->routeIs('reports.index') ? 'overflow-y-auto' : 'overflow-hidden' }} px-4 py-2 space-y-2 [scrollbar-width:thin] [scrollbar-color:rgba(107,114,128,0.8)_transparent] [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-500/80"">
         <div class="flex-1 space-y-[6px]">
             @if($createNewAction)
                 @php $isCreateSelected = $selectedFile === null; @endphp
@@ -33,7 +33,7 @@
                         <i @class([...AuditLogsStyling::getIconClasses($isCreateSelected), 'fa-pen-to-square text-[30px] max-w-[23px] ml-[9.5px] mr-[1.5px]'])></i>
 
                         <div class="ml-[14px] overflow-hidden text-left">
-                            <span @class(['text-[14px] tracking-normal tabular-nums font-semibold truncate', ...AuditLogsStyling::getTextClasses($isCreateSelected)])>
+                            <span @class(['text-[14px] tracking-normal tabular-nums font-semibold', ...AuditLogsStyling::getTextClasses($isCreateSelected)])>
                                 Create New {{ str($title)->singular() }}
                             </span>
                         </div>
@@ -57,7 +57,7 @@
                             <i @class(AuditLogsStyling::getIconClasses($isSelected))></i>
 
                             <div class="ml-[13.5px] overflow-hidden text-left w-[11rem]">
-                                <p @class(['text-[14px] tracking-normal tabular-nums font-semibold truncate', ...AuditLogsStyling::getTextClasses($isSelected)]) title="{{ $displayName }}">
+                                <p @class(['text-[14px] tracking-normal tabular-nums font-semibold', ...AuditLogsStyling::getTextClasses($isSelected)]) title="{{ $displayName }}">
                                     {{ $displayName }}
                                 </p>
 
