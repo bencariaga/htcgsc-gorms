@@ -1,24 +1,24 @@
 <form id="profileForm" action="{{ route('user-profile.update', $user->user_id) }}" method="POST"
     enctype="multipart/form-data" class="space-y-6 py-[20px] px-[2rem]" x-data="{
         form: {
-            lastName: @js(old('last_name', $person->last_name)),
-            firstName: @js(old('first_name', $person->first_name)),
-            middleName: @js(old('middle_name', $person->middle_name)),
-            suffix: @js(old('suffix', $person->suffix ?? '')),
-            email: @js(old('email_address', $person->email_address)),
-            phoneNumber: @js(old('phone_number', $person->phone_number)),
+            lastName: @js(old('last_name', data_get($person, 'last_name'))),
+            firstName: @js(old('first_name', data_get($person, 'first_name'))),
+            middleName: @js(old('middle_name', data_get($person, 'middle_name'))),
+            suffix: @js(old('suffix', data_get($person, 'suffix', ''))),
+            email: @js(old('email_address', data_get($person, 'email_address'))),
+            phoneNumber: @js(old('phone_number', data_get($person, 'phone_number'))),
             remove_picture: '0',
             hasNewFile: false
         },
         original: {
-            lastName: @js($person->last_name),
-            firstName: @js($person->first_name),
-            middleName: @js($person->middle_name),
-            suffix: @js($person->suffix ?? ''),
-            email: @js($person->email_address),
-            phoneNumber: @js($person->phone_number)
+            lastName: @js(data_get($person, 'last_name')),
+            firstName: @js(data_get($person, 'first_name')),
+            middleName: @js(data_get($person, 'middle_name')),
+            suffix: @js(data_get($person, 'suffix', '')),
+            email: @js(data_get($person, 'email_address')),
+            phoneNumber: @js(data_get($person, 'phone_number'))
         },
-        previewUrl: @js($user->profile_picture_url),
+        previewUrl: @js(data_get($user, 'profile_picture_url')),
         suffixOpen: false,
         isLoaded: false,
 
@@ -102,16 +102,22 @@
                 </template>
             </div>
 
+            <input type="file" name="profile_picture" id="profilePictureFileInput" class="hidden" accept="image/*" @change="previewImage($event)">
+
             <template x-if="previewUrl">
-                <button type="button" @click="removeImage()" class="absolute -bottom-2 -right-2 bg-red-600 text-white w-8 h-8 flex items-center justify-center rounded-lg cursor-pointer hover:scale-110 transition-transform shadow-md">
-                    <i class="fas fa-trash-can text-sm"></i>
-                </button>
+                <div class="absolute -bottom-2 -right-2 flex gap-1">
+                    <button type="button" @click="removeImage()" class="bg-red-600 text-white w-8 h-8 flex items-center justify-center rounded-lg cursor-pointer hover:scale-110 transition-transform shadow-md" title="Remove image">
+                        <i class="fas fa-trash-can text-sm"></i>
+                    </button>
+                    <label for="profilePictureFileInput" class="bg-blue-600 text-white w-8 h-8 flex items-center justify-center rounded-lg cursor-pointer hover:scale-110 transition-transform shadow-md" title="Change image">
+                        <i class="fas fa-pencil text-sm"></i>
+                    </label>
+                </div>
             </template>
 
             <template x-if="!previewUrl">
-                <label class="absolute -bottom-2 -right-2 bg-blue-600 text-white w-8 h-8 flex items-center justify-center rounded-lg cursor-pointer hover:scale-110 transition-transform shadow-md">
+                <label for="profilePictureFileInput" class="absolute -bottom-2 -right-2 bg-blue-600 text-white w-8 h-8 flex items-center justify-center rounded-lg cursor-pointer hover:scale-110 transition-transform shadow-md" title="Upload image">
                     <i class="fas fa-pencil text-sm"></i>
-                    <input type="file" name="profilePicture" id="profilePictureFileInput" class="hidden" accept="image/*" @change="previewImage($event)">
                 </label>
             </template>
         </div>
@@ -128,7 +134,7 @@
 
             <div class="relative flex items-center">
                 <i class="fas fa-user absolute left-4 text-slate-400"></i>
-                <input type="text" id="lastNameInput" name="last_name" x-model="form.lastName" data-original="{{ $person->last_name }}" :class="isDirty('lastName') ? 'bg-orange-50 border-orange-300 dark:bg-orange-900/20' : 'bg-gray-100 dark:bg-slate-900'" class="w-full h-[50px] pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all dark:text-white">
+                <input type="text" id="lastNameInput" name="last_name" x-model="form.lastName" data-original="{{ data_get($person, 'last_name') }}" :class="isDirty('lastName') ? 'bg-orange-50 border-orange-300 dark:bg-orange-900/20' : 'bg-gray-100 dark:bg-slate-900'" class="w-full h-[50px] pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all dark:text-white">
             </div>
         </div>
 
@@ -137,7 +143,7 @@
 
             <div class="relative flex items-center">
                 <i class="fas fa-user absolute left-4 text-slate-400"></i>
-                <input type="text" id="firstNameInput" name="first_name" x-model="form.firstName" data-original="{{ $person->first_name }}" @keydown.space.prevent @input="sanitize" @blur="sanitize" :class="isDirty('firstName') ? 'bg-orange-50 border-orange-300 dark:bg-orange-900/20' : 'bg-gray-100 dark:bg-slate-900'" class="w-full h-[50px] pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all dark:text-white">
+                <input type="text" id="firstNameInput" name="first_name" x-model="form.firstName" data-original="{{ data_get($person, 'first_name') }}" @keydown.space.prevent @input="sanitize" @blur="sanitize" :class="isDirty('firstName') ? 'bg-orange-50 border-orange-300 dark:bg-orange-900/20' : 'bg-gray-100 dark:bg-slate-900'" class="w-full h-[50px] pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all dark:text-white">
             </div>
         </div>
 
@@ -146,7 +152,7 @@
 
             <div class="relative flex items-center">
                 <i class="fas fa-user absolute left-4 text-slate-400"></i>
-                <input type="text" id="middleNameInput" name="middle_name" x-model="form.middleName" data-original="{{ $person->middle_name }}" :class="isDirty('middleName') ? 'bg-orange-50 border-orange-300 dark:bg-orange-900/20' : 'bg-gray-100 dark:bg-slate-900'" class="w-full h-[50px] pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all dark:text-white">
+                <input type="text" id="middleNameInput" name="middle_name" x-model="form.middleName" data-original="{{ data_get($person, 'middle_name') }}" :class="isDirty('middleName') ? 'bg-orange-50 border-orange-300 dark:bg-orange-900/20' : 'bg-gray-100 dark:bg-slate-900'" class="w-full h-[50px] pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all dark:text-white">
             </div>
         </div>
 
@@ -189,7 +195,7 @@
 
             <div class="relative flex items-center">
                 <i class="fas fa-envelope absolute left-4 text-slate-400"></i>
-                <input type="email" id="emailInput" name="email_address" x-model="form.email" data-original="{{ $person->email_address }}" @keydown.space.prevent @input="sanitize" @blur="sanitize" :class="isDirty('email') ? 'bg-orange-50 border-orange-300 dark:bg-orange-900/20' : 'bg-gray-100 dark:bg-slate-900'" class="w-full h-[50px] pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all dark:text-white">
+                <input type="email" id="emailInput" name="email_address" x-model="form.email" data-original="{{ data_get($person, 'email_address') }}" @keydown.space.prevent @input="sanitize" @blur="sanitize" :class="isDirty('email') ? 'bg-orange-50 border-orange-300 dark:bg-orange-900/20' : 'bg-gray-100 dark:bg-slate-900'" class="w-full h-[50px] pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all dark:text-white">
             </div>
         </div>
 
@@ -198,7 +204,7 @@
 
             <div class="relative flex items-center">
                 <i class="fas fa-phone absolute left-4 text-slate-400"></i>
-                <input type="text" id="phoneInput" name="phone_number" x-model="form.phoneNumber" data-original="{{ $person->phone_number }}" inputmode="tel" @input="sanitize" @blur="sanitize" :class="isDirty('phoneNumber') ? 'bg-orange-50 border-orange-300 dark:bg-orange-900/20' : 'bg-gray-100 dark:bg-slate-900'" class="w-full h-[50px] pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all dark:text-white">
+                <input type="text" id="phoneInput" name="phone_number" x-model="form.phoneNumber" data-original="{{ data_get($person, 'phone_number') }}" inputmode="tel" @input="sanitize" @blur="sanitize" :class="isDirty('phoneNumber') ? 'bg-orange-50 border-orange-300 dark:bg-orange-900/20' : 'bg-gray-100 dark:bg-slate-900'" class="w-full h-[50px] pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all dark:text-white">
             </div>
         </div>
     </div>

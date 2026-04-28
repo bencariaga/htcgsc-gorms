@@ -1,5 +1,3 @@
-@props(['item', 'person', 'cellStyling'])
-
 <td class="{{ $cellStyling }}">
     <x-atoms.utility.status-badge :status="$person->type" />
 </td>

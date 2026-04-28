@@ -1,5 +1,3 @@
-@props(['id'])
-
 <script src="{{ asset('js/student-profile.js') }}"></script>
 
 <form id="{{ $id }}" action="{{ route('student-profile.update') }}" method="POST" x-data="studentProfileForm('{{ $id }}')" x-show="show" class="hidden fixed inset-0 z-[100] items-center justify-center p-4" :class="{ 'flex': show, 'hidden': !show }" @submit.prevent="submit()" x-cloak>
@@ -26,7 +24,7 @@
                     <label class="block text-base font-semibold text-slate-700 dark:text-slate-200">Last Name <span class="text-red-500">*</span></label>
                     <div class="relative flex items-center">
                         <i class="fas fa-user absolute left-4 text-slate-400"></i>
-                        <input type="text" name="lastName" x-model="form.lastName" :class="isDirty('lastName') ? 'bg-orange-50 border-orange-300 dark:bg-orange-900/20' : 'bg-gray-100 dark:bg-slate-900'" class="w-full h-[50px] pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all dark:text-white">
+                        <input type="text" name="last_name" x-model="form.lastName" :class="isDirty('lastName') ? 'bg-orange-50 border-orange-300 dark:bg-orange-900/20' : 'bg-gray-100 dark:bg-slate-900'" class="w-full h-[50px] pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all dark:text-white">
                     </div>
                 </div>
 
@@ -34,7 +32,7 @@
                     <label class="block text-base font-semibold text-slate-700 dark:text-slate-200">First Name <span class="text-red-500">*</span></label>
                     <div class="relative flex items-center">
                         <i class="fas fa-user absolute left-4 text-slate-400"></i>
-                        <input type="text" name="firstName" x-model="form.firstName" @keydown.space.prevent @input="sanitize" @blur="sanitize" :class="isDirty('firstName') ? 'bg-orange-50 border-orange-300 dark:bg-orange-900/20' : 'bg-gray-100 dark:bg-slate-900'" class="w-full h-[50px] pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all dark:text-white">
+                        <input type="text" name="first_name" x-model="form.firstName" @keydown.space.prevent @input="sanitize" @blur="sanitize" :class="isDirty('firstName') ? 'bg-orange-50 border-orange-300 dark:bg-orange-900/20' : 'bg-gray-100 dark:bg-slate-900'" class="w-full h-[50px] pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all dark:text-white">
                     </div>
                 </div>
 
@@ -42,7 +40,7 @@
                     <label class="block text-base font-semibold text-slate-700 dark:text-slate-200">Middle Name</label>
                     <div class="relative flex items-center">
                         <i class="fas fa-user absolute left-4 text-slate-400"></i>
-                        <input type="text" name="middleName" x-model="form.middleName" :class="isDirty('middleName') ? 'bg-orange-50 border-orange-300 dark:bg-orange-900/20' : 'bg-gray-100 dark:bg-slate-900'" class="w-full h-[50px] pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all dark:text-white">
+                        <input type="text" name="middle_name" x-model="form.middleName" :class="isDirty('middleName') ? 'bg-orange-50 border-orange-300 dark:bg-orange-900/20' : 'bg-gray-100 dark:bg-slate-900'" class="w-full h-[50px] pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all dark:text-white">
                     </div>
                 </div>
 
@@ -84,7 +82,7 @@
                     <label class="block text-base font-semibold text-slate-700 dark:text-slate-200">Email Address <span class="text-red-500">*</span></label>
                     <div class="relative flex items-center">
                         <i class="fas fa-envelope absolute left-4 text-slate-400"></i>
-                        <input type="email" name="email" x-model="form.email" @keydown.space.prevent @input="sanitize" @blur="sanitize" :class="isDirty('email') ? 'bg-orange-50 border-orange-300 dark:bg-orange-900/20' : 'bg-gray-100 dark:bg-slate-900'" class="w-full h-[50px] pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all dark:text-white">
+                        <input type="email" name="email_address" x-model="form.email" @keydown.space.prevent @input="sanitize" @blur="sanitize" :class="isDirty('email') ? 'bg-orange-50 border-orange-300 dark:bg-orange-900/20' : 'bg-gray-100 dark:bg-slate-900'" class="w-full h-[50px] pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all dark:text-white">
                     </div>
                 </div>
 
@@ -92,7 +90,7 @@
                     <label class="block text-base font-semibold text-slate-700 dark:text-slate-200">Phone Number</label>
                     <div class="relative flex items-center">
                         <i class="fas fa-phone absolute left-4 text-slate-400"></i>
-                        <input type="text" name="phoneNumber" x-model="form.phoneNumber" inputmode="tel" @input="sanitize" @blur="sanitize" :class="isDirty('phoneNumber') ? 'bg-orange-50 border-orange-300 dark:bg-orange-900/20' : 'bg-gray-100 dark:bg-slate-900'" class="w-full h-[50px] pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all dark:text-white">
+                        <input type="text" name="phone_number" x-model="form.phoneNumber" inputmode="tel" @input="sanitize" @blur="sanitize" :class="isDirty('phoneNumber') ? 'bg-orange-50 border-orange-300 dark:bg-orange-900/20' : 'bg-gray-100 dark:bg-slate-900'" class="w-full h-[50px] pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all dark:text-white">
                     </div>
                 </div>
             </div>

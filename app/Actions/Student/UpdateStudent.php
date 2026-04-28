@@ -15,12 +15,12 @@ class UpdateStudent
             $student = Student::with('person')->findOrFail($data['student_id']);
 
             $student->person->update([
-                'last_name' => $data['lastName'],
-                'first_name' => $data['firstName'],
-                'middle_name' => $data['middleName'],
+                'last_name' => $data['last_name'],
+                'first_name' => $data['first_name'],
+                'middle_name' => $data['middle_name'],
                 'suffix' => $data['suffix'],
-                'email_address' => $data['email'],
-                'phone_number' => $data['phoneNumber'],
+                'email_address' => $data['email_address'],
+                'phone_number' => $data['phone_number'],
             ]);
 
             Log::info("Student record updated successfully for Student ID: {$data['student_id']}");

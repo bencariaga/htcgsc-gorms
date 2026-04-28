@@ -1,5 +1,3 @@
-@props(['id', 'param'])
-
 <div id="{{ $id }}" x-data="{ show: false }" x-show="show" x-on:open-modal.window="if ($event.detail.id === '{{ $id }}') show = true" x-on:close-modal.window="if ($event.detail.id === '{{ $id }}') show = false" class="hidden fixed inset-0 z-[100] items-center justify-center p-4" :class="{ 'flex': show, 'hidden': !show }" x-cloak>
     <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm" x-on:click="show = false"></div>
 

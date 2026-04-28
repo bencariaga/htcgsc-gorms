@@ -1,5 +1,3 @@
-@props(['items', 'type', 'perPage', 'sortField', 'sortDirection', 'idColumn' => 'id', 'alphaColumn' => 'name'])
-
 @use('Illuminate\Pagination\LengthAwarePaginator')
 
 <div class="px-6 py-3 bg-white dark:bg-slate-800 border-b-2 border-gray-300 dark:border-slate-700 flex flex-col space-y-4 rounded-t-[calc(1rem-2px)]">

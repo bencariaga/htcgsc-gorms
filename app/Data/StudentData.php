@@ -17,30 +17,28 @@ use Spatie\LaravelData\Data;
  */
 class StudentData extends Data
 {
-    public function __construct(
-        public int $student_id,
-        public PersonData $person,
-        public ?string $profile_picture,
-        public string $formatted_student_id,
-        public bool $is_admin,
-        public string $referrer,
-        public ?object $latest_appointment,
-    ) {}
+    public function __construct(public int $student_id, public PersonData $person, public ?string $profile_picture, public string $formatted_student_id, public bool $is_admin, public string $referrer, public ?object $latest_appointment) {}
 
     public static function fromModel(Student $student): self
     {
-        $person = $student->person;
-        $latestAppointment = $student->referrals->first()?->appointment;
+        /** @var mixed $person */
+        $person = $student->relationLoaded('person') ? $student->person : null;
 
-        return new self(
-            student_id: $student->student_id,
-            person: PersonData::fromModel($person),
-            profile_picture: null,
-            formatted_student_id: $student->formatted_student_id,
-            is_admin: $person?->type === PersonType::Administrator,
-            referrer: self::resolveReferrer($latestAppointment, $person),
-            latest_appointment: $latestAppointment,
-        );
+        /** @var mixed $latestAppointment */
+        $latestAppointment = $student->relationLoaded('referrals') ? $student->referrals->first()?->appointment : null;
+
+        return new self(student_id: $student->student_id, person: PersonData::fromModel($person), profile_picture: null, formatted_student_id: $student->formatted_student_id, is_admin: data_get($person, 'type') === PersonType::Administrator, referrer: self::resolveReferrer($latestAppointment, $person), latest_appointment: $latestAppointment);
+    }
+
+    public static function fromId(int $student_id): self
+    {
+        $student = Student::with('person')->find($student_id);
+
+        if (!$student) {
+            return new self(student_id: $student_id, person: PersonData::fromModel(null), profile_picture: null, formatted_student_id: 'Unknown', is_admin: false, referrer: 'Unknown', latest_appointment: null);
+        }
+
+        return self::fromModel($student);
     }
 
     private static function resolveReferrer(?object $latestAppointment, ?Person $person): string

@@ -13,10 +13,10 @@ class UpdateProfilePicture
 
     public function handle(User $user, Request $request): void
     {
-        if ($request->boolean('remove_picture') || $request->hasFile('profilePicture')) {
+        if ($request->boolean('remove_picture') || $request->hasFile('profile_picture')) {
             $this->executeTransaction(function () use ($user, $request) {
                 $this->deleteOldPicture($user);
-                $path = $request->hasFile('profilePicture') ? $request->file('profilePicture')->store('profile-pictures', 'public') : null;
+                $path = $request->hasFile('profile_picture') ? $request->file('profile_picture')->store('profile-pictures', 'public') : null;
                 $user->update(['profile_picture' => $path]);
 
                 Log::info("Profile picture updated for User ID: {$user->user_id}");

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\{Http, Log};
 
 class TextBeeService
 {
-    protected ?string $base = null;
+    protected ?string $baseUrl = null;
 
     protected ?string $apiKey = null;
 
@@ -34,7 +34,7 @@ class TextBeeService
                 return null;
             }
 
-            $url = "{$this->base}/gateway/devices/{$this->deviceId}/send-sms";
+            $url = "{$this->baseUrl}/gateway/devices/{$this->deviceId}/send-sms";
 
             return Http::withHeaders(['x-api-key' => $this->apiKey, 'Accept' => 'application/json'])->timeout(3)->withoutVerifying()->post($url, compact('recipients', 'message'));
         } catch (ConnectionException) {

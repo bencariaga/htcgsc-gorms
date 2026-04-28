@@ -1,5 +1,3 @@
-@props(['initialState', 'preloadedData', 'selectedFile', 'jsFields', 'jsFormats', 'actionHeader', 'fields', 'categories', 'today', 'formats', 'actions'])
-
 <div class="flex-1 h-full p-4" x-data="reportForm({ initial: {{ $initialState }}, preloaded: {{ $preloadedData }}, isSelected: {{ $selectedFile ? 'true' : 'false' }}, fieldKeys: {{ $jsFields }}, formatLabels: {{ $jsFormats }} })" @report-loaded.window="handleReportLoaded($event.detail.data)" wire:ignore.self x-cloak>
     <div class="bg-white dark:bg-slate-800 shadow-sm border-2 border-slate-300 dark:border-slate-700 rounded-2xl overflow-hidden transition-colors duration-300">
         <div class="px-8 py-6">

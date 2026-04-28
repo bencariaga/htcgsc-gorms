@@ -1,5 +1,3 @@
-@props(['context', 'submitAction'])
-
 @use('App\Enums\NonDB\AuthenticationStyling')
 
 <form wire:submit.prevent="{{ $submitAction }}" class="space-y-5">

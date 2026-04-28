@@ -1,5 +1,3 @@
-@props(['id'])
-
 <div id="{{ $id }}"
     x-data="{
         show: false,

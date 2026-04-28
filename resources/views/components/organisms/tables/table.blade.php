@@ -1,5 +1,3 @@
-@props(['columns' => [], 'items' => [], 'type' => ''])
-
 <table {{ $attributes->merge(['class' => 'w-full text-left border-collapse']) }}>
     <x-organisms.tables.table-column :columns="$columns" />
 

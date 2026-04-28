@@ -1,5 +1,3 @@
-@props(['item', 'person', 'cellStyling', 'referrer', 'latestAppointment'])
-
 <td class="{{ $cellStyling }}">
     <span class="font-semibold text-sm text-gray-900 dark:text-white whitespace-nowrap">
         {!! $referrer !!}

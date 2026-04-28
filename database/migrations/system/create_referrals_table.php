@@ -6,8 +6,8 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('referrals', function (Blueprint $table) {
-            $table->integer('referral_id')->primary();
-            $table->integer('student_id');
+            $table->increments('referral_id');
+            $table->unsignedInteger('student_id');
             $table->timestamps();
             $table->foreign('student_id')->references('student_id')->on('students')->onDelete('cascade');
         });

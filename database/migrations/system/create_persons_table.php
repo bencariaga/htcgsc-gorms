@@ -7,7 +7,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('persons', function (Blueprint $table) {
-            $table->integer('person_id')->primary();
+            $table->increments('person_id');
             $table->enum('type', PersonType::values());
             $table->string('last_name', 20);
             $table->string('first_name', 20);

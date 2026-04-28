@@ -25,7 +25,7 @@
                     <div class="mt-6 pt-4 border-t border-slate-400">
                         <div class="flex flex-row justify-between">
                             <p class="text-base font-medium text-slate-700" x-text="$store.formPreview.activeSubmission?.['School Email Address (Referrer)'] || 'No email provided'"></p>
-                            <a class="font-medium text-blue-600 hover:text-blue-700 hover:underline" :href="{{ $contactReferrer }}" {{ $newTab }}><i class="far fa-envelope mr-1"></i>Contact Referrer</a>
+                            <a class="font-medium text-blue-600 hover:text-blue-700 hover:underline" href="{{ $contactReferrer }}" {{ $newTab }}><i class="far fa-envelope mr-1"></i>Contact Referrer</a>
                         </div>
 
                         <p class="font-medium text-base text-red-500 mt-2">* Indicates required question</p>
@@ -50,35 +50,29 @@
                 </label>
             </div>
 
-            @foreach($component->getInfoSectionsWithTypes() as $section)
-                @php
-                    $role = $section['role'];
-                    $description = $section['description'];
-                    $type = $section['type'];
-                @endphp
-
+            @foreach($infoSections as $section)
                 <div class="bg-white rounded-xl shadow-sm overflow-hidden mb-4">
                     <div class="bg-[#c7cf00] px-6 py-4">
-                        <h2 class="text-lg font-medium uppercase text-slate-900">BASIC INFORMATION ({{ $type }})</h2>
+                        <h2 class="text-lg font-medium uppercase text-slate-900">BASIC INFORMATION ({{ $section['type'] }})</h2>
                     </div>
 
                     <div class="p-6 space-y-8">
-                        <p class="text-base text-slate-800">{{ $description }}</p>
+                        <p class="text-base text-slate-800">{{ $section['description'] }}</p>
 
                         @foreach($gfs->fields as $field)
                             <div class="space-y-4">
-                                <label class="block text-base text-slate-900">{{ $field['label'] }} ({{ $type }}) @if($field['required']) <span class="text-red-500">*</span> @endif</label>
-                                <input type="{{ $field['type'] }}" readonly :value="$store.formPreview.activeSubmission?.['{{ $field['label'] }} ({{ $type }})'] || ''" placeholder="Your answer" class="w-full md:w-1/2 border-b border-slate-400 focus:border-[#c7cf00] outline-none py-2 font-medium bg-transparent cursor-default">
+                                <label class="block text-base text-slate-900">{{ $field['label'] }} ({{ $section['type'] }}) @if($field['required']) <span class="text-red-500">*</span> @endif</label>
+                                <input type="{{ $field['type'] }}" readonly :value="$store.formPreview.activeSubmission?.['{{ $field['label'] }} ({{ $section['type'] }})'] || ''" placeholder="Your answer" class="w-full md:w-1/2 border-b border-slate-400 focus:border-[#c7cf00] outline-none py-2 font-medium bg-transparent cursor-default">
                             </div>
                         @endforeach
 
                         <div class="space-y-4">
-                            <label class="block text-base text-slate-900">Suffix ({{ $type }})</label>
+                            <label class="block text-base text-slate-900">Suffix ({{ $section['type'] }})</label>
 
                             @foreach($gfs->personSuffixes as $suffix)
                                 <label class="flex items-center gap-3">
                                     <div class="relative flex items-center">
-                                        <input type="radio" :checked="$store.formPreview.activeSubmission?.['Suffix ({{ $type }})'] === '{{ $suffix->value }}'" name="suffix_{{ str($role)->lower() }}" class="peer h-5 w-5 appearance-none rounded-full border-2 border-gray-400">
+                                        <input type="radio" :checked="$store.formPreview.activeSubmission?.['Suffix ({{ $section['type'] }})'] === '{{ $suffix->value }}'" name="suffix_{{ str($section['role'])->lower() }}" class="peer h-5 w-5 appearance-none rounded-full border-2 border-gray-400">
                                         <div class="pointer-events-none absolute left-1/2 top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-500 opacity-0 transition-opacity peer-checked:opacity-100"></div>
                                     </div>
                                     <span class="text-base text-slate-800 cursor-default">{{ $suffix->value }}</span>
@@ -86,7 +80,7 @@
                             @endforeach
                         </div>
 
-                        @if($role === collect($gfs->infoSections)->keys()->first())
+                        @if($section['role'] === collect($gfs->infoSections)->keys()->first())
                             <div class="space-y-4">
                                 <label class="block text-base text-slate-900">REFERRAL TYPE <span class="text-red-500">*</span></label>
 

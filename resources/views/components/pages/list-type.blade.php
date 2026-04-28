@@ -1,5 +1,3 @@
-@props(['filter', 'items', 'perPage', 'sortField', 'sortDirection', 'columns', 'type', 'modalParam' => 'id', 'modalConfig' => [], 'idColumn' => 'id', 'alphaColumn' => 'name', 'selectedFileName' => null])
-
 @use('Illuminate\Support\Js')
 
 <div class="px-6 py-3 transition-colors duration-300">

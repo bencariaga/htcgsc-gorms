@@ -1,5 +1,3 @@
-@props(['backButtonText' => 'Back', 'loadingMessage' => 'Going back...'])
-
 @if(($bladeViewName ?? '') === 'livewire.authentication.login')
     <div class="flex justify-center items-center">
         <a href="{{ route('password.forgot') }}" wire:navigate class="text-[#00b] font-semibold hover:underline hover:text-[#2575fc]">Forgot password?</a>

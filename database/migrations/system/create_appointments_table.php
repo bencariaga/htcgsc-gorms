@@ -7,10 +7,10 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('appointments', function (Blueprint $table) {
-            $table->integer('appointment_id')->primary();
-            $table->integer('referrer_id');
-            $table->integer('referral_id');
-            $table->integer('person_id')->nullable();
+            $table->increments('appointment_id');
+            $table->unsignedInteger('referrer_id');
+            $table->unsignedInteger('referral_id');
+            $table->unsignedInteger('person_id')->nullable();
             $table->enum('referral_type', ReferralType::values());
             $table->string('reason');
             $table->date('appointment_date');

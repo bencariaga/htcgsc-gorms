@@ -9,6 +9,8 @@ class ReferralObserver implements HandlesReferralEvents
 {
     public function created(Referral $referral): void
     {
+        $referral->load(['student.person', 'student.referrals.appointment']);
+
         Log::info('Referral created.', ReferralData::fromModel($referral)->toArray());
     }
 }

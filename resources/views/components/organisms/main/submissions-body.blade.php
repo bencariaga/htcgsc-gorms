@@ -1,5 +1,3 @@
-@props(['submissions', 'renderedSubmissions', 'selectedFileName', 'sbms'])
-
 <main wire:key="submissions-{{ $selectedFileName }}" x-data="{ filter: 'All', submissions: {{ $renderedSubmissions }}, get filteredSubmissions() { return this.filter === 'All' ? this.submissions : (this.filter === 'Yourself' ? this.submissions.filter(s => s.referral_type === 'Yourself') : this.submissions.filter(s => s.referral_type !== 'Yourself')); } }" x-show="!$store.formPreview.activeSubmission" x-effect="submissions = {{ $renderedSubmissions }}" class="flex-1 flex flex-col min-w-0 overflow-y-auto [scrollbar-width:thin] [scrollbar-color:rgba(16,185,129,0.5)_transparent] [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-emerald-500/50 bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
     <div class="sticky top-0 z-10 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-400/80 dark:border-gray-600/80 px-8 py-6">
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">

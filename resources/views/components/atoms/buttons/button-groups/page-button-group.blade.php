@@ -1,5 +1,5 @@
 @foreach ($styleEnum->getMenuItems() as $item)
-    @php $route = $item['route']; @endphp
+    @php($route = $item['route'])
 
     @if ($isHeader)
         <a href="{{ route($route) }}" class="text-lg {{ $item['width'] }} flex justify-between items-center px-4 py-2 font-semibold rounded-xl transition-all group {{ request()->routeIs($route) ? 'text-blue-700 dark:text-blue-400 bg-blue-100 dark:bg-slate-700' : 'hover:text-blue-700 dark:hover:text-blue-400 hover:bg-blue-100 dark:hover:bg-slate-700' }}">

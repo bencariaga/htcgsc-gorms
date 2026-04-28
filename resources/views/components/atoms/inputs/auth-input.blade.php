@@ -1,5 +1,3 @@
-@props(['label' => null, 'placeholder' => null, 'model', 'icon' => 'fa-lock', 'type' => 'text', 'required' => false])
-
 @use('App\Enums\Enums')
 @use('App\Enums\NonDB\AuthenticationStyling')
 

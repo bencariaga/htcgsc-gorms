@@ -1,5 +1,3 @@
-@props(['id'])
-
 @use('App\Enums\AppointmentTime')
 
 <script src="{{ asset('js/appointments.js') }}"></script>

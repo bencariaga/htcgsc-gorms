@@ -1,5 +1,3 @@
-@props(['title', 'form', 'description', 'identifier'])
-
 @if(($bladeViewName ?? '') === 'livewire.authentication.login')
     <div class="text-center mb-8">
         <div class="flex items-center justify-center gap-3 mb-5">

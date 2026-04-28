@@ -130,7 +130,16 @@
 
         <div class="stats-grid">
             @foreach((array) $grid as $item)
-                @php $details = $component->getGridItemDetails($item); @endphp
+                @php
+                    $item = (array) $item;
+                    $details = [
+                        'label' => \Illuminate\Support\Arr::accessible($item['label'] ?? null) ? (string) collect($item['label'])->implode(' ') : (string) ($item['label'] ?? ''),
+                        'value' => \Illuminate\Support\Arr::accessible($item['value'] ?? null) ? (string) collect($item['value'])->implode(', ') : (string) ($item['value'] ?? ''),
+                        'icon' => $item['icon'] ?? null,
+                        'colors' => $item['colors'] ?? [],
+                        'subtext' => $item['subtext'] ?? null,
+                    ];
+                @endphp
 
                 <div class="stat-card">
                     @if(filled($details['icon']))

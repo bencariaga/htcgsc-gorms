@@ -23,11 +23,11 @@ class Referral extends Model implements CommonModel
     use IsCommonModel;
 
     /** @var array */
-    protected $fillable = ['referral_id', 'student_id', 'referral_type', 'reason'];
+    protected $fillable = ['referral_id', 'student_id'];
 
     protected function casts(): array
     {
-        return ['referral_type' => ReferralType::class];
+        return [];
     }
 
     public function student(): BelongsTo

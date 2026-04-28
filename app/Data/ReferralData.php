@@ -13,20 +13,16 @@ use Spatie\LaravelData\Data;
  */
 class ReferralData extends Data
 {
-    public function __construct(
-        public int $referral_id,
-        public StudentData $student,
-        public string $reason,
-        public string $referral_type,
-    ) {}
+    public function __construct(public int $referral_id, public StudentData $student, public string $reason, public string $referral_type) {}
 
     public static function fromModel(Referral $referral): self
     {
-        return new self(
-            referral_id: $referral->referral_id,
-            student: StudentData::fromModel($referral->student),
-            reason: $referral->reason ?? 'No reason provided',
-            referral_type: $referral->referral_type->value,
-        );
+        /** @var mixed $appointment */
+        $appointment = $referral->relationLoaded('appointment') ? $referral->appointment : null;
+
+        /** @var mixed $student */
+        $student = $referral->relationLoaded('student') ? $referral->student : null;
+
+        return new self(referral_id: $referral->referral_id, student: $student ? StudentData::fromModel($student) : StudentData::fromId($referral->student_id), reason: $appointment?->reason ?? 'No reason provided', referral_type: data_get($appointment, 'referral_type.value', 'Yourself'));
     }
 }

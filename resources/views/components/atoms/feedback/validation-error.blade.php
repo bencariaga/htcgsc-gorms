@@ -1,5 +1,3 @@
-@props(['field', 'alpineTrigger' => null])
-
 @use('App\Enums\NonDB\AuthenticationStyling')
 
 @error($field)

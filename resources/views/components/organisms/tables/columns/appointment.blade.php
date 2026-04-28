@@ -1,5 +1,3 @@
-@props(['item', 'person', 'cellStyling', 'bookedTime', 'modalBookedTime', 'isReschedulable'])
-
 <td class="{{ $cellStyling }}">
     <span class="text-sm font-semibold text-gray-700 dark:text-slate-200">
         {{ $person?->formal_name_with_initial }}

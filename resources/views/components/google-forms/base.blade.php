@@ -1,5 +1,3 @@
-@props(['mode' => null])
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -194,7 +192,7 @@
                 </div>
 
                 @foreach($gfs->infoSections as $role => $description)
-                    <x-google-form-section :role="$role" :description="$description" :mode="$mode" :activeSubmission="$activeSubmission" :gfs="$gfs">
+                    <x-google-forms.info-section :role="$role" :description="$description" :mode="$mode" :activeSubmission="$activeSubmission" :gfs="$gfs">
                         @if($loop->first)
                             <div class="form-group">
                                 <label class="label-block">REFERRAL TYPE <span class="text-red-500">*</span></label>
@@ -212,7 +210,7 @@
                                 </div>
                             </div>
                         @endif
-                    </x-google-form-section>
+                    </x-google-forms.info-section>
                 @endforeach
 
                 <div @if($mode === 'pdf') style="padding-top: 11rem;" @endif>

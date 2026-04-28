@@ -7,7 +7,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('reports', function (Blueprint $table) {
-            $table->integer('report_id')->primary();
+            $table->increments('report_id');
             $table->string('title', 20);
             $table->date('start_date');
             $table->date('end_date');

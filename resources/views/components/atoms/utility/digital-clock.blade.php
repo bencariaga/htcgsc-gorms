@@ -15,8 +15,4 @@
     <span x-cloak x-text="time" class="text-slate-600 dark:text-slate-300 font-bold tracking-wider text-center tabular-nums min-w-[260px] font-['Inter']">
         {{ $time }}
     </span>
-
-    {{-- <span class="text-slate-600 dark:text-slate-300 font-bold tracking-wider text-center tabular-nums min-w-[260px] font-['Inter']">
-        Mar. 01, 2026 | 12:00:00 AM
-    </span> --}}
 </div>

@@ -1,5 +1,3 @@
-@props(['item', 'level'])
-
 <td class="px-6 py-4 h-[4.5rem] w-[110px]">
     <x-atoms.utility.status-badge :level="$item['level']" />
 </td>

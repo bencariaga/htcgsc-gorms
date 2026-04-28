@@ -1,5 +1,3 @@
-@props(['title' => 'Dashboard', 'padding' => '20px', 'important' => '', 'type' => null ])
-
 <!DOCTYPE html>
 <html lang="en" x-data="{ sidebarOpen: $persist(true), darkMode: $persist(false), notifications: [] }" :class="{ 'dark': darkMode }">
     <head>
