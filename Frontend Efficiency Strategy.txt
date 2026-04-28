@@ -113,6 +113,7 @@ resources/
    │  ├─ google-forms/
    │  │  ├─ base.blade.php
    │  │  ├─ image.blade.php
+   │  │  ├─ info-section.blade.php
    │  │  └─ pdf.blade.php
    │  ├─ molecules/
    │  │  ├─ forms/
@@ -157,6 +158,11 @@ resources/
    │  │  │  └─ sort.blade.php
    │  │  └─ tables/
    │  │     ├─ columns/
+   │  │     │  ├─ appointment.blade.php
+   │  │     │  ├─ audit-log.blade.php
+   │  │     │  ├─ student.blade.php
+   │  │     │  └─ user.blade.php
+   │  │     ├─ rows/
    │  │     │  ├─ appointment.blade.php
    │  │     │  ├─ audit-log.blade.php
    │  │     │  ├─ student.blade.php
@@ -462,7 +468,7 @@ Frost looked at high school chemistry for inspiration. He realized that just as 
 
 Atoms are the smallest pieces of your interface that can't be broken down any further without losing their purpose.
 
-* 
+*
 **Examples**: A button, a text input field, a label, or a specific color.
 
 
@@ -477,7 +483,7 @@ Molecules are small groups of atoms bonded together to do one specific job.
 * **Example**: Take a "Label" atom, an "Input" atom, and a "Button" atom. Put them together, and you have a **Search Form molecule**.
 
 
-* 
+*
 **The Benefit**: These are simple, reusable, and easy to test because they follow the "do one thing and do it well" rule.
 
 
@@ -486,11 +492,11 @@ Molecules are small groups of atoms bonded together to do one specific job.
 
 Organisms are more complex sections of an interface made of groups of molecules and/or atoms.
 
-* 
+*
 **Example**: A "Header" organism. It might contain a Logo (atom), a Navigation Menu (molecule), and that Search Form (molecule) we just made.
 
 
-* 
+*
 **Context**: This is where you start to see the design actually working in a recognizable way.
 
 
@@ -499,7 +505,7 @@ Organisms are more complex sections of an interface made of groups of molecules 
 
 At this stage, we stop the chemistry talk and start talking about layouts. Templates are the "skeletons" of a page. They show where the organisms live on the screen without using real content yet.
 
-* 
+*
 **Focus**: This is about **structure**, not the final data. It defines things like: "The header goes here, and the product grid goes there".
 
 
@@ -508,7 +514,7 @@ At this stage, we stop the chemistry talk and start talking about layouts. Templ
 
 Pages are the most concrete stage. This is where you take your template and pour in **real content**—real photos, real headlines, and real text.
 
-* 
+*
 **Why it matters**: This is the ultimate "stress test". If a headline is too long and breaks the design, you go back to the atoms or molecules and fix them.
 
 
@@ -517,15 +523,15 @@ Pages are the most concrete stage. This is where you take your template and pour
 
 Building a system like this isn't just about code; it’s about how people work together.
 
-* 
+*
 **Kill the "Waterfall"**: In the old days, a designer would spend weeks on a "perfect" Photoshop file, throw it over a wall to the developer, and yell "Make this!". Frost says that is a recipe for disaster.
 
 
-* 
+*
 **Collaboration**: Designers and developers need to work together from day one. They should focus on "design atmosphere" (colors and feel) early on, rather than pixel-perfect layouts.
 
 
-* 
+*
 **Prototypes**: Instead of static pictures, teams should build living, breathing prototypes in the browser as soon as possible.
 
 
@@ -536,15 +542,15 @@ To make this system work, you need a **Pattern Library** (or Style Guide). This 
 
 **Benefits of a Pattern Library:**
 
-* 
+*
 **Consistency**: No more having 50 different shades of blue or 10 different button styles on one site.
 
 
-* 
+*
 **Speed**: Once the system is built, you can launch new features much faster because the "bricks" are already there.
 
 
-* 
+*
 **Shared Language**: Everyone starts calling the "Top Bar" the "Header Organism," which cuts down on confusion.
 
 
@@ -553,15 +559,15 @@ To make this system work, you need a **Pattern Library** (or Style Guide). This 
 
 The biggest mistake companies make is treating a design system like a one-time project. Frost insists that a design system is a **living product** that needs constant care.
 
-* 
+*
 **Make it Official**: It needs a dedicated team and budget to survive.
 
 
-* 
+*
 **Make it Last**: Much like a fine wine, a design system should get better over time as you learn from user testing and data.
 
 
-* 
+*
 **Make it Adaptable**: As new devices come out, your system should be able to evolve to meet those needs.
 
 
