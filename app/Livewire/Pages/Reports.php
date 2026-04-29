@@ -6,6 +6,8 @@ use App\{Models\Report, Services\Miscellaneous\ReportService};
 use Illuminate\Support\Collection;
 use Livewire\{Attributes\Layout, Attributes\Title, Component};
 
+#[Title('Reports')]
+#[Layout('layouts.personal-pages', ['padding' => '0px', 'important' => '!important'])]
 class Reports extends Component
 {
     public ?int $selectedReportId = null;
@@ -59,7 +61,6 @@ class Reports extends Component
         }
 
         $title = $report->title;
-
         $service->delete($id);
 
         if ($this->activeId === $id) {
@@ -86,8 +87,6 @@ class Reports extends Component
         }, $file['filename']);
     }
 
-    #[Title('Reports')]
-    #[Layout('layouts.personal-pages', ['padding' => '0px', 'important' => '!important'])]
     public function render(ReportService $service)
     {
         $reports = $service->getReportsList();

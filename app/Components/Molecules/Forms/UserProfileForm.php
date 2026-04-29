@@ -9,7 +9,7 @@ class UserProfileForm extends Component
 {
     public array $suffixes;
 
-    public function __construct(public mixed $user, public mixed $person)
+    public function __construct(public string $id = 'profileForm', public mixed $user = null, public mixed $person = null)
     {
         $this->suffixes = Enums::suffixes();
     }

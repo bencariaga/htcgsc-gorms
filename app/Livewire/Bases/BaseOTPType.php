@@ -15,7 +15,7 @@ abstract class BaseOTPType extends Component
 
     public string $sessionKey = 'otp_email';
 
-    public string $fallbackRoute = 'profile.index';
+    public string $fallbackRoute = 'user-profile.index';
 
     protected string $updateField;
 
@@ -47,12 +47,12 @@ abstract class BaseOTPType extends Component
         $pending = Session::get('pending_profile_update');
 
         $mappedData = [
-            'first_name' => $pending['firstName'] ?? $targetUser->person->first_name,
-            'last_name' => $pending['lastName'] ?? $targetUser->person->last_name,
-            'middle_name' => $pending['middleName'] ?? $targetUser->person->middle_name,
+            'first_name' => $pending['first_name'] ?? $targetUser->person->first_name,
+            'last_name' => $pending['last_name'] ?? $targetUser->person->last_name,
+            'middle_name' => $pending['middle_name'] ?? $targetUser->person->middle_name,
             'suffix' => $pending['suffix'] ?? $targetUser->person->suffix,
-            'email_address' => $pending['email'] ?? $targetUser->person->email_address,
-            'phone_number' => $pending['phoneNumber'] ?? $targetUser->person->phone_number,
+            'email_address' => $pending['email_address'] ?? $targetUser->person->email_address,
+            'phone_number' => $pending['phone_number'] ?? $targetUser->person->phone_number,
         ];
 
         $mappedData[$verifiedField] = $this->identifier;

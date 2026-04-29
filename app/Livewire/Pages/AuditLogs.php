@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\{Title, Url};
 use Opcodes\LogViewer\Facades\LogViewer;
 
+#[Title('Audit Logs')]
 class AuditLogs extends BaseListType
 {
     use HandlesAuditLogActions, HasAppInformation;
@@ -47,7 +48,6 @@ class AuditLogs extends BaseListType
         }
     }
 
-    #[Title('Audit Logs')]
     public function render()
     {
         $service = $this->getService();
@@ -61,7 +61,7 @@ class AuditLogs extends BaseListType
         $viewPath = $this->view;
 
         /** @var mixed $view */
-        $view = view($viewPath, [$this->key => $service->getLogs($selectedFile, $this->search, $this->sortField, $this->sortDirection, $this->perPage, $this->filter, $this->getPage()), 'user' => Auth::user()?->load('person'), 'files' => $files, 'selectedFile' => $selectedFile, 'processingFileName' => $this->processingFileName, 'appInfo' => $this->getAppInfo()]);
+        $view = view($viewPath, [$this->key => $service->getLogs($selectedFile, $this->search, $this->sortField, $this->sortDirection, $this->perPage, $this->filter, $this->getPage()), 'user' => Auth::user()?->loadMissing('person'), 'files' => $files, 'selectedFile' => $selectedFile, 'processingFileName' => $this->processingFileName, 'appInfo' => $this->getAppInfo()]);
 
         return $view->layout('layouts.personal-pages', ['padding' => '0px', 'important' => '!important', 'type' => $this->getType()]);
     }

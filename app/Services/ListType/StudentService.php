@@ -2,7 +2,7 @@
 
 namespace App\Services\ListType;
 
-use App\Actions\Student\{SearchStudents, UpdateStudent};
+use App\Actions\Student\{CreateStudent, SearchStudents, UpdateStudent};
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class StudentService
@@ -14,13 +14,14 @@ class StudentService
         return $this->searchStudents->handle($search, $filter, $sortField, $sortDirection, $rowsPerPage);
     }
 
-    public function searchStudents(string $search, string $sortField, string $sortDirection, int $limit): LengthAwarePaginator
+    public function create(array $data): int
     {
-        return $this->handle($search, 'All', $sortField, $sortDirection, $limit);
+        return app(CreateStudent::class)->handle($data);
     }
 
-    public function update(array $data): void
+    public function update(int|string $id, array $data): void
     {
+        $data['student_id'] = $id;
         $this->updateStudent->handle($data);
     }
 }

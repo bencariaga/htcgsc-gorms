@@ -15,9 +15,11 @@ class UpdateUserProfile extends FormRequest
 
     public function rules(): array
     {
+        $targetUserId = $this->input('user_id');
         $routeUser = $this->route('user');
 
         $targetUser = match (true) {
+            filled($targetUserId) => User::find($targetUserId),
             $routeUser instanceof User => $routeUser,
             str($routeUser)->isMatch(Regex::userName()) => User::where('username', $routeUser)->first(),
             default => Auth::user(),
@@ -30,6 +32,7 @@ class UpdateUserProfile extends FormRequest
         $personId = $targetUser->person?->person_id;
 
         return [
+            'user_id' => ['nullable', 'exists:users,user_id'],
             'first_name' => ['required', 'string', 'max:20', 'regex:' . Regex::firstName()],
             'last_name' => ['required', 'string', 'max:20'],
             'middle_name' => ['nullable', 'string', 'max:20'],

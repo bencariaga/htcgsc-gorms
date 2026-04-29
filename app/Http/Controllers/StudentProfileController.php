@@ -2,25 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\{Http\Requests\UpdateStudentProfile, Models\Student, Services\ListType\StudentService};
+use App\{Http\Requests\UpdateStudentProfile, Services\ListType\StudentService};
 use Exception;
-use Illuminate\Http\{JsonResponse, RedirectResponse};
+use Illuminate\Http\JsonResponse;
 
 class StudentProfileController extends Controller
 {
-    public function update(UpdateStudentProfile $request, StudentService $studentService): JsonResponse|RedirectResponse
+    public function update(UpdateStudentProfile $request, StudentService $studentService): JsonResponse
     {
         try {
-            $studentService->update($request->validated());
-            $student = Student::where('student_id', $request->input('student_id'))->first();
+            $studentId = $request->input('student_id');
+            $studentService->update($studentId, $request->validated());
 
-            if ($request->expectsJson()) {
-                return response()->json(['type' => 'success', 'message' => $this->getUpdatedMessage('Student'), 'student' => $student->fresh()->load('person')->toArray()], 200);
-            }
-
-            return $this->success($this->getUpdatedMessage('Student'));
+            return response()->json(['status' => 'success', 'message' => 'Student profile has been updated successfully!']);
         } catch (Exception $e) {
-            return $this->error($e->getMessage());
+            return response()->json(['status' => 'error', 'message' => $e->getMessage()], 400);
         }
     }
 }

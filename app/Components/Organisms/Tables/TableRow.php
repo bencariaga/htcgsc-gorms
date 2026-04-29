@@ -77,7 +77,7 @@ class TableRow extends Component
         $this->fullName = $this->person?->full_name ?? '—';
         $this->formalNameWithInitial = $this->person?->formal_name_with_initial ?? '—';
         $this->phoneNumber = $this->person?->phone_number ?? '—';
-        $this->emailAddress = str($this->person?->email_address ?? '')->replace(['@online.htcgsc.edu.ph', '@gmail.com', '@example.com', '@example.net'], '')->toString();
+        $this->emailAddress = $this->person?->email_address ?? '—';
         $this->emailAddressLineBreak = str($this->person?->email_address ?? '')->replace('@', '<br>@')->toString();
 
         $personType = $this->person?->type instanceof \BackedEnum ? $this->person->type->value : $this->person?->type;
@@ -128,7 +128,7 @@ class TableRow extends Component
             return null;
         }
 
-        return $this->item->referrals->first()?->appointment;
+        return $this->item->latestReferral?->appointment;
     }
 
     private function resolveReferrer(): string

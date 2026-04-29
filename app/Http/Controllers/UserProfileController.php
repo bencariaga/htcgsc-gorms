@@ -2,78 +2,60 @@
 
 namespace App\Http\Controllers;
 
-use App\{Actions\User\ResetUserPassword, Data\PasswordResetData, Models\User};
-use App\Http\Requests\{UpdateUserPassword, UpdateUserProfile};
-use App\Services\{ListType\UserService, Miscellaneous\OTPService, Miscellaneous\ProfileService};
-use Illuminate\Http\{JsonResponse, RedirectResponse};
-use Illuminate\Support\Facades\{Auth, Log};
+use App\{Data\PasswordResetData, Http\Requests\UpdateUserProfile, Models\User};
+use App\Services\Miscellaneous\{OTPService, ProfileService};
+use Exception;
+use Illuminate\Http\{JsonResponse, RedirectResponse, Request};
+use Illuminate\Support\Facades\Auth;
 
 class UserProfileController extends Controller
 {
-    public function index(?User $user = null)
-    {
-        $targetUser = $user ?? Auth::user();
-        $targetUser->load('person');
-
-        return view('livewire.pages.user-profile', ['user' => $targetUser, 'person' => $targetUser->person, 'fullName' => $targetUser->person->full_name]);
-    }
-
-    public function update(UpdateUserProfile $request, OTPService $otpService, ProfileService $profileService, UserService $userService, ?User $user = null): JsonResponse|RedirectResponse
+    public function update(UpdateUserProfile $request, OTPService $otpService, ProfileService $profileService, User $user): JsonResponse|RedirectResponse
     {
         try {
-            $targetUser = $user ?? Auth::user();
-            $redirectRoute = $profileService->handleUpdate($targetUser, $request->validated(), $otpService);
-            /** @var mixed $request */
-            $profileService->handleProfilePicture($targetUser, $request);
+            $redirectRoute = $profileService->handleUpdate($user, $request->validated(), $otpService, $request->file('profilePicture'), $request->input('remove_picture') === '1');
+
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json(['status' => 'success', 'message' => 'User profile updated successfully!', 'redirect' => $redirectRoute ? route($redirectRoute) : null]);
+            }
 
             if ($redirectRoute) {
                 return redirect()->route($redirectRoute);
             }
 
-            return $this->success($this->getUpdatedMessage());
-        } catch (\Exception $e) {
-            return $this->error("User profile update failed: {$e->getMessage()}");
+            return redirect()->back()->with('success', 'User profile updated successfully!');
+        } catch (Exception $e) {
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json(['status' => 'error', 'message' => $e->getMessage()], 400);
+            }
+
+            return redirect()->back()->with('error', $e->getMessage());
         }
     }
 
-    public function updatePassword(UpdateUserPassword $request, ResetUserPassword $resetAction, ?User $user = null): JsonResponse|RedirectResponse
+    public function updatePassword(Request $request, ProfileService $profileService, User $user): RedirectResponse
     {
+        $validated = $request->validate(['full_name' => 'required', 'newPassword' => ['required', 'min:8', 'confirmed']]);
+
         try {
-            $targetUser = $user ?? Auth::user();
-            $targetUser->load('person');
-            $identifier = $targetUser->person->email_address ?? $targetUser->person->phone_number;
-            $newPassword = $request->validated()['newPassword'];
+            if ($validated['full_name'] !== $user->person->full_name) {
+                throw new Exception('The full name does not match.');
+            }
 
-            $resetAction->execute(new PasswordResetData(identifier: $identifier, newPassword: $newPassword));
+            $shouldLogout = $profileService->resetPassword(new PasswordResetData(identifier: $user->person->email_address ?? $user->person->phone_number, newPassword: $validated['newPassword']), $user);
 
-            $message = $this->getUpdatedMessage();
-            $loginMessage = 'Please log in again.';
-            $lineBreak = '<br>';
-
-            if ($targetUser->user_id === Auth::id()) {
-                Auth::guard('web')->logout();
+            if ($shouldLogout) {
+                Auth::logout();
 
                 $request->session()->invalidate();
                 $request->session()->regenerateToken();
 
-                return redirect()->to('/')->with('success', "{$message}{$lineBreak}{$loginMessage}");
+                return redirect()->to('/')->with('success', 'Password updated successfully! Please log in again.');
             }
 
-            return $this->success($message);
-        } catch (\Exception $e) {
-            Log::error("Password update failed: {$e->getMessage()}");
-
-            return back()->withErrors(['error' => 'Something went wrong while updating the password. Please try again.']);
+            return redirect()->back()->with('success', 'Password updated successfully!');
+        } catch (Exception $e) {
+            return redirect()->back()->withErrors(['newPassword' => $e->getMessage()])->withInput();
         }
-    }
-
-    public function otpEmail()
-    {
-        return view('livewire.authentication.one-time-password-eac');
-    }
-
-    public function otpPhone()
-    {
-        return view('livewire.authentication.one-time-password-pnc');
     }
 }

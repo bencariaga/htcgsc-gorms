@@ -9,8 +9,8 @@ class Appointment extends Component
 {
     public function __construct(public mixed $item, public ?PersonData $person = null, public string $fullName = '—', public bool $isReschedulable = false, public ?array $config = null, public string $referrer = '—', public ?string $bookedTime = null, public ?string $modalBookedTime = null, public string $formalName = '—')
     {
-        if ($this->item->person instanceof PersonData) {
-            $this->mapPersonData($this->item->person);
+        if (data_get($this->item, 'person') instanceof PersonData) {
+            $this->mapPersonData(data_get($this->item, 'person'));
 
             return;
         }

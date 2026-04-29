@@ -16,7 +16,7 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('api')->prefix('api')->group(base_path('routes/api.php'));
 
             Route::middleware('web')->group(function () {
-                $webRoutes = ['web', 'auth', 'livewire'];
+                $webRoutes = ['web', 'auth', 'livewire', 'miscellaneous'];
 
                 foreach ($webRoutes as $route) {
                     require base_path("routes/{$route}.php");

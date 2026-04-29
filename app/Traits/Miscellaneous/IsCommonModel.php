@@ -26,22 +26,22 @@ trait IsCommonModel
 
     public function initializeIsCommonModel(): void
     {
-        $className = class_basename($this);
-        $this->table = str($className)->snake()->append('s')->toString();
-        $this->primaryKey = str($className)->snake()->append('_id')->toString();
+        static $cache = [];
+        $class = static::class;
+
+        if (!collect($cache)->has($class)) {
+            $className = class_basename($class);
+            $cache[$class] = collect(['table' => 's', 'key' => '_id'])->map(fn ($suffix, $key) => str($className)->snake()->append($suffix)->toString())->toArray();
+        }
+
+        $this->table = $cache[$class]['table'];
+        $this->primaryKey = $cache[$class]['key'];
         $this->keyType = 'int';
         $this->incrementing = false;
     }
 
     protected static function bootIsCommonModel(): void
     {
-        static::creating(function ($model) {
-            if (!$model->{$model->getKeyName()}) {
-                $model->{$model->getKeyName()} = GenerateDatabaseTableRowId::execute(
-                    $model->getTable(),
-                    $model->getKeyName(),
-                );
-            }
-        });
+        static::creating(fn ($model) => $model->{$model->getKeyName()} ??= GenerateDatabaseTableRowId::execute($model->getTable(), $model->getKeyName()));
     }
 }

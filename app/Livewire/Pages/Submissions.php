@@ -7,6 +7,8 @@ use App\Services\Miscellaneous\GoogleFormService;
 use Illuminate\Support\Js;
 use Livewire\{Attributes\Layout, Attributes\Title, Attributes\Url, Component};
 
+#[Title('Submissions')]
+#[Layout('layouts.personal-pages', ['padding' => '0px', 'important' => '!important'])]
 class Submissions extends Component
 {
     #[Url(as: 'file')]
@@ -70,8 +72,6 @@ class Submissions extends Component
         $this->selectedFileName = $name;
     }
 
-    #[Title('Submissions')]
-    #[Layout('layouts.personal-pages', ['padding' => '0px', 'important' => '!important'])]
     public function render(GoogleFormService $service)
     {
         $items = $service->getStats();

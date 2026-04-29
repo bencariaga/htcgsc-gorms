@@ -5,4 +5,5 @@
         'deactivate' => ['title' => 'Deactivating', 'color' => 'confirm', 'action' => 'deactivate', 'msg' => 'deactivate', 'person' => 'user', 'target' => 'user account'],
         'delete' => ['title' => 'Deleting', 'color' => 'danger', 'action' => 'delete', 'msg' => 'delete', 'person' => 'user', 'target' => 'user account']
     ]"
+    :modalEnum="App\Enums\NonDB\ListTypeModals::USER"
 />

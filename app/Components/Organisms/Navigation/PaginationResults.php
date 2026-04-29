@@ -19,9 +19,8 @@ class PaginationResults extends Component
     {
         $settings = PaginationStyling::getLayoutSettings($this->type);
         $this->width = $settings['results_width'] ?? 'w-[20rem]';
-
         $isPaginator = $this->items instanceof LengthAwarePaginator;
-        $this->totalCount = $isPaginator ? $this->items->total() : count($this->items);
+        $this->totalCount = $isPaginator ? $this->items->total() : collect($this->items)->count();
 
         if ($this->totalCount <= 0) {
             $this->noResults = 'No ' . str($this->type)->replace('-', ' ')->plural() . ' found.';
@@ -31,7 +30,8 @@ class PaginationResults extends Component
 
         $first = $isPaginator ? $this->items->firstItem() : 1;
         $last = $isPaginator ? $this->items->lastItem() : $this->totalCount;
-        $this->resultText = "Showing {$first} to {$last} of {$this->totalCount} results";
+        $text = "{$first} to {$last} of {$this->totalCount}";
+        $this->resultText = (request()->routeIs('audit-logs.index')) ? $text : "Showing {$text} results";
     }
 
     public function render()

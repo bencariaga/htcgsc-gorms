@@ -1,50 +1,8 @@
 <?php
 
 use App\Http\Controllers\{StudentProfileController, UserProfileController};
+use App\Livewire\{Authentication\OneTimePasswordEAC, Authentication\OneTimePasswordPNC, Pages\UserProfile};
 use Illuminate\Support\{Facades\Artisan, Facades\Auth, Facades\Route};
-
-Route::get('/setup', function () {
-    try {
-        Artisan::call('setup');
-
-        return response()->json([
-            'status' => 'Success',
-            'log' => Artisan::output(),
-        ]);
-    } catch (Exception $e) {
-        return response()->json([
-            'status' => 'Failed',
-            'error' => $e->getMessage(),
-            'trace' => $e->getTraceAsString(),
-        ], 500);
-    }
-});
-
-Route::get('/delete-logs', function () {
-    try {
-        $gfLogPath = storage_path('logs/google-forms');
-
-        if (File::exists($gfLogPath)) {
-            File::put($gfLogPath, '');
-
-            return response()->json([
-                'status' => 'Success',
-                'message' => 'Log file cleared successfully.',
-            ]);
-        }
-
-        return response()->json([
-            'status' => 'Success',
-            'message' => 'Log file does not exist, nothing to clear.',
-        ]);
-    } catch (Exception $e) {
-        return response()->json([
-            'status' => 'Failed',
-            'error' => $e->getMessage(),
-            'trace' => $e->getTraceAsString(),
-        ], 500);
-    }
-});
 
 Route::middleware('web')->group(function () {
     Route::get('/refresh-csrf', fn () => response()->json(['token' => csrf_token(), 'status' => config('app.key') ? 'ok' : 'error']));
@@ -68,12 +26,11 @@ Route::middleware('web')->group(function () {
             return redirect()->to('/')->with('success', 'System cache has been <strong>cleared and logged out</strong> successfully!');
         })->name('cache.clear');
 
-        Route::prefix('user-profile')->name('user-profile.')->controller(UserProfileController::class)->group(function () {
-            Route::get('{user?}', 'index')->name('index');
-            Route::put('update/{user?}', 'update')->name('update');
-            Route::post('update-password/{user?}', 'updatePassword')->name('updatePassword');
-        });
-
-        Route::post('student-profile/update', [StudentProfileController::class, 'update'])->name('student-profile.update');
+        Route::get('user-profile/{user?}', UserProfile::class)->name('user-profile.index');
+        Route::post('students/update', [StudentProfileController::class, 'update'])->name('student-profile.update');
+        Route::put('user-profile/{user}/update', [UserProfileController::class, 'update'])->name('user-profile.update');
+        Route::post('user-profile/{user}/update-password', [UserProfileController::class, 'updatePassword'])->name('user-profile.updatePassword');
+        Route::get('user-profile/otp-email', OneTimePasswordEAC::class)->name('user-profile.otpEmail');
+        Route::get('user-profile/otp-phone', OneTimePasswordPNC::class)->name('user-profile.otpPhone');
     });
 });

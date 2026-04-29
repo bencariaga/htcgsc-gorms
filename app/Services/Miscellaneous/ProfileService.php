@@ -2,40 +2,49 @@
 
 namespace App\Services\Miscellaneous;
 
-use App\Actions\Profile\{StorePendingProfileUpdate, UpdateProfileBasicInfo, UpdateProfilePicture};
-use App\Models\User;
-use Illuminate\Http\Request;
+use App\Actions\Profile\{HandleProfileUpdate, PrepareProfileUpdatedEvent, UpdateUserProfile, UpdateUserProfilePicture};
+use App\Actions\User\ResetUserPassword;
+use App\{Data\PasswordResetData, Models\User};
+use Exception;
+use Illuminate\Http\{Request, UploadedFile};
+use Illuminate\Support\Facades\Auth;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 class ProfileService
 {
-    public function handleUpdate(User $user, array $validated, OTPService $otpService): ?string
+    public function handleUpdate(User $user, array $validated, OTPService $otpService, UploadedFile|TemporaryUploadedFile|null $profilePicture = null, bool $removePicture = false): ?string
     {
-        $user->loadMissing('person');
-        $person = $user->person()->firstOrFail();
+        return app(HandleProfileUpdate::class)->handle($user, $validated, $otpService, $profilePicture, $removePicture);
+    }
 
-        foreach (['email_address' => 'otp_email', 'phone_number' => 'otp_phone'] as $field => $type) {
-            $currentValue = ($field === 'email_address') ? $person->email_address : $person->phone_number;
-
-            if (filled($validated[$field] ?? null) && $validated[$field] !== $currentValue) {
-                app(StorePendingProfileUpdate::class)->handle($user->getAttribute('user_id'), $type, $validated[$field], collect($validated)->except($field)->toArray());
-                $otpService->generateAndSend($user, $validated[$field], true);
-
-                return 'user-profile.' . ($field === 'email_address' ? 'otpEmail' : 'otpPhone');
-            }
-        }
-
-        $this->updateBasicInfo($user, $validated);
-
-        return null;
+    public function refreshAndGetPayload(User $user): array
+    {
+        return app(PrepareProfileUpdatedEvent::class)->handle($user);
     }
 
     public function updateBasicInfo(User $user, array $data): void
     {
-        app(UpdateProfileBasicInfo::class)->handle($user, $data);
+        app(UpdateUserProfile::class)->handle($user, $data);
+    }
+
+    public function updateProfilePicture(User $user, UploadedFile|TemporaryUploadedFile|null $file, bool $remove = false): void
+    {
+        app(UpdateUserProfilePicture::class)->handle($user, $file, $remove);
     }
 
     public function handleProfilePicture(User $user, Request $request): void
     {
-        app(UpdateProfilePicture::class)->handle($user, $request);
+        $this->updateProfilePicture($user, $request->file('profile_picture'), $request->input('remove_picture') === '1');
+    }
+
+    public function resetPassword(PasswordResetData $data, User $targetUser): bool
+    {
+        $success = app(ResetUserPassword::class)->execute($data);
+
+        if (!$success) {
+            throw new Exception('Failed to update password.');
+        }
+
+        return $targetUser->user_id === Auth::id();
     }
 }

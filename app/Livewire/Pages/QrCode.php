@@ -5,6 +5,8 @@ namespace App\Livewire\Pages;
 use App\Services\Miscellaneous\QrCodeService;
 use Livewire\{Attributes\Layout, Attributes\Title, Component};
 
+#[Title('QR Code')]
+#[Layout('layouts.personal-pages', ['padding' => '1rem', 'important' => '!important'])]
 class QrCode extends Component
 {
     public function download(QrCodeService $service)
@@ -14,8 +16,6 @@ class QrCode extends Component
         return $service->downloadQrCode();
     }
 
-    #[Layout('layouts.personal-pages')]
-    #[Title('QR Code')]
     public function render(QrCodeService $service)
     {
         return view('livewire.pages.qr-code', $service->getViewModelData());

@@ -51,7 +51,7 @@ class Student extends Model implements CommonModel
 
     public function latestReferral(): HasOne
     {
-        return $this->hasOne(Referral::class, 'student_id', 'student_id')->latestOfMany();
+        return $this->hasOne(Referral::class, 'student_id', 'student_id')->latestOfMany('referral_id');
     }
 
     public function latestActivity(): MergedRelation

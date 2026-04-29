@@ -25,7 +25,7 @@ class StudentData extends Data
         $person = $student->relationLoaded('person') ? $student->person : null;
 
         /** @var mixed $latestAppointment */
-        $latestAppointment = $student->relationLoaded('referrals') ? $student->referrals->first()?->appointment : null;
+        $latestAppointment = $student->relationLoaded('latestReferral') ? $student->latestReferral?->appointment : ($student->relationLoaded('referrals') ? $student->referrals->first()?->appointment : null);
 
         return new self(student_id: $student->student_id, person: PersonData::fromModel($person), profile_picture: null, formatted_student_id: $student->formatted_student_id, is_admin: data_get($person, 'type') === PersonType::Administrator, referrer: self::resolveReferrer($latestAppointment, $person), latest_appointment: $latestAppointment);
     }

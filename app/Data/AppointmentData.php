@@ -34,6 +34,7 @@ class AppointmentData extends Data
         public string $booked_time_table,
         public string $booked_time_modal,
         public bool $is_reschedulable,
+        public bool $is_finalized,
         public string $referrer,
         public bool $is_admin,
     ) {}
@@ -64,6 +65,7 @@ class AppointmentData extends Data
             booked_time_table: $bookedTimeTable,
             booked_time_modal: $bookedTimeModal,
             is_reschedulable: $isReschedulable,
+            is_finalized: collect([AppointmentStatus::Done, AppointmentStatus::Cancelled])->contains($status),
             referrer: $referrer,
             is_admin: ($person?->type ?? null) === PersonType::Administrator,
         );

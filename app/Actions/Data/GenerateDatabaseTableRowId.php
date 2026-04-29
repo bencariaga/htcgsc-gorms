@@ -8,6 +8,6 @@ class GenerateDatabaseTableRowId
 {
     public static function execute(string $table, string $primaryKey): int
     {
-        return DB::table($table)->pluck($primaryKey)->sort()->reduce(fn ($next, $id) => $id == $next ? $id + 1 : $next, 1);
+        return (DB::table($table)->max($primaryKey) ?? 0) + 1;
     }
 }

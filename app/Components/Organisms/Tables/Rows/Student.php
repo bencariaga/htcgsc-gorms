@@ -9,8 +9,8 @@ class Student extends Component
 {
     public function __construct(public mixed $item, public ?PersonData $person = null, public string $fullName = '—', public ?string $emailAddress = null, public ?string $emailAddressLineBreak = null, public ?array $config = null, public ?object $latestAppointment = null, public string $referrer = '—', public string $formalName = '—', public string $phoneNumber = '—')
     {
-        if ($this->item->person instanceof PersonData) {
-            $this->mapPersonData($this->item->person);
+        if (data_get($this->item, 'person') instanceof PersonData) {
+            $this->mapPersonData(data_get($this->item, 'person'));
 
             return;
         }
@@ -22,7 +22,7 @@ class Student extends Component
     {
         $this->person = $personData;
         $this->fullName = $personData->full_name;
-        $this->emailAddress = $personData->email_address;
+        $this->emailAddress = str($personData->email_address)->replace(['@online.htcgsc.edu.ph', '@gmail.com', '@example.com', '@example.net'], '')->toString();
         $this->emailAddressLineBreak = $personData->email_address_line_break;
         $this->config = ['id_key' => 'studentId', 'id_val' => $this->item->student_id];
         $this->latestAppointment = $this->item->latest_appointment ?? null;
@@ -35,11 +35,11 @@ class Student extends Component
     {
         $this->person = $this->item->person;
         $this->fullName = $this->person?->full_name ?? '—';
-        $this->emailAddress = str($this->person?->email_address ?? '')->replace(['@online.htcgsc.edu.ph', '@gmail.com', '@example.com', '@example.net'], '')->toString();
+        $this->emailAddress = $this->person?->email_address ?? '—';
         $this->emailAddressLineBreak = str($this->person?->email_address ?? '')->replace('@', '<br>@')->toString();
         $this->config = ['id_key' => 'studentId', 'id_val' => $this->item->student_id];
 
-        $this->latestAppointment = $this->item->referrals->first()?->appointment;
+        $this->latestAppointment = $this->item->latestReferral?->appointment;
         $this->referrer = $this->resolveReferrer();
         $this->formalName = $this->person?->formal_name_with_initial ?? '—';
         $this->phoneNumber = $this->person?->phone_number ?? '—';

@@ -36,13 +36,13 @@
             </button>
 
             <div class="absolute bottom-0 left-0 h-1 bg-slate-200/30 w-full">
-                <div class="h-full transition-all duration-[5000ms] linear"
+                <div class="h-full transition-all duration-[5000ms] linear bg-gradient-to-r"
                     x-init="$el.style.width = '100%'; setTimeout(() => $el.style.width = '0%', 10)"
                     :class="{
-                        'bg-emerald-500': note.type === 'success',
-                        'bg-red-500': note.type === 'error',
-                        'bg-orange-400': note.type === 'warning',
-                        'bg-blue-500': note.type === 'info'
+                        'from-emerald-500 to-emerald-500': note.type === 'success',
+                        'from-red-500 to-red-500': note.type === 'error',
+                        'from-orange-500 to-orange-500': note.type === 'warning',
+                        'from-blue-500 to-blue-500': note.type === 'info'
                     }">
                 </div>
             </div>

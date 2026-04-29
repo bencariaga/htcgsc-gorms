@@ -14,6 +14,6 @@
 
 <td class="{{ $cellStyling }}">
     <span class="text-base font-bold text-slate-700 dark:text-slate-200 whitespace-nowrap">
-        {{ $item->formatted_student_id }}
+        {{ data_get($item, 'formatted_student_id') }}
     </span>
 </td>
