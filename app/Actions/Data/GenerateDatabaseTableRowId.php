@@ -8,6 +8,18 @@ class GenerateDatabaseTableRowId
 {
     public static function execute(string $table, string $primaryKey): int
     {
-        return (DB::table($table)->max($primaryKey) ?? 0) + 1;
+        $ids = DB::table($table)->pluck($primaryKey)->sort();
+
+        $nextId = 1;
+
+        foreach ($ids as $id) {
+            if ($id > $nextId) {
+                break;
+            }
+
+            $nextId = $id + 1;
+        }
+
+        return $nextId;
     }
 }
