@@ -1,15 +1,109 @@
-@props(['id'])
+@props(['modal' => true, 'id'])
 
-<script src="{{ asset('js/student-profile.js') }}"></script>
+<form id="{{ $id }}" action="{{ route('student-profile.update') }}" method="POST" x-data="{
+    modal: @js($modal),
+    show: @js(!$modal),
+    student: {},
+    form: {
+        student_id: '',
+        last_name: '',
+        first_name: '',
+        middle_name: '',
+        suffix: '',
+        email_address: '',
+        phone_number: ''
+    },
+    original: {},
+    suffixOpen: false,
 
-<form id="{{ $id }}" action="{{ route('student-profile.update') }}" method="POST" x-data="studentProfileForm('{{ $id }}')" x-show="show" class="hidden fixed inset-0 z-[100] items-center justify-center p-4" :class="{ 'flex': show, 'hidden': !show }" @submit.prevent="submit()" x-cloak>
+    init() {
+        if (this.modal) {
+            this.show = true;
+        }
+
+        window.addEventListener('open-modal', (event) => {
+            if (event.detail.id === '{{ $id }}') {
+                this.student = event.detail.student;
+                const person = this.student.person;
+
+                this.form = {
+                    student_id: this.student.student_id,
+                    last_name: person.last_name,
+                    first_name: person.first_name,
+                    middle_name: person.middle_name || '',
+                    suffix: person.suffix || '',
+                    email_address: person.email_address,
+                    phone_number: person.phone_number || ''
+                };
+
+                this.original = { ...this.form };
+                this.show = true;
+            }
+        });
+    },
+
+    isDirty(field) {
+        return this.form[field] !== this.original[field];
+    },
+
+    get anyDirty() {
+        return Object.keys(this.form).some(field => this.isDirty(field));
+    },
+
+    resetForm() {
+        this.form = { ...this.original };
+    },
+
+    sanitize() {
+        this.form.first_name = this.form.first_name.replace(/\s/g, '');
+        this.form.phone_number = this.form.phone_number.replace(/[^0-9+]/g, '');
+    },
+
+    submit() {
+        this.$dispatch('show-loading-accounts', {
+            message: 'Updating student profile...',
+            userName: [this.form.first_name, this.form.middle_name, this.form.last_name, this.form.suffix].filter(Boolean).join(' '),
+        });
+
+        fetch(this.$el.action, {
+            method: 'POST',
+            body: new FormData(this.$el),
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content
+            }
+        })
+        .then(async response => {
+            const data = await response.json();
+
+            if (response.ok) {
+                this.original = { ...this.form };
+                this.$dispatch('close-modal', { id: '{{ $id }}' });
+                this.$dispatch('notify', { type: 'success', message: data.message });
+                window.Livewire?.dispatch('refreshList');
+            } else {
+                const errorMessages = response.status === 422 ? Object.values(data.errors).flat().join(' ') : (data.message || 'An unexpected error occurred.');
+
+                this.$dispatch('notify', {
+                    type: 'error',
+                    message: errorMessages
+                });
+            }
+        })
+        .catch(() => {
+            this.$dispatch('notify', { type: 'error', message: 'Connection lost. Please try again.' });
+        })
+        .finally(() => {
+            this.$dispatch('hide-loading-accounts');
+        });
+    }
+}" x-init="init()" class="w-full" @submit.prevent="submit()" x-cloak>
     @csrf
 
     <input type="hidden" name="student_id" x-model="form.student_id">
-    <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm" x-on:click="show = false"></div>
 
-    <div class="max-w-4xl w-full relative z-10 bg-white dark:bg-slate-800 shadow-xl border border-slate-200 dark:border-slate-700 rounded-2xl overflow-hidden">
-        <div class="bg-slate-50 dark:bg-slate-800/50 px-8 py-6 flex justify-between items-center border-b border-slate-100 dark:border-slate-700">
+    <div class="bg-slate-50 dark:bg-slate-800/50 px-8 py-6 flex justify-between items-center border-b border-slate-100 dark:border-slate-700">
             <div>
                 <h2 class="text-2xl font-bold text-slate-800 dark:text-white">Student Profile Settings</h2>
                 <p class="text-base text-slate-500 dark:text-slate-400 mt-1 font-medium transition-colors duration-300">Manage the information of this student.</p>
@@ -26,7 +120,7 @@
                     <label class="block text-base font-semibold text-slate-700 dark:text-slate-200">Last Name <span class="text-red-500">*</span></label>
                     <div class="relative flex items-center">
                         <i class="fas fa-user absolute left-4 text-slate-400"></i>
-                        <input type="text" name="lastName" x-model="form.lastName" :class="isDirty('lastName') ? 'bg-orange-50 border-orange-300 dark:bg-orange-900/20' : 'bg-gray-100 dark:bg-slate-900'" class="w-full h-[50px] pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all dark:text-white">
+                        <input type="text" name="last_name" x-model="form.last_name" :class="isDirty('last_name') ? 'bg-orange-50 border-orange-300 dark:bg-orange-900/20' : 'bg-gray-100 dark:bg-slate-900'" class="w-full h-[50px] pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all dark:text-white">
                     </div>
                 </div>
 
@@ -34,7 +128,7 @@
                     <label class="block text-base font-semibold text-slate-700 dark:text-slate-200">First Name <span class="text-red-500">*</span></label>
                     <div class="relative flex items-center">
                         <i class="fas fa-user absolute left-4 text-slate-400"></i>
-                        <input type="text" name="firstName" x-model="form.firstName" @keydown.space.prevent @input="sanitize" @blur="sanitize" :class="isDirty('firstName') ? 'bg-orange-50 border-orange-300 dark:bg-orange-900/20' : 'bg-gray-100 dark:bg-slate-900'" class="w-full h-[50px] pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all dark:text-white">
+                        <input type="text" name="first_name" x-model="form.first_name" @keydown.space.prevent @input="sanitize" @blur="sanitize" :class="isDirty('first_name') ? 'bg-orange-50 border-orange-300 dark:bg-orange-900/20' : 'bg-gray-100 dark:bg-slate-900'" class="w-full h-[50px] pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all dark:text-white">
                     </div>
                 </div>
 
@@ -42,7 +136,7 @@
                     <label class="block text-base font-semibold text-slate-700 dark:text-slate-200">Middle Name</label>
                     <div class="relative flex items-center">
                         <i class="fas fa-user absolute left-4 text-slate-400"></i>
-                        <input type="text" name="middleName" x-model="form.middleName" :class="isDirty('middleName') ? 'bg-orange-50 border-orange-300 dark:bg-orange-900/20' : 'bg-gray-100 dark:bg-slate-900'" class="w-full h-[50px] pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all dark:text-white">
+                        <input type="text" name="middle_name" x-model="form.middle_name" :class="isDirty('middle_name') ? 'bg-orange-50 border-orange-300 dark:bg-orange-900/20' : 'bg-gray-100 dark:bg-slate-900'" class="w-full h-[50px] pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all dark:text-white">
                     </div>
                 </div>
 
@@ -64,12 +158,12 @@
 
                         <div x-show="suffixOpen" x-transition x-cloak class="absolute z-50 w-full mt-2 bg-white dark:bg-slate-800 border border-gray-300 dark:border-slate-700 rounded-xl shadow-xl overflow-hidden">
                             <div class="grid grid-cols-2 p-1 gap-1">
-                                <button type="button" @click="form.suffix = ''; suffixOpen = false" class="w-full text-left px-4 py-2 text-lg transition-colors rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700" :class="!form.suffix ? 'bg-emerald-50 text-emerald-600 font-bold' : ''">
+                                <button type="button" @click="form.suffix = ''; suffixOpen = false" class="w-full text-left px-4 py-2 text-lg transition-colors rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 dark:text-white" :class="!form.suffix ? 'bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 font-bold' : ''">
                                     N / A
                                 </button>
 
                                 @foreach(App\Enums\Enums::suffixes() as $value => $label)
-                                    <button type="button" @click="form.suffix = '{{ $value }}'; suffixOpen = false" class="w-full text-left px-4 py-2 text-lg transition-colors rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700" :class="form.suffix === '{{ $value }}' ? 'bg-emerald-50 text-emerald-600 font-bold' : ''">
+                                    <button type="button" @click="form.suffix = '{{ $value }}'; suffixOpen = false" class="w-full text-left px-4 py-2 text-lg transition-colors rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 dark:text-white" :class="form.suffix === '{{ $value }}' ? 'bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 font-bold' : ''">
                                         {{ $label }}
                                     </button>
                                 @endforeach
@@ -84,7 +178,7 @@
                     <label class="block text-base font-semibold text-slate-700 dark:text-slate-200">Email Address <span class="text-red-500">*</span></label>
                     <div class="relative flex items-center">
                         <i class="fas fa-envelope absolute left-4 text-slate-400"></i>
-                        <input type="email" name="email" x-model="form.email" @keydown.space.prevent @input="sanitize" @blur="sanitize" :class="isDirty('email') ? 'bg-orange-50 border-orange-300 dark:bg-orange-900/20' : 'bg-gray-100 dark:bg-slate-900'" class="w-full h-[50px] pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all dark:text-white">
+                        <input type="email" name="email_address" x-model="form.email_address" @keydown.space.prevent @input="sanitize" @blur="sanitize" :class="isDirty('email_address') ? 'bg-orange-50 border-orange-300 dark:bg-orange-900/20' : 'bg-gray-100 dark:bg-slate-900'" class="w-full h-[50px] pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all dark:text-white">
                     </div>
                 </div>
 
@@ -92,7 +186,7 @@
                     <label class="block text-base font-semibold text-slate-700 dark:text-slate-200">Phone Number</label>
                     <div class="relative flex items-center">
                         <i class="fas fa-phone absolute left-4 text-slate-400"></i>
-                        <input type="text" name="phoneNumber" x-model="form.phoneNumber" inputmode="tel" @input="sanitize" @blur="sanitize" :class="isDirty('phoneNumber') ? 'bg-orange-50 border-orange-300 dark:bg-orange-900/20' : 'bg-gray-100 dark:bg-slate-900'" class="w-full h-[50px] pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all dark:text-white">
+                        <input type="text" name="phone_number" x-model="form.phone_number" inputmode="tel" @input="sanitize" @blur="sanitize" :class="isDirty('phone_number') ? 'bg-orange-50 border-orange-300 dark:bg-orange-900/20' : 'bg-gray-100 dark:bg-slate-900'" class="w-full h-[50px] pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all dark:text-white">
                     </div>
                 </div>
             </div>
@@ -109,5 +203,4 @@
                 <span>Save Changes</span>
             </button>
         </div>
-    </div>
 </form>

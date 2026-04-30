@@ -1,24 +1,34 @@
-@php $profilePicture = $user->profile_picture ? asset("storage/{$user->profile_picture}") : null; @endphp
+@props(['modal' => false, 'loaderId' => null])
+
+@php
+    $profilePicture = $user->profile_picture ? asset("storage/{$user->profile_picture}") : null;
+    $isSelf = $user->user_id === auth()->id();
+@endphp
+
+<script src="{{ asset('js/user-profile.js') }}"></script>
 
 <form id="profileForm" action="{{ route('user-profile.update', $user->user_id) }}" method="POST"
     enctype="multipart/form-data" class="space-y-6 py-[20px] px-[2rem]" x-data="{
+        modal: @js($modal),
+        isSelf: @js($isSelf),
+        loaderId: @js($loaderId),
         form: {
-            lastName: @js(old('last_name', $person->last_name)),
-            firstName: @js(old('first_name', $person->first_name)),
-            middleName: @js(old('middle_name', $person->middle_name)),
+            last_name: @js(old('last_name', $person->last_name)),
+            first_name: @js(old('first_name', $person->first_name)),
+            middle_name: @js(old('middle_name', $person->middle_name)),
             suffix: @js(old('suffix', $person->suffix ?? '')),
-            email: @js(old('email_address', $person->email_address)),
-            phoneNumber: @js(old('phone_number', $person->phone_number)),
+            email_address: @js(old('email_address', $person->email_address)),
+            phone_number: @js(old('phone_number', $person->phone_number)),
             remove_picture: '0',
             hasNewFile: false
         },
         original: {
-            lastName: @js($person->last_name),
-            firstName: @js($person->first_name),
-            middleName: @js($person->middle_name),
+            last_name: @js($person->last_name),
+            first_name: @js($person->first_name),
+            middle_name: @js($person->middle_name),
             suffix: @js($person->suffix ?? ''),
-            email: @js($person->email_address),
-            phoneNumber: @js($person->phone_number)
+            email_address: @js($person->email_address),
+            phone_number: @js($person->phone_number)
         },
         previewUrl: @js($profilePicture),
         suffixOpen: false,
@@ -43,7 +53,7 @@
         },
 
         get anyDirty() {
-            const basicFields = ['lastName', 'firstName', 'middleName', 'suffix', 'email', 'phoneNumber'];
+            const basicFields = ['last_name', 'first_name', 'middle_name', 'suffix', 'email_address', 'phone_number'];
             const isFieldDirty = basicFields.some(field => this.isDirty(field));
             return isFieldDirty || this.photoDirty;
         },
@@ -66,12 +76,9 @@
         },
 
         resetForm() {
-            this.form.lastName = this.original.lastName;
-            this.form.firstName = this.original.firstName;
-            this.form.middleName = this.original.middleName;
-            this.form.suffix = this.original.suffix;
-            this.form.email = this.original.email;
-            this.form.phoneNumber = this.original.phoneNumber;
+            Object.keys(this.original).forEach(key => {
+                this.form[key] = this.original[key];
+            });
 
             this.form.hasNewFile = false;
             this.form.remove_picture = '0';
@@ -81,10 +88,131 @@
         },
 
         sanitize() {
-            this.form.firstName = this.form.firstName.replace(/\s/g, '');
-            this.form.phoneNumber = this.form.phoneNumber.replace(/[^0-9+]/g, '');
+            this.form.first_name = this.form.first_name.replace(/\s/g, '');
+            this.form.phone_number = this.form.phone_number.replace(/[^0-9+]/g, '');
+        },
+
+        submit() {
+            const personName = [this.form.first_name, this.form.middle_name, this.form.last_name, this.form.suffix].filter(Boolean).join(' ');
+            const nameChanged = this.isDirty('first_name') || this.isDirty('middle_name') || this.isDirty('last_name') || this.isDirty('suffix');
+            const emailChanged = this.isDirty('email_address');
+            const phoneChanged = this.isDirty('phone_number');
+
+            const formatter = new Intl.ListFormat('en', { style: 'long', type: 'conjunction' });
+
+            if (emailChanged && phoneChanged) {
+                return alert('For security reasons, you cannot change your email address and phone number at the same time. Please update them one at a time.');
+            }
+
+            if (nameChanged && (emailChanged || phoneChanged)) {
+                return alert(`You cannot change your name while changing your ${emailChanged ? 'email address' : 'phone number'}.`);
+            }
+
+            if (nameChanged) {
+                const names = [
+                    { n: 'first name', v: this.form.first_name.trim() },
+                    { n: 'middle name', v: this.form.middle_name.trim() },
+                    { n: 'last name', v: this.form.last_name.trim() }
+                ].filter(f => f.v && f.v.length < 2).map(f => f.n);
+
+                if (names.length > 0) {
+                    return alert(`The ${formatter.format(names)} ${names.length > 1 ? 'must all' : 'must'} be at least 2 characters long.`);
+                }
+            }
+
+            if (emailChanged && !/^[a-zA-Z0-9._%+-]+@(gmail\.com|online\.htcgsc\.edu\.ph)$/.test(this.form.email_address)) {
+                return alert('Please enter a valid Gmail or HTCGSC email address.');
+            }
+
+            const phoneValue = this.form.phone_number.replace(/\s+/g, '');
+            if (phoneChanged && phoneValue !== '' && !/^(09|\+639)\d{9}$/.test(phoneValue)) {
+                return alert('Please enter a valid Philippine mobile number.');
+            }
+
+            if (!this.isSelf) {
+                this.$dispatch('show-loading-accounts', {
+                    message: 'Updating user profile...',
+                    userName: personName
+                });
+            } else if (this.loaderId) {
+                const loader = document.getElementById(this.loaderId);
+                if (loader) {
+                    loader.classList.remove('hidden');
+                    loader.classList.add('flex');
+                }
+            }
+
+            const formData = new FormData(this.$el);
+
+            fetch(this.$el.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content
+                }
+            })
+            .then(async response => {
+                const data = await response.json();
+
+                if (response.ok) {
+                    this.$dispatch('notify', { type: 'success', message: data.message });
+
+                    if (data.redirect) {
+                        window.location.href = data.redirect;
+                    } else {
+                        Object.keys(this.form).forEach(key => {
+                            if (key in this.original) this.original[key] = this.form[key];
+                        });
+                        this.form.hasNewFile = false;
+                        this.form.remove_picture = '0';
+
+                        if (this.modal) {
+                            this.$dispatch('close-modal', { id: @js($id) });
+                        }
+
+                        if (!this.isSelf) {
+                            this.$dispatch('hide-loading-accounts');
+                        } else if (this.loaderId) {
+                            const loader = document.getElementById(this.loaderId);
+                            if (loader) {
+                                loader.classList.remove('flex');
+                                loader.classList.add('hidden');
+                            }
+                        }
+
+                        window.Livewire?.dispatch('refreshList');
+                    }
+                } else {
+                    if (!this.isSelf) {
+                        this.$dispatch('hide-loading-accounts');
+                    } else if (this.loaderId) {
+                        const loader = document.getElementById(this.loaderId);
+                        if (loader) {
+                            loader.classList.remove('flex');
+                            loader.classList.add('hidden');
+                        }
+                    }
+
+                    const errorMessages = response.status === 422 ? Object.values(data.errors).flat().join(' ') : (data.message || 'An unexpected error occurred.');
+                    this.$dispatch('notify', { type: 'error', message: errorMessages });
+                }
+            })
+            .catch(() => {
+                if (!this.isSelf) {
+                    this.$dispatch('hide-loading-accounts');
+                } else if (this.loaderId) {
+                    const loader = document.getElementById(this.loaderId);
+                    if (loader) {
+                        loader.classList.remove('flex');
+                        loader.classList.add('hidden');
+                    }
+                }
+                this.$dispatch('notify', { type: 'error', message: 'Connection lost. Please try again.' });
+            });
         }
-    }" x-init="init()" x-cloak>
+    }" x-init="init()" @submit.prevent="submit()" x-cloak>
     @csrf
     @method('PUT')
 
@@ -130,7 +258,7 @@
 
             <div class="relative flex items-center">
                 <i class="fas fa-user absolute left-4 text-slate-400"></i>
-                <input type="text" id="lastNameInput" name="last_name" x-model="form.lastName" data-original="{{ $person->last_name }}" :class="isDirty('lastName') ? 'bg-orange-50 border-orange-300 dark:bg-orange-900/20' : 'bg-gray-100 dark:bg-slate-900'" class="w-full h-[50px] pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all dark:text-white">
+                <input type="text" id="lastNameInput" name="last_name" x-model="form.last_name" data-original="{{ $person->last_name }}" :class="isDirty('last_name') ? 'bg-orange-50 border-orange-300 dark:bg-orange-900/20' : 'bg-gray-100 dark:bg-slate-900'" class="w-full h-[50px] pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all dark:text-white">
             </div>
         </div>
 
@@ -139,7 +267,7 @@
 
             <div class="relative flex items-center">
                 <i class="fas fa-user absolute left-4 text-slate-400"></i>
-                <input type="text" id="firstNameInput" name="first_name" x-model="form.firstName" data-original="{{ $person->first_name }}" @keydown.space.prevent @input="sanitize" @blur="sanitize" :class="isDirty('firstName') ? 'bg-orange-50 border-orange-300 dark:bg-orange-900/20' : 'bg-gray-100 dark:bg-slate-900'" class="w-full h-[50px] pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all dark:text-white">
+                <input type="text" id="firstNameInput" name="first_name" x-model="form.first_name" data-original="{{ $person->first_name }}" @keydown.space.prevent @input="sanitize" @blur="sanitize" :class="isDirty('first_name') ? 'bg-orange-50 border-orange-300 dark:bg-orange-900/20' : 'bg-gray-100 dark:bg-slate-900'" class="w-full h-[50px] pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all dark:text-white">
             </div>
         </div>
 
@@ -148,7 +276,7 @@
 
             <div class="relative flex items-center">
                 <i class="fas fa-user absolute left-4 text-slate-400"></i>
-                <input type="text" id="middleNameInput" name="middle_name" x-model="form.middleName" data-original="{{ $person->middle_name }}" :class="isDirty('middleName') ? 'bg-orange-50 border-orange-300 dark:bg-orange-900/20' : 'bg-gray-100 dark:bg-slate-900'" class="w-full h-[50px] pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all dark:text-white">
+                <input type="text" id="middleNameInput" name="middle_name" x-model="form.middle_name" data-original="{{ $person->middle_name }}" :class="isDirty('middle_name') ? 'bg-orange-50 border-orange-300 dark:bg-orange-900/20' : 'bg-gray-100 dark:bg-slate-900'" class="w-full h-[50px] pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all dark:text-white">
             </div>
         </div>
 
@@ -191,7 +319,7 @@
 
             <div class="relative flex items-center">
                 <i class="fas fa-envelope absolute left-4 text-slate-400"></i>
-                <input type="email" id="emailInput" name="email_address" x-model="form.email" data-original="{{ $person->email_address }}" @keydown.space.prevent @input="sanitize" @blur="sanitize" :class="isDirty('email') ? 'bg-orange-50 border-orange-300 dark:bg-orange-900/20' : 'bg-gray-100 dark:bg-slate-900'" class="w-full h-[50px] pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all dark:text-white">
+                <input type="email" id="emailInput" name="email_address" x-model="form.email_address" data-original="{{ $person->email_address }}" @keydown.space.prevent @input="sanitize" @blur="sanitize" :class="isDirty('email_address') ? 'bg-orange-50 border-orange-300 dark:bg-orange-900/20' : 'bg-gray-100 dark:bg-slate-900'" class="w-full h-[50px] pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all dark:text-white">
             </div>
         </div>
 
@@ -200,7 +328,7 @@
 
             <div class="relative flex items-center">
                 <i class="fas fa-phone absolute left-4 text-slate-400"></i>
-                <input type="text" id="phoneInput" name="phone_number" x-model="form.phoneNumber" data-original="{{ $person->phone_number }}" inputmode="tel" @input="sanitize" @blur="sanitize" :class="isDirty('phoneNumber') ? 'bg-orange-50 border-orange-300 dark:bg-orange-900/20' : 'bg-gray-100 dark:bg-slate-900'" class="w-full h-[50px] pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all dark:text-white">
+                <input type="text" id="phoneInput" name="phone_number" x-model="form.phone_number" data-original="{{ $person->phone_number }}" inputmode="tel" @input="sanitize" @blur="sanitize" :class="isDirty('phone_number') ? 'bg-orange-50 border-orange-300 dark:bg-orange-900/20' : 'bg-gray-100 dark:bg-slate-900'" class="w-full h-[50px] pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all dark:text-white">
             </div>
         </div>
     </div>
