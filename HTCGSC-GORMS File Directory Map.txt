@@ -19,13 +19,23 @@ htcgsc-gorms/
 │  │  │  ├─ PrepareAuditLogData.php
 │  │  │  ├─ SearchAuditLogs.php
 │  │  │  └─ SortAuditLogs.php
+│  │  ├─ Auth/
+│  │  │  └─ LogoutUser.php
 │  │  ├─ Dashboard/
 │  │  │  ├─ RenderChartStatistics.php
 │  │  │  └─ RenderTextStatistics.php
 │  │  ├─ Data/
+│  │  │  ├─ Statistics/
+│  │  │  │  ├─ RenderAppointmentStatistics.php
+│  │  │  │  ├─ RenderStudentStatistics.php
+│  │  │  │  └─ RenderUserStatistics.php
 │  │  │  ├─ GenerateDatabaseTableRowId.php
 │  │  │  └─ RenderStatisticalData.php
 │  │  ├─ GoogleForms/
+│  │  │  ├─ Generators/
+│  │  │  │  ├─ GenerateImageSubmission.php
+│  │  │  │  ├─ GenerateLogSubmission.php
+│  │  │  │  └─ GeneratePdfSubmission.php
 │  │  │  ├─ DownloadSubmission.php
 │  │  │  ├─ GetLogFiles.php
 │  │  │  ├─ GetOrCreateEntity.php
@@ -33,6 +43,22 @@ htcgsc-gorms/
 │  │  │  ├─ GetUrls.php
 │  │  │  ├─ ProcessSubmission.php
 │  │  │  └─ RenderSubmission.php
+│  │  ├─ Mail/
+│  │  │  ├─ SendAccountNoticeMail.php
+│  │  │  ├─ SendAppointmentReminderMail.php
+│  │  │  └─ SendOtpMail.php
+│  │  ├─ OTP/
+│  │  │  ├─ FindUserByIdentifier.php
+│  │  │  ├─ GenerateAndSendOTP.php
+│  │  │  └─ ValidateOTP.php
+│  │  ├─ Person/
+│  │  │  └─ UpdatePersonInfo.php
+│  │  ├─ Profile/
+│  │  │  ├─ HandleProfileUpdate.php
+│  │  │  ├─ PrepareProfileUpdatedEvent.php
+│  │  │  ├─ StorePendingProfileUpdate.php
+│  │  │  ├─ UpdateUserProfile.php
+│  │  │  └─ UpdateUserProfilePicture.php
 │  │  ├─ QrCode/
 │  │  │  ├─ DisplayQrCode.php
 │  │  │  ├─ DownloadQrCode.php
@@ -47,6 +73,7 @@ htcgsc-gorms/
 │  │  │  ├─ RenderReport.php
 │  │  │  └─ SaveReport.php
 │  │  ├─ Student/
+│  │  │  ├─ CreateStudent.php
 │  │  │  ├─ FilterStudents.php
 │  │  │  ├─ SearchStudents.php
 │  │  │  └─ UpdateStudent.php
@@ -59,10 +86,101 @@ htcgsc-gorms/
 │  │     ├─ SearchUsers.php
 │  │     └─ UpdateUserStatus.php
 │  ├─ Components/
-│  │  ├─ NoticeEmail.php
-│  │  ├─ OTPEmail.php
-│  │  ├─ OTPPage.php
-│  │  └─ TableRow.php
+│  │  ├─ Atoms/
+│  │  │  ├─ Buttons/
+│  │  │  │  ├─ ActionButtons/
+│  │  │  │  │  ├─ AppointmentGroup.php
+│  │  │  │  │  ├─ AuditLogGroup.php
+│  │  │  │  │  ├─ StudentGroup.php
+│  │  │  │  │  └─ UserGroup.php
+│  │  │  │  ├─ ButtonGroups/
+│  │  │  │  │  ├─ AuditLogButtonGroup.php
+│  │  │  │  │  ├─ FilterButtonGroup.php
+│  │  │  │  │  └─ PageButtonGroup.php
+│  │  │  │  └─ ThemeToggler.php
+│  │  │  ├─ Feedback/
+│  │  │  │  └─ ValidationError.php
+│  │  │  ├─ Images/
+│  │  │  │  ├─ SystemLogo.php
+│  │  │  │  └─ UserAvatar.php
+│  │  │  ├─ Inputs/
+│  │  │  │  └─ AuthInput.php
+│  │  │  └─ Utility/
+│  │  │     ├─ DigitalClock.php
+│  │  │     ├─ Spinner.php
+│  │  │     ├─ StatusBadge.php
+│  │  │     └─ StatusDot.php
+│  │  ├─ GoogleForms/
+│  │  │  ├─ Base.php
+│  │  │  └─ InfoSection.php
+│  │  ├─ Layouts/
+│  │  │  ├─ NoticeEmail.php
+│  │  │  ├─ OtpEmail.php
+│  │  │  └─ OtpPage.php
+│  │  ├─ Molecules/
+│  │  │  ├─ Forms/
+│  │  │  │  ├─ AuthForm.php
+│  │  │  │  ├─ FormFooter.php
+│  │  │  │  ├─ FormHeader.php
+│  │  │  │  ├─ GoogleForm.php
+│  │  │  │  ├─ ReportForm.php
+│  │  │  │  ├─ StudentProfileForm.php
+│  │  │  │  └─ UserProfileForm.php
+│  │  │  ├─ LoadingScreens/
+│  │  │  │  ├─ Ls.php
+│  │  │  │  ├─ LsAuth.php
+│  │  │  │  ├─ LsListType.php
+│  │  │  │  └─ LsLivewire.php
+│  │  │  ├─ Modals/
+│  │  │  │  ├─ AuditLogMessageModal.php
+│  │  │  │  ├─ ConfirmationModal.php
+│  │  │  │  ├─ RescheduleAppointmentModal.php
+│  │  │  │  └─ UserProfileModal.php
+│  │  │  ├─ Sidebars/
+│  │  │  │  ├─ AuditLogsSidebar.php
+│  │  │  │  ├─ ReportsSidebar.php
+│  │  │  │  ├─ SubmissionsSidebar.php
+│  │  │  │  └─ TemplateSidebar.php
+│  │  │  └─ ToastNotifications/
+│  │  │     ├─ Tn.php
+│  │  │     └─ TnAuth.php
+│  │  ├─ Organisms/
+│  │  │  ├─ Layouts/
+│  │  │  │  ├─ Footer.php
+│  │  │  │  ├─ Header.php
+│  │  │  │  └─ Sidebar.php
+│  │  │  ├─ Main/
+│  │  │  │  └─ SubmissionsBody.php
+│  │  │  ├─ Navigation/
+│  │  │  │  ├─ Pagination.php
+│  │  │  │  ├─ PaginationGroup.php
+│  │  │  │  ├─ PaginationResults.php
+│  │  │  │  ├─ RowsPerPage.php
+│  │  │  │  ├─ Search.php
+│  │  │  │  └─ Sort.php
+│  │  │  └─ Tables/
+│  │  │     ├─ Columns/
+│  │  │     │  ├─ Appointment.php
+│  │  │     │  ├─ AuditLog.php
+│  │  │     │  ├─ Student.php
+│  │  │     │  └─ User.php
+│  │  │     ├─ Rows/
+│  │  │     │  ├─ Appointment.php
+│  │  │     │  ├─ AuditLog.php
+│  │  │     │  ├─ Student.php
+│  │  │     │  └─ User.php
+│  │  │     ├─ EmptyState.php
+│  │  │     ├─ InfiniteScrollLoader.php
+│  │  │     ├─ Table.php
+│  │  │     ├─ TableColumn.php
+│  │  │     └─ TableRow.php
+│  │  ├─ Pages/
+│  │  │  └─ ListType.php
+│  │  ├─ Reports/
+│  │  │  └─ Base.php
+│  │  └─ Templates/
+│  │     ├─ AuthenticationPages.php
+│  │     └─ PersonalPages.php
 │  ├─ Console/
 │  │  ├─ Commands/
 │  │  │  ├─ BaseCommand.php
@@ -186,9 +304,15 @@ htcgsc-gorms/
 │  │  ├─ Bases/
 │  │  │  ├─ BaseListType.php
 │  │  │  └─ BaseOTPType.php
+│  │  ├─ Components/
+│  │  │  ├─ StudentProfileModal.php
+│  │  │  └─ UserProfileModal.php
 │  │  ├─ Forms/
 │  │  │  ├─ LoginForm.php
-│  │  │  └─ RegisterForm.php
+│  │  │  ├─ PasswordChangeForm.php
+│  │  │  ├─ RegisterForm.php
+│  │  │  ├─ StudentProfileForm.php
+│  │  │  └─ UserProfileForm.php
 │  │  └─ Pages/
 │  │     ├─ Appointments.php
 │  │     ├─ AuditLogs.php
@@ -197,6 +321,7 @@ htcgsc-gorms/
 │  │     ├─ Reports.php
 │  │     ├─ Students.php
 │  │     ├─ Submissions.php
+│  │     ├─ UserProfile.php
 │  │     └─ Users.php
 │  ├─ Mail/
 │  │  ├─ BaseMailable.php
@@ -305,6 +430,10 @@ htcgsc-gorms/
 │  │  │  ├─ composer.json
 │  │  │  ├─ LICENSE
 │  │  │  └─ README.md
+│  │  ├─ Formatters/
+│  │  │  ├─ ExceptionLogFormatter.php
+│  │  │  ├─ StandardLogFormatter.php
+│  │  │  └─ StringLogFormatter.php
 │  │  ├─ AppKeyChecker.php
 │  │  ├─ BinaryFinder.php
 │  │  ├─ HolidayClientCustom.php
@@ -318,24 +447,25 @@ htcgsc-gorms/
 │  │  ├─ TimeZoneConverter.php
 │  │  └─ VerticalFormatter.php
 │  └─ Traits/
-│     ├─ Concerns/
-│     │  ├─ HandlesAppointments.php
-│     │  ├─ HandlesUsers.php
-│     │  ├─ HasName.php
-│     │  ├─ IsCommonModel.php
-│     │  └─ ManagesTransactions.php
 │     ├─ Handles/
+│     │  ├─ HandlesAppointmentActions.php
 │     │  ├─ HandlesAuditLogActions.php
+│     │  ├─ HandlesBrowsershot.php
 │     │  ├─ HandlesOTP.php
 │     │  ├─ HandlesPostActionNotifications.php
-│     │  └─ HandlesStudentActions.php
+│     │  ├─ HandlesStatistics.php
+│     │  ├─ HandlesStudentActions.php
+│     │  └─ HandlesUserActions.php
 │     ├─ Has/
 │     │  ├─ HasAppInformation.php
 │     │  ├─ HasFormattedId.php
+│     │  ├─ HasNameAttributes.php
 │     │  ├─ HasProfanityList.php
 │     │  └─ HasValues.php
 │     ├─ Miscellaneous/
 │     │  ├─ BaseCommandTrait.php
+│     │  ├─ IsCommonModel.php
+│     │  ├─ ManagesTransactions.php
 │     │  ├─ ProvidesMessages.php
 │     │  ├─ RendersQRCode.php
 │     │  └─ Searchable.php
@@ -422,7 +552,6 @@ htcgsc-gorms/
 │  │  ├─ list-type.js
 │  │  ├─ otp-page.js
 │  │  ├─ reports.js
-│  │  ├─ student-profile.js
 │  │  ├─ submissions.js
 │  │  └─ user-profile.js
 │  ├─ .htaccess
@@ -464,7 +593,12 @@ htcgsc-gorms/
 │     │  ├─ google-forms/
 │     │  │  ├─ base.blade.php
 │     │  │  ├─ image.blade.php
+│     │  │  ├─ info-section.blade.php
 │     │  │  └─ pdf.blade.php
+│     │  ├─ layouts/
+│     │  │  ├─ notice-email.blade.php
+│     │  │  ├─ otp-email.blade.php
+│     │  │  └─ otp-page.blade.php
 │     │  ├─ molecules/
 │     │  │  ├─ forms/
 │     │  │  │  ├─ auth-form.blade.php
@@ -483,6 +617,7 @@ htcgsc-gorms/
 │     │  │  │  ├─ audit-log-message-modal.blade.php
 │     │  │  │  ├─ confirmation-modal.blade.php
 │     │  │  │  ├─ reschedule-appointment-modal.blade.php
+│     │  │  │  ├─ user-password-modal.blade.php
 │     │  │  │  └─ user-profile-modal.blade.php
 │     │  │  ├─ sidebars/
 │     │  │  │  ├─ audit-logs-sidebar.blade.php
@@ -512,6 +647,11 @@ htcgsc-gorms/
 │     │  │     │  ├─ audit-log.blade.php
 │     │  │     │  ├─ student.blade.php
 │     │  │     │  └─ user.blade.php
+│     │  │     ├─ rows/
+│     │  │     │  ├─ appointment.blade.php
+│     │  │     │  ├─ audit-log.blade.php
+│     │  │     │  ├─ student.blade.php
+│     │  │     │  └─ user.blade.php
 │     │  │     ├─ empty-state.blade.php
 │     │  │     ├─ infinite-scroll-loader.blade.php
 │     │  │     ├─ table-column.blade.php
@@ -525,8 +665,6 @@ htcgsc-gorms/
 │     │  │  ├─ students.blade.php
 │     │  │  └─ users.blade.php
 │     │  └─ templates/
-│     │     ├─ authentication-pages.blade.php
-│     │     └─ personal-pages.blade.php
 │     ├─ emails/
 │     │  ├─ notice-account-activation.blade.php
 │     │  ├─ notice-account-deactivation.blade.php
@@ -569,8 +707,6 @@ htcgsc-gorms/
 │     │  └─ errors.blade.php
 │     ├─ layouts/
 │     │  ├─ authentication-pages.blade.php
-│     │  ├─ notice-email.blade.php
-│     │  ├─ otp-email.blade.php
 │     │  └─ personal-pages.blade.php
 │     └─ livewire/
 │        ├─ authentication/
@@ -580,8 +716,10 @@ htcgsc-gorms/
 │        │  ├─ one-time-password-eac.blade.php
 │        │  ├─ one-time-password-login.blade.php
 │        │  └─ one-time-password-pnc.blade.php
+│        ├─ components/
+│        │  ├─ student-profile-modal.blade.php
+│        │  └─ user-profile-modal.blade.php
 │        ├─ layouts/
-│        │  └─ otp-page.blade.php
 │        └─ pages/
 │           ├─ appointments.blade.php
 │           ├─ audit-logs.blade.php
@@ -597,7 +735,11 @@ htcgsc-gorms/
 │  ├─ auth.php
 │  ├─ console.php
 │  ├─ livewire.php
+│  ├─ miscellaneous.php
 │  └─ web.php
+├─ scratch/
+│  ├─ find_large_files.ps1
+│  └─ find_long_lines.ps1
 ├─ stubs/
 │  ├─ action.stub
 │  ├─ cast.inbound.stub
@@ -673,18 +815,24 @@ htcgsc-gorms/
 ├─ .markdownlint.json
 ├─ .prettierrc
 ├─ artisan
+├─ Backend Efficiency Strategy.txt
 ├─ compose.debug.yaml
 ├─ compose.yaml
 ├─ composer.json
 ├─ composer.lock
 ├─ Dockerfile
+├─ Frontend Efficiency Strategy.txt
+├─ htcgsc_gorms.sql
+├─ HTCGSC-GORMS File Directory Map.txt
+├─ htcgsc-gorms.gs
 ├─ jsconfig.json
-├─ livewire-blaze.md
+├─ Laravel Pest Controller.txt
 ├─ package-lock.json
 ├─ package.json
 ├─ phpunit.xml
 ├─ pint.json
 ├─ README.md
+├─ Refactoring Nested Statements.txt
 ├─ render.yaml
 ├─ tailwind.config.js
 └─ vite.config.js

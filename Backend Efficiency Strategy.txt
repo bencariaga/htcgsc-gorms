@@ -88,13 +88,23 @@ app/
 │  │  ├─ PrepareAuditLogData.php
 │  │  ├─ SearchAuditLogs.php
 │  │  └─ SortAuditLogs.php
+│  ├─ Auth/
+│  │  └─ LogoutUser.php
 │  ├─ Dashboard/
 │  │  ├─ RenderChartStatistics.php
 │  │  └─ RenderTextStatistics.php
 │  ├─ Data/
+│  │  ├─ Statistics/
+│  │  │  ├─ RenderAppointmentStatistics.php
+│  │  │  ├─ RenderStudentStatistics.php
+│  │  │  └─ RenderUserStatistics.php
 │  │  ├─ GenerateDatabaseTableRowId.php
 │  │  └─ RenderStatisticalData.php
 │  ├─ GoogleForms/
+│  │  ├─ Generators/
+│  │  │  ├─ GenerateImageSubmission.php
+│  │  │  ├─ GenerateLogSubmission.php
+│  │  │  └─ GeneratePdfSubmission.php
 │  │  ├─ DownloadSubmission.php
 │  │  ├─ GetLogFiles.php
 │  │  ├─ GetOrCreateEntity.php
@@ -102,6 +112,22 @@ app/
 │  │  ├─ GetUrls.php
 │  │  ├─ ProcessSubmission.php
 │  │  └─ RenderSubmission.php
+│  ├─ Mail/
+│  │  ├─ SendAccountNoticeMail.php
+│  │  ├─ SendAppointmentReminderMail.php
+│  │  └─ SendOtpMail.php
+│  ├─ OTP/
+│  │  ├─ FindUserByIdentifier.php
+│  │  ├─ GenerateAndSendOTP.php
+│  │  └─ ValidateOTP.php
+│  ├─ Person/
+│  │  └─ UpdatePersonInfo.php
+│  ├─ Profile/
+│  │  ├─ HandleProfileUpdate.php
+│  │  ├─ PrepareProfileUpdatedEvent.php
+│  │  ├─ StorePendingProfileUpdate.php
+│  │  ├─ UpdateUserProfile.php
+│  │  └─ UpdateUserProfilePicture.php
 │  ├─ QrCode/
 │  │  ├─ DisplayQrCode.php
 │  │  ├─ DownloadQrCode.php
@@ -116,6 +142,7 @@ app/
 │  │  ├─ RenderReport.php
 │  │  └─ SaveReport.php
 │  ├─ Student/
+│  │  ├─ CreateStudent.php
 │  │  ├─ FilterStudents.php
 │  │  ├─ SearchStudents.php
 │  │  └─ UpdateStudent.php
@@ -128,10 +155,101 @@ app/
 │     ├─ SearchUsers.php
 │     └─ UpdateUserStatus.php
 ├─ Components/
-│  ├─ NoticeEmail.php
-│  ├─ OTPEmail.php
-│  ├─ OTPPage.php
-│  └─ TableRow.php
+│  ├─ Atoms/
+│  │  ├─ Buttons/
+│  │  │  ├─ ActionButtons/
+│  │  │  │  ├─ AppointmentGroup.php
+│  │  │  │  ├─ AuditLogGroup.php
+│  │  │  │  ├─ StudentGroup.php
+│  │  │  │  └─ UserGroup.php
+│  │  │  ├─ ButtonGroups/
+│  │  │  │  ├─ AuditLogButtonGroup.php
+│  │  │  │  ├─ FilterButtonGroup.php
+│  │  │  │  └─ PageButtonGroup.php
+│  │  │  └─ ThemeToggler.php
+│  │  ├─ Feedback/
+│  │  │  └─ ValidationError.php
+│  │  ├─ Images/
+│  │  │  ├─ SystemLogo.php
+│  │  │  └─ UserAvatar.php
+│  │  ├─ Inputs/
+│  │  │  └─ AuthInput.php
+│  │  └─ Utility/
+│  │     ├─ DigitalClock.php
+│  │     ├─ Spinner.php
+│  │     ├─ StatusBadge.php
+│  │     └─ StatusDot.php
+│  ├─ GoogleForms/
+│  │  ├─ Base.php
+│  │  └─ InfoSection.php
+│  ├─ Layouts/
+│  │  ├─ NoticeEmail.php
+│  │  ├─ OtpEmail.php
+│  │  └─ OtpPage.php
+│  ├─ Molecules/
+│  │  ├─ Forms/
+│  │  │  ├─ AuthForm.php
+│  │  │  ├─ FormFooter.php
+│  │  │  ├─ FormHeader.php
+│  │  │  ├─ GoogleForm.php
+│  │  │  ├─ ReportForm.php
+│  │  │  ├─ StudentProfileForm.php
+│  │  │  └─ UserProfileForm.php
+│  │  ├─ LoadingScreens/
+│  │  │  ├─ Ls.php
+│  │  │  ├─ LsAuth.php
+│  │  │  ├─ LsListType.php
+│  │  │  └─ LsLivewire.php
+│  │  ├─ Modals/
+│  │  │  ├─ AuditLogMessageModal.php
+│  │  │  ├─ ConfirmationModal.php
+│  │  │  ├─ RescheduleAppointmentModal.php
+│  │  │  └─ UserProfileModal.php
+│  │  ├─ Sidebars/
+│  │  │  ├─ AuditLogsSidebar.php
+│  │  │  ├─ ReportsSidebar.php
+│  │  │  ├─ SubmissionsSidebar.php
+│  │  │  └─ TemplateSidebar.php
+│  │  └─ ToastNotifications/
+│  │     ├─ Tn.php
+│  │     └─ TnAuth.php
+│  ├─ Organisms/
+│  │  ├─ Layouts/
+│  │  │  ├─ Footer.php
+│  │  │  ├─ Header.php
+│  │  │  └─ Sidebar.php
+│  │  ├─ Main/
+│  │  │  └─ SubmissionsBody.php
+│  │  ├─ Navigation/
+│  │  │  ├─ Pagination.php
+│  │  │  ├─ PaginationGroup.php
+│  │  │  ├─ PaginationResults.php
+│  │  │  ├─ RowsPerPage.php
+│  │  │  ├─ Search.php
+│  │  │  └─ Sort.php
+│  │  └─ Tables/
+│  │     ├─ Columns/
+│  │     │  ├─ Appointment.php
+│  │     │  ├─ AuditLog.php
+│  │     │  ├─ Student.php
+│  │     │  └─ User.php
+│  │     ├─ Rows/
+│  │     │  ├─ Appointment.php
+│  │     │  ├─ AuditLog.php
+│  │     │  ├─ Student.php
+│  │     │  └─ User.php
+│  │     ├─ EmptyState.php
+│  │     ├─ InfiniteScrollLoader.php
+│  │     ├─ Table.php
+│  │     ├─ TableColumn.php
+│  │     └─ TableRow.php
+│  ├─ Pages/
+│  │  └─ ListType.php
+│  ├─ Reports/
+│  │  └─ Base.php
+│  └─ Templates/
+│     ├─ AuthenticationPages.php
+│     └─ PersonalPages.php
 ├─ Console/
 │  ├─ Commands/
 │  │  ├─ BaseCommand.php
@@ -255,9 +373,15 @@ app/
 │  ├─ Bases/
 │  │  ├─ BaseListType.php
 │  │  └─ BaseOTPType.php
+│  ├─ Components/
+│  │  ├─ StudentProfileModal.php
+│  │  └─ UserProfileModal.php
 │  ├─ Forms/
 │  │  ├─ LoginForm.php
-│  │  └─ RegisterForm.php
+│  │  ├─ PasswordChangeForm.php
+│  │  ├─ RegisterForm.php
+│  │  ├─ StudentProfileForm.php
+│  │  └─ UserProfileForm.php
 │  └─ Pages/
 │     ├─ Appointments.php
 │     ├─ AuditLogs.php
@@ -266,6 +390,7 @@ app/
 │     ├─ Reports.php
 │     ├─ Students.php
 │     ├─ Submissions.php
+│     ├─ UserProfile.php
 │     └─ Users.php
 ├─ Mail/
 │  ├─ BaseMailable.php
@@ -374,6 +499,10 @@ app/
 │  │  ├─ composer.json
 │  │  ├─ LICENSE
 │  │  └─ README.md
+│  ├─ Formatters/
+│  │  ├─ ExceptionLogFormatter.php
+│  │  ├─ StandardLogFormatter.php
+│  │  └─ StringLogFormatter.php
 │  ├─ AppKeyChecker.php
 │  ├─ BinaryFinder.php
 │  ├─ HolidayClientCustom.php
@@ -387,24 +516,25 @@ app/
 │  ├─ TimeZoneConverter.php
 │  └─ VerticalFormatter.php
 └─ Traits/
-   ├─ Concerns/
-   │  ├─ HandlesAppointments.php
-   │  ├─ HandlesUsers.php
-   │  ├─ HasName.php
-   │  ├─ IsCommonModel.php
-   │  └─ ManagesTransactions.php
    ├─ Handles/
+   │  ├─ HandlesAppointmentActions.php
    │  ├─ HandlesAuditLogActions.php
+   │  ├─ HandlesBrowsershot.php
    │  ├─ HandlesOTP.php
    │  ├─ HandlesPostActionNotifications.php
-   │  └─ HandlesStudentActions.php
+   │  ├─ HandlesStatistics.php
+   │  ├─ HandlesStudentActions.php
+   │  └─ HandlesUserActions.php
    ├─ Has/
    │  ├─ HasAppInformation.php
    │  ├─ HasFormattedId.php
+   │  ├─ HasNameAttributes.php
    │  ├─ HasProfanityList.php
    │  └─ HasValues.php
    ├─ Miscellaneous/
    │  ├─ BaseCommandTrait.php
+   │  ├─ IsCommonModel.php
+   │  ├─ ManagesTransactions.php
    │  ├─ ProvidesMessages.php
    │  ├─ RendersQRCode.php
    │  └─ Searchable.php
@@ -476,15 +606,15 @@ Here is the breakdown of when to use each approach based on my experience and th
 
 You should use **Eager Loading** (the `with()` method) whenever you know you are going to need relationship data for a collection of models. It is the "gold standard" for performance because it prevents the dreaded **N+1 query problem**, where your app runs one query for the main model and then a separate query for every single related record.
 
-* 
+*
 **Large Data Sets:** Use it when working with many records to reduce the number of database drivers required.
 
 
-* 
+*
 **Performance Optimization:** If you notice a page is slow or the Laravel Debugbar shows repetitive queries (like fetching a user for every post), eager load that relation to group them into a single query.
 
 
-* 
+*
 **Immediate Use:** It’s best when you plan to manipulate or display the relationship data immediately after retrieving the main model from the database.
 
 
@@ -501,22 +631,22 @@ $posts = Post::with('user')->latest()->get();
 
 **Lazy Loading** (loading data only when it's accessed) is something I usually tell people to avoid in loops, but it does have its place.
 
-* 
+*
 **Small/Simple Data Sets:** It can be useful for smaller data sets where the overhead of a few extra queries doesn't impact performance.
 
 
-* 
+*
 **Conditional Access:** Use it when you only need the relationship data based on a specific user action, such as clicking a "View Comments" button.
 
 
-* 
+*
 **Single Models:** If you are only dealing with one record (like a single Profile page), lazy loading one relationship won't kill your performance.
 
 
 
 > **Pro Tip:** In modern Laravel development, many developers now use `Model::preventLazyLoading()` during development. This forces you to be intentional about your queries by throwing an error if you try to lazy load something you forgot to eager load.
-> 
-> 
+>
+>
 
 ---
 
@@ -524,11 +654,11 @@ $posts = Post::with('user')->latest()->get();
 
 Sometimes you don't know if you'll need the relationship until *after* you've already fetched the main model. This is where the `load()` method comes in.
 
-* 
+*
 **Post-Retrieval Decisions:** Use this if you’ve already fetched a collection but then hit a logic branch where you suddenly need their relationships.
 
 
-* 
+*
 **Memory Management:** It allows you to fetch the results first and only "heavy up" the data if necessary.
 
 
@@ -539,11 +669,11 @@ Sometimes you don't know if you'll need the relationship until *after* you've al
 
 If you're using the latest versions of Laravel, there is a revolutionary new feature that basically handles this for you.
 
-* 
+*
 **Global Protection:** You can enable `automaticallyEagerLoadRelationships()` in your `AppServiceProvider`. This tells Laravel to detect when you're accessing a relationship in a loop or a blade file and automatically group those queries for you.
 
 
-* 
+*
 **Junior-Proofing:** It’s great for teams because it prevents junior developers (or tired seniors!) from accidentally introducing N+1 issues.
 
 ---
@@ -795,7 +925,7 @@ Looking at your existing structure, you already have a `Repositories` directory 
 * **`UserRepositoryInterface.php`**: Place this in `app/Contracts/`. If that folder doesn't exist, create it. This keeps your "agreements" separate from your "actions."
 
 
-* 
+*
 **`EloquentUserRepository.php`**: Place this in `app/Repositories/`. This is where the actual database-specific logic lives.
 
 
@@ -882,12 +1012,12 @@ Here is how you would handle this consistently across your project.
 
 Based on your directory map, you should organize them like this to keep everything neat:
 
-* 
-**Interface:** `app/Contracts/UserRepositoryInterface.php` 
+*
+**Interface:** `app/Contracts/UserRepositoryInterface.php`
 
 
-* 
-**Implementation:** `app/Repositories/EloquentUserRepository.php` 
+*
+**Implementation:** `app/Repositories/EloquentUserRepository.php`
 
 
 
@@ -936,15 +1066,15 @@ class RepositoryServiceProvider extends ServiceProvider
 
 ### Why this is better than the "Umbrella" Controller
 
-* 
+*
 **Single Responsibility:** Each component only loads what it actually needs.
 
 
-* 
+*
 **Avoids Bloat:** Putting everything in a base `Controller.php` creates a "God Class" that becomes a nightmare to debug later.
 
 
-* 
+*
 **Easy Swapping:** If you ever switch to a NoSQL database, you just create a `MongoUserRepository`, swap the binding in your Provider, and **none** of your Livewire components have to change a single line of code.
 
 

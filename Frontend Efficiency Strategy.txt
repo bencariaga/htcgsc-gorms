@@ -115,6 +115,10 @@ resources/
    │  │  ├─ image.blade.php
    │  │  ├─ info-section.blade.php
    │  │  └─ pdf.blade.php
+   │  ├─ layouts/
+   │  │  ├─ notice-email.blade.php
+   │  │  ├─ otp-email.blade.php
+   │  │  └─ otp-page.blade.php
    │  ├─ molecules/
    │  │  ├─ forms/
    │  │  │  ├─ auth-form.blade.php
@@ -133,6 +137,7 @@ resources/
    │  │  │  ├─ audit-log-message-modal.blade.php
    │  │  │  ├─ confirmation-modal.blade.php
    │  │  │  ├─ reschedule-appointment-modal.blade.php
+   │  │  │  ├─ user-password-modal.blade.php
    │  │  │  └─ user-profile-modal.blade.php
    │  │  ├─ sidebars/
    │  │  │  ├─ audit-logs-sidebar.blade.php
@@ -180,8 +185,6 @@ resources/
    │  │  ├─ students.blade.php
    │  │  └─ users.blade.php
    │  └─ templates/
-   │     ├─ authentication-pages.blade.php
-   │     └─ personal-pages.blade.php
    ├─ emails/
    │  ├─ notice-account-activation.blade.php
    │  ├─ notice-account-deactivation.blade.php
@@ -224,8 +227,6 @@ resources/
    │  └─ errors.blade.php
    ├─ layouts/
    │  ├─ authentication-pages.blade.php
-   │  ├─ notice-email.blade.php
-   │  ├─ otp-email.blade.php
    │  └─ personal-pages.blade.php
    └─ livewire/
       ├─ authentication/
@@ -235,8 +236,10 @@ resources/
       │  ├─ one-time-password-eac.blade.php
       │  ├─ one-time-password-login.blade.php
       │  └─ one-time-password-pnc.blade.php
+      ├─ components/
+      │  ├─ student-profile-modal.blade.php
+      │  └─ user-profile-modal.blade.php
       ├─ layouts/
-      │  └─ otp-page.blade.php
       └─ pages/
          ├─ appointments.blade.php
          ├─ audit-logs.blade.php
