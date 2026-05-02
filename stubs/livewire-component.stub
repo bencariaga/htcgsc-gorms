@@ -1,0 +1,26 @@
+<?php
+
+namespace {{ namespace }};
+
+use Livewire\Attributes\Layout;
+use Livewire\Component;
+
+#[Layout('layouts.class-name')]
+class {{ class }} extends Component
+{
+    /**
+     * Initialize the component state.
+     */
+    public function mount()
+    {
+        //
+    }
+
+    /**
+     * Render the component view.
+     */
+    public function render()
+    {
+        return view('{{ view }}');
+    }
+}

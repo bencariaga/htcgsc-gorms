@@ -1,0 +1,118 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+@source '../../app/Enums/**/*.php';
+
+@theme {
+    --font-sans: 'Inter', 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+
+    --color-app-bg: rgb(var(--color-background));
+    --color-app-surface: rgb(var(--color-surface));
+    --color-app-body: rgb(var(--color-text));
+}
+
+@layer base {
+    :root {
+        --color-background: 255 255 255;
+        --color-surface: 249 250 251;
+        --color-text: 17 24 39;
+    }
+
+    .dark {
+        --color-background: 15 23 42;
+        --color-surface: 30 41 59;
+        --color-text: 243 244 246;
+    }
+}
+
+@layer utilities {
+    .safelist-audit {
+        @apply text-emerald-600;
+        @apply text-blue-600;
+        @apply text-yellow-600;
+        @apply text-rose-600;
+        @apply text-slate-600;
+        @apply dark:text-emerald-300;
+        @apply dark:text-blue-300;
+        @apply dark:text-yellow-300;
+        @apply dark:text-rose-300;
+        @apply dark:text-slate-300;
+        @apply dark:text-emerald-400;
+        @apply dark:text-blue-400;
+        @apply dark:text-yellow-400;
+        @apply dark:text-rose-400;
+        @apply dark:text-slate-400;
+    }
+
+    .safelist-dashboard {
+        @apply bg-indigo-100;
+        @apply bg-stone-100;
+        @apply bg-emerald-100;
+        @apply dark:bg-indigo-900/30;
+        @apply dark:bg-stone-900/30;
+        @apply dark:bg-emerald-900/30;
+        @apply border-indigo-200;
+        @apply border-stone-500/30;
+        @apply border-emerald-200;
+        @apply dark:border-indigo-800;
+        @apply dark:border-stone-500/50;
+        @apply dark:border-emerald-800;
+        @apply text-indigo-600;
+        @apply text-stone-600;
+        @apply text-emerald-600;
+    }
+
+    .safelist-ui {
+        @apply focus:border-emerald-500;
+        @apply border-red-500;
+        @apply text-red-500;
+        @apply w-[165px];
+        @apply w-[140px];
+        @apply w-[160px];
+        @apply w-[12.5rem];
+        @apply w-[20rem];
+        @apply min-w-[15rem];
+        @apply left-72;
+        @apply left-20;
+        @apply left-[36rem];
+        @apply left-[23rem];
+    }
+
+    .safelist-status-badges {
+        @apply bg-green-500;
+        @apply bg-red-700;
+        @apply bg-orange-500;
+        @apply bg-blue-500;
+        @apply bg-gray-500;
+        @apply bg-emerald-500;
+        @apply dark:bg-emerald-400;
+        @apply bg-orange-500;
+        @apply dark:bg-orange-400;
+        @apply bg-orange-200;
+        @apply dark:bg-orange-900/40;
+        @apply text-orange-800;
+        @apply dark:text-orange-300;
+        @apply border-orange-300;
+        @apply dark:border-orange-800;
+        @apply bg-emerald-200;
+        @apply dark:bg-emerald-900/40;
+        @apply text-emerald-800;
+        @apply dark:text-emerald-300;
+        @apply border-emerald-300;
+        @apply dark:border-emerald-800;
+    }
+
+    .safelist-report-forms {
+        @apply bg-orange-600;
+        @apply hover:bg-orange-700;
+        @apply bg-green-600;
+        @apply hover:bg-green-700;
+        @apply bg-blue-600;
+        @apply hover:bg-blue-700;
+        @apply text-red-600;
+        @apply text-green-600;
+    }
+}

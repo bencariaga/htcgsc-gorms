@@ -1,0 +1,45 @@
+<?php
+
+namespace App\Http\Requests;
+
+use App\{Enums\PersonSuffix, Models\User, Support\Regex};
+use App\Rules\{DuplicateContactDetails, EmailAddressFormat};
+use Illuminate\{Foundation\Http\FormRequest, Support\Facades\Auth, Validation\Rule};
+
+class UpdateUserProfile extends FormRequest
+{
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    public function rules(): array
+    {
+        $targetUserId = $this->input('user_id');
+        $routeUser = $this->route('user');
+
+        $targetUser = match (true) {
+            filled($targetUserId) => User::find($targetUserId),
+            $routeUser instanceof User => $routeUser,
+            str($routeUser)->isMatch(Regex::userName()) => User::where('username', $routeUser)->first(),
+            default => Auth::user(),
+        };
+
+        if ($targetUser) {
+            $targetUser->loadMissing('person');
+        }
+
+        $personId = $targetUser->person?->person_id;
+
+        return [
+            'user_id' => ['nullable', 'exists:users,user_id'],
+            'first_name' => ['required', 'string', 'max:20', 'regex:' . Regex::firstName()],
+            'last_name' => ['required', 'string', 'max:20'],
+            'middle_name' => ['nullable', 'string', 'max:20'],
+            'suffix' => ['nullable', 'string', Rule::in(PersonSuffix::values())],
+            'email_address' => ['required', 'email', 'max:60', new DuplicateContactDetails('email_address', $personId, 'user'), new EmailAddressFormat],
+            'phone_number' => ['nullable', 'string', 'max:16', new DuplicateContactDetails('phone_number', $personId, 'user')],
+            'profile_picture' => ['nullable', 'image', 'max:8192'],
+        ];
+    }
+}
