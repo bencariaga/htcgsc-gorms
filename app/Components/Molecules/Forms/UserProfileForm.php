@@ -18,7 +18,7 @@ class UserProfileForm extends Component
         }
 
         if ($this->profilePicture === null && $this->user !== null) {
-            $this->profilePicture = $this->user->profile_picture ?? null;
+            $this->profilePicture = $this->user->profile_picture ? asset('storage/' . $this->user->profile_picture) : null;
         }
     }
 

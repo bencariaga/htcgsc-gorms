@@ -7,33 +7,7 @@
 
         <title>{{ 'HTCGSC-GORMS | ' . ($title ?? '') }}</title>
 
-        <script>
-            (function() {
-                const sd = localStorage.getItem('_x_sidebarOpen');
-                const dm = localStorage.getItem('_x_darkMode');
-
-                if (dm === 'true') {
-                    document.documentElement.classList.add('dark');
-                } else {
-                    document.documentElement.classList.remove('dark');
-                }
-
-                const style = document.createElement('style');
-
-                style.id = 'anti-flash-style';
-
-                style.innerHTML = `
-                    [x-cloak] { display: none !important; }
-                    .sidebar-lock {
-                        width: ${sd === 'false' ? '5rem' : '18rem'} !important;
-                        transition: none !important;
-                    }
-                `;
-
-                document.head.appendChild(style);
-            })();
-        </script>
-
+        <script src="{{ asset('js/theme-init.js') }}"></script>
         <script src="https://cdn.tailwindcss.com"></script>
         <script src="{{ asset('js/global.js') }}"></script>
 
@@ -42,22 +16,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
 
-        <script>
-            tailwind.config = {
-                darkMode: 'class',
-                theme: {
-                    extend: {
-                        colors: {
-                            app: {
-                                bg: 'rgb(var(--color-background) / <alpha-value>)',
-                                surface: 'rgb(var(--color-surface) / <alpha-value>)',
-                                body: 'rgb(var(--color-text) / <alpha-value>)',
-                            }
-                        }
-                    }
-                }
-            }
-        </script>
+        <script src="{{ asset('js/tailwind-config.js') }}"></script>
 
         @livewireStyles
     </head>

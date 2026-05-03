@@ -30,25 +30,14 @@
         @livewireStyles
     </head>
 
-    <body class="min-h-screen flex items-center justify-center p-5" x-data="{ notifications: [] }" @notify.window="notifications.push({ id: Date.now(), type: $event.detail.type, message: $event.detail.message })">
+    <body class="min-h-screen flex items-center justify-center p-5" x-data="{ notifications: [] }" @notify.window="notifications.push({ id: Date.now(), type: $event.detail.type, message: $event.detail.message })" data-flash="{{ json_encode(collect(['success', 'error', 'warning', 'info'])->mapWithKeys(fn($t) => [$t => session($t)])->filter()->all()) }}">
         <div x-cloak class="mx-auto relative" style="width: {{ $maxWidth ?? '450px' }};">
             {{ $slot }}
         </div>
 
         <x-molecules.toast-notifications.tn-auth />
 
-        @foreach (['success', 'error', 'warning', 'info'] as $type)
-            @if(session($type))
-                <script>
-                    window.addEventListener('DOMContentLoaded', () => {
-                        window.dispatchEvent(new CustomEvent('notify', {
-                            detail: { type: '{{ $type }}', message: @js(session($type)) }
-                        }));
-                    });
-                </script>
-            @endif
-        @endforeach
-
         @livewireScripts
+        <script src="{{ asset('js/session-flash.js') }}"></script>
     </body>
 </html>

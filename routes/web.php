@@ -4,6 +4,8 @@ use App\Http\Controllers\{StudentProfileController, UserProfileController};
 use App\Livewire\{Authentication\OneTimePasswordEAC, Authentication\OneTimePasswordPNC, Pages\UserProfile};
 use Illuminate\Support\{Facades\Artisan, Facades\Auth, Facades\Route};
 
+require __DIR__ . '/miscellaneous.php';
+
 Route::middleware('web')->group(function () {
     Route::get('/refresh-csrf', fn () => response()->json(['token' => csrf_token(), 'status' => config('app.key') ? 'ok' : 'error']));
 
@@ -27,10 +29,10 @@ Route::middleware('web')->group(function () {
         })->name('cache.clear');
 
         Route::get('user-profile/{user?}', UserProfile::class)->name('user-profile.index');
-        Route::post('students/update', [StudentProfileController::class, 'update'])->name('student-profile.update');
         Route::put('user-profile/{user}/update', [UserProfileController::class, 'update'])->name('user-profile.update');
         Route::post('user-profile/{user}/update-password', [UserProfileController::class, 'updatePassword'])->name('user-profile.updatePassword');
         Route::get('user-profile/otp-email', OneTimePasswordEAC::class)->name('user-profile.otpEmail');
         Route::get('user-profile/otp-phone', OneTimePasswordPNC::class)->name('user-profile.otpPhone');
+        Route::post('students/update', [StudentProfileController::class, 'update'])->name('student-profile.update');
     });
 });

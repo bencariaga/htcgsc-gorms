@@ -2,7 +2,8 @@
 
 namespace App\Components\Molecules\Sidebars;
 
-use Illuminate\View\Component;
+use Illuminate\{Support\Number, View\Component};
+use ReflectionClass;
 
 class TemplateSidebar extends Component
 {
@@ -21,13 +22,21 @@ class TemplateSidebar extends Component
         return $files->map(function ($file) use ($selectedId) {
             $id = data_get($file, $this->idKey);
             $isSelected = $selectedId !== null && $id === $selectedId;
-            $displayName = (string) $id;
+            $displayName = $file->title ?? (string) $id;
 
             foreach ($this->nameStrip as $strip) {
                 $displayName = str($displayName)->replace($strip, '')->toString();
             }
 
-            $fileSize = $this->sizeFormatted ?? data_get($file, 'sizeFormatted') ?? (data_get($file, 'size') ? number_format(data_get($file, 'size') / 1024, 2) . ' KB' : null);
+            $formatted = data_get($file, 'sizeFormatted');
+            $reflection = new ReflectionClass($file);
+            $canCallMethod = $reflection->hasMethod('sizeFormatted') && $reflection->getMethod('sizeFormatted')->isPublic();
+
+            $rawSize = data_get($file, 'size');
+            $formattedRaw = $rawSize ? Number::fileSize($rawSize, precision: 2) : null;
+
+            $fileSize = $this->sizeFormatted ?? $formatted ?? ($canCallMethod ? $file->sizeFormatted() : null) ?? $formattedRaw;
+
             $updatedAt = data_get($file, 'updated_at');
             $delConfirmMsg = "Are you sure you want to delete \"{$displayName}\"?";
 

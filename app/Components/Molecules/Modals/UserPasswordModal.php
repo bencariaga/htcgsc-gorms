@@ -4,7 +4,7 @@ namespace App\Components\Molecules\Modals;
 
 use Illuminate\{Support\ViewErrorBag, View\Component};
 
-class UserProfileModal extends Component
+class UserPasswordModal extends Component
 {
     public bool $hasPasswordErrors = false;
 
@@ -34,6 +34,6 @@ class UserProfileModal extends Component
 
     public function render()
     {
-        return view('components.molecules.modals.user-profile-modal');
+        return view('components.molecules.modals.user-password-modal');
     }
 }

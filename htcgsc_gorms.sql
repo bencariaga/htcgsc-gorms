@@ -28,18 +28,18 @@ SET time_zone = "+00:00";
 -- (See below for the actual view)
 --
 CREATE TABLE `all_activities` (
-`referral_id` int(11)
-,`student_id` int(11)
-,`referrer_id` int(11)
+`referral_id` int(10) unsigned
+,`student_id` decimal(10,0)
+,`referrer_id` decimal(10,0)
 ,`created_at` timestamp
 ,`updated_at` timestamp
-,`appointment_id` int(11)
+,`appointment_id` decimal(10,0)
 ,`referral_type` enum('Yourself','Someone Else')
 ,`reason` varchar(255)
 ,`appointment_date` date
 ,`appointment_time` enum('8:30 AM - 9:30 AM','9:30 AM - 10:30 AM','10:30 AM - 11:30 AM','1:30 PM - 2:30 PM','2:30 PM - 3:30 PM','3:30 PM - 4:30 PM')
 ,`appointment_status` enum('Scheduled','Done','Cancelled','Missed')
-,`laravel_foreign_key` int(11)
+,`laravel_foreign_key` int(10) unsigned
 ,`laravel_model` varchar(22)
 ,`laravel_placeholders` varchar(88)
 ,`laravel_with` varchar(0)
@@ -52,10 +52,10 @@ CREATE TABLE `all_activities` (
 --
 
 CREATE TABLE `appointments` (
-  `appointment_id` int(11) NOT NULL,
-  `referrer_id` int(11) NOT NULL,
-  `referral_id` int(11) NOT NULL,
-  `person_id` int(11) DEFAULT NULL,
+  `appointment_id` int(10) UNSIGNED NOT NULL,
+  `referrer_id` int(10) UNSIGNED NOT NULL,
+  `referral_id` int(10) UNSIGNED NOT NULL,
+  `person_id` int(10) UNSIGNED DEFAULT NULL,
   `referral_type` enum('Yourself','Someone Else') NOT NULL,
   `reason` varchar(255) NOT NULL,
   `appointment_date` date NOT NULL,
@@ -159,7 +159,7 @@ CREATE TABLE `migrations` (
 --
 
 CREATE TABLE `persons` (
-  `person_id` int(11) NOT NULL,
+  `person_id` int(10) UNSIGNED NOT NULL,
   `type` enum('Administrator','Employee','Student') NOT NULL,
   `last_name` varchar(20) NOT NULL,
   `first_name` varchar(20) NOT NULL,
@@ -178,8 +178,8 @@ CREATE TABLE `persons` (
 --
 
 CREATE TABLE `referrals` (
-  `referral_id` int(11) NOT NULL,
-  `student_id` int(11) NOT NULL,
+  `referral_id` int(10) UNSIGNED NOT NULL,
+  `student_id` int(10) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -191,8 +191,8 @@ CREATE TABLE `referrals` (
 --
 
 CREATE TABLE `referrers` (
-  `referrer_id` int(11) NOT NULL,
-  `student_id` int(11) NOT NULL,
+  `referrer_id` int(10) UNSIGNED NOT NULL,
+  `student_id` int(10) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -204,7 +204,7 @@ CREATE TABLE `referrers` (
 --
 
 CREATE TABLE `reports` (
-  `report_id` int(11) NOT NULL,
+  `report_id` int(10) UNSIGNED NOT NULL,
   `title` varchar(20) NOT NULL,
   `start_date` date NOT NULL,
   `end_date` date NOT NULL,
@@ -236,8 +236,8 @@ CREATE TABLE `sessions` (
 --
 
 CREATE TABLE `students` (
-  `student_id` int(11) NOT NULL,
-  `person_id` int(11) NOT NULL,
+  `student_id` int(10) UNSIGNED NOT NULL,
+  `person_id` int(10) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -249,8 +249,8 @@ CREATE TABLE `students` (
 --
 
 CREATE TABLE `users` (
-  `user_id` int(11) NOT NULL,
-  `person_id` int(11) NOT NULL,
+  `user_id` int(10) UNSIGNED NOT NULL,
+  `person_id` int(10) UNSIGNED NOT NULL,
   `account_status` enum('Inactive','Active') NOT NULL,
   `password` varchar(255) NOT NULL,
   `profile_picture` text DEFAULT NULL,
@@ -372,6 +372,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `appointments`
+--
+ALTER TABLE `appointments`
+  MODIFY `appointment_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
 -- AUTO_INCREMENT for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
@@ -387,7 +393,43 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT for table `persons`
+--
+ALTER TABLE `persons`
+  MODIFY `person_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+
+--
+-- AUTO_INCREMENT for table `referrals`
+--
+ALTER TABLE `referrals`
+  MODIFY `referral_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `referrers`
+--
+ALTER TABLE `referrers`
+  MODIFY `referrer_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `reports`
+--
+ALTER TABLE `reports`
+  MODIFY `report_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `students`
+--
+ALTER TABLE `students`
+  MODIFY `student_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `user_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- Constraints for dumped tables

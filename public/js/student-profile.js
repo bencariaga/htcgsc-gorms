@@ -1,7 +1,25 @@
+const onNextLivewireCommit = (cb) => {
+    const off = window.Livewire.hook('commit', ({ succeed }) => {
+        succeed(() => {
+            off();
+            cb();
+        });
+    });
+};
+
+const extractErrorMessage = (data, status) => {
+    if (status === 422 && data.errors) {
+        return Object.values(data.errors)
+            .flatMap((v) => v)
+            .join(' ');
+    }
+    return data.message || 'An unexpected error occurred.';
+};
+
 document.addEventListener('alpine:init', () => {
     Alpine.data('studentProfileForm', (config) => ({
         modal: config.modal,
-        show: !config.modal,
+        loaderId: config.loaderId ?? null,
         student: {},
         form: {
             student_id: '',
@@ -16,15 +34,13 @@ document.addEventListener('alpine:init', () => {
         suffixOpen: false,
 
         init() {
-            if (this.modal) this.show = true;
-
             window.addEventListener('open-modal', (event) => {
                 if (event.detail.id !== config.formId) return;
 
                 const { student } = event.detail;
-                this.student = student;
                 const { person } = student;
 
+                this.student = student;
                 this.form = {
                     student_id: student.student_id,
                     last_name: person.last_name,
@@ -34,9 +50,7 @@ document.addEventListener('alpine:init', () => {
                     email_address: person.email_address,
                     phone_number: person.phone_number || '',
                 };
-
                 this.original = { ...this.form };
-                this.show = true;
             });
         },
 
@@ -45,7 +59,7 @@ document.addEventListener('alpine:init', () => {
         },
 
         get anyDirty() {
-            return Object.keys(this.form).some((field) => this.isDirty(field));
+            return Object.keys(this.form).some((f) => this.isDirty(f));
         },
 
         resetForm() {
@@ -57,10 +71,25 @@ document.addEventListener('alpine:init', () => {
             this.form.phone_number = this.form.phone_number.replace(/[^0-9+]/g, '');
         },
 
+        showModalLoader(show) {
+            if (!this.loaderId) return;
+
+            const loader = el(this.loaderId);
+            if (!loader) return;
+
+            loader.classList.toggle('hidden', !show);
+            loader.classList.toggle('flex', show);
+        },
+
         async submit() {
             const { first_name, middle_name, last_name, suffix } = this.form;
             const personName = [first_name, middle_name, last_name, suffix].filter(Boolean).join(' ');
-            window.showLoading(true, 'Updating student profile...', personName);
+
+            if (this.modal) {
+                this.showModalLoader(true);
+            } else {
+                window.showLoading(true, 'Updating student profile...', personName);
+            }
 
             try {
                 const response = await fetch(this.$el.action, {
@@ -76,18 +105,38 @@ document.addEventListener('alpine:init', () => {
                 const data = await response.json();
 
                 if (!response.ok) {
-                    const errorMessages = response.status === 422 ? Object.values(data.errors).flat().join(' ') : data.message || 'An unexpected error occurred.';
-                    throw new Error(errorMessages);
+                    throw new Error(extractErrorMessage(data, response.status));
                 }
 
                 this.original = { ...this.form };
-                window.dispatchEvent(new CustomEvent('close-modal', { detail: { id: config.formId } }));
-                window.notify('success', data.message);
-                window.Livewire?.dispatch('refreshList');
+
+                if (window.Livewire) {
+                    onNextLivewireCommit(() => {
+                        if (this.modal) {
+                            this.showModalLoader(false);
+                        } else {
+                            window.showLoading(false);
+                        }
+                        window.notify('success', data.message);
+                    });
+
+                    window.Livewire.dispatch('refreshList');
+                } else {
+                    if (this.modal) {
+                        this.showModalLoader(false);
+                    } else {
+                        window.showLoading(false);
+                    }
+                    window.notify('success', data.message);
+                }
             } catch (error) {
+                if (this.modal) {
+                    this.showModalLoader(false);
+                } else {
+                    window.showLoading(false);
+                }
+
                 window.notify('error', error.message || 'Connection lost. Please try again.');
-            } finally {
-                window.showLoading(false);
             }
         },
     }));

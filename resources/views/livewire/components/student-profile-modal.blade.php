@@ -2,6 +2,7 @@
     <div class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm" x-on:click="show = false"></div>
 
     <div class="max-w-4xl w-full relative z-10 bg-white dark:bg-slate-800 shadow-xl border border-slate-200 dark:border-slate-700 rounded-2xl overflow-hidden">
-        <x-molecules.forms.student-profile-form :id="$modalId" :modal="true" />
+        <x-molecules.loading-screens.ls id="loadingStudentProfileModal" message="Updating student profile..." :absolute="true" />
+        <x-molecules.forms.student-profile-form :id="$modalId" :modal="true" loader-id="loadingStudentProfileModal" />
     </div>
 </div>

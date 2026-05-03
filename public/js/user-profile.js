@@ -1,55 +1,60 @@
+const onNextLivewireCommit = (cb) => {
+    const off = window.Livewire.hook('commit', ({ succeed }) => {
+        succeed(() => {
+            off();
+            cb();
+        });
+    });
+};
+
 const getChangedFields = () => {
-    const mapping = {
+    const fieldMap = {
         firstNameInput: 'first name',
         lastNameInput: 'last name',
         middleNameInput: 'middle name',
-        suffixHiddenInput: 'suffix',
-        emailInput: 'email address',
-        phoneInput: 'phone number',
+        suffixInput: 'suffix',
+        emailAddressInput: 'email address',
+        phoneNumberInput: 'phone number',
     };
 
-    return Object.entries(mapping)
+    return Object.entries(fieldMap)
         .filter(([id]) => isChanged(el(id)))
         .map(([, label]) => label);
 };
 
 window.toggleModal = (show) => {
-    const modal = el('passwordModal');
-    if (!modal) return;
-
-    if (!show) {
-        modal.classList.replace('flex', 'hidden');
-        return;
-    }
-
-    const changed = getChangedFields();
-
-    if (changed.length > 0) {
-        const formatter = new Intl.ListFormat('en', { style: 'long', type: 'conjunction' });
-        return alert(`You cannot change your password while changing your ${formatter.format(changed)}.`);
-    }
-
-    modal.classList.replace('hidden', 'flex');
+    window.dispatchEvent(new CustomEvent('open-password-modal', { detail: { show } }));
 };
 
-const handlePasswordSubmit = (event) => {
-    const modal = el('passwordModal');
-    if (modal) modal.classList.replace('flex', 'hidden');
+const validateNameLength = (form, formatter) => {
+    const nameFields = [
+        { n: 'first name', v: form.first_name.trim() },
+        { n: 'middle name', v: form.middle_name.trim() },
+        { n: 'last name', v: form.last_name.trim() },
+    ]
+        .filter((f) => f.v && f.v.length < 2)
+        .map((f) => f.n);
 
-    const loader = el('loadingPassword');
-    if (loader) {
-        loader.classList.replace('hidden', 'flex');
-    }
+    if (nameFields.length === 0) return null;
+    return `The ${formatter.format(nameFields)} ${nameFields.length > 1 ? 'must all' : 'must'} be at least 2 characters long.`;
+};
+
+const validateEmail = (email) => {
+    if (/^[a-zA-Z0-9._%+-]+@(gmail\.com|online\.htcgsc\.edu\.ph)$/.test(email)) return null;
+    return 'Please enter a valid Gmail or HTCGSC email address.';
+};
+
+const validatePhone = (phone) => {
+    const cleaned = phone.replace(/\s+/g, '');
+    if (cleaned === '' || /^(09|\+639)\d{9}$/.test(cleaned)) return null;
+    return 'Please enter a valid Philippine mobile number.';
 };
 
 window.addEventListener('pageshow', (e) => {
     if (!e.persisted) return;
 
     ['loadingPassword', 'loadingProfile'].forEach((id) => {
-        const loader = el(id);
-        if (loader) {
-            loader.classList.replace('flex', 'hidden');
-        }
+        el(id)?.classList.replace('flex', 'hidden');
     });
 });
 
@@ -81,8 +86,8 @@ document.addEventListener('alpine:init', () => {
         },
 
         get anyDirty() {
-            const basicFields = ['last_name', 'first_name', 'middle_name', 'suffix', 'email_address', 'phone_number'];
-            return basicFields.some((field) => this.isDirty(field)) || this.photoDirty;
+            const fields = ['last_name', 'first_name', 'middle_name', 'suffix', 'email_address', 'phone_number'];
+            return fields.some((f) => this.isDirty(f)) || this.photoDirty;
         },
 
         previewImage(event) {
@@ -104,10 +109,7 @@ document.addEventListener('alpine:init', () => {
         },
 
         resetForm() {
-            Object.keys(this.original).forEach((key) => {
-                this.form[key] = this.original[key];
-            });
-
+            Object.assign(this.form, this.original);
             this.form.hasNewFile = false;
             this.form.remove_picture = '0';
             this.previewUrl = config.profilePicture;
@@ -121,12 +123,23 @@ document.addEventListener('alpine:init', () => {
             this.form.phone_number = this.form.phone_number.replace(/[^0-9+]/g, '');
         },
 
+        showLoader(show, name = '') {
+            if (!this.isSelf || this.modal) {
+                window.showLoading(show, 'Updating user profile...', name);
+                return;
+            }
+
+            const loader = el(this.loaderId);
+            loader?.classList.toggle('hidden', !show);
+            loader?.classList.toggle('flex', show);
+        },
+
         async submit() {
             const { last_name, first_name, middle_name, suffix, email_address, phone_number } = this.form;
-            const nameChanged = this.isDirty('first_name') || this.isDirty('middle_name') || this.isDirty('last_name') || this.isDirty('suffix');
+            const formatter = new Intl.ListFormat('en', { style: 'long', type: 'conjunction' });
+            const nameChanged = ['first_name', 'middle_name', 'last_name', 'suffix'].some((f) => this.isDirty(f));
             const emailChanged = this.isDirty('email_address');
             const phoneChanged = this.isDirty('phone_number');
-            const formatter = new Intl.ListFormat('en', { style: 'long', type: 'conjunction' });
 
             if (emailChanged && phoneChanged) {
                 return alert('For security reasons, you cannot change your email address and phone number at the same time. Please update them one at a time.');
@@ -137,29 +150,26 @@ document.addEventListener('alpine:init', () => {
             }
 
             if (nameChanged) {
-                const names = [
-                    { n: 'first name', v: first_name.trim() },
-                    { n: 'middle name', v: middle_name.trim() },
-                    { n: 'last name', v: last_name.trim() },
-                ]
-                    .filter((f) => f.v && f.v.length < 2)
-                    .map((f) => f.n);
-
-                if (names.length > 0) {
-                    return alert(`The ${formatter.format(names)} ${names.length > 1 ? 'must all' : 'must'} be at least 2 characters long.`);
-                }
+                const nameError = validateNameLength(this.form, formatter);
+                if (nameError) return alert(nameError);
             }
 
-            if (emailChanged && !/^[a-zA-Z0-9._%+-]+@(gmail\.com|online\.htcgsc\.edu\.ph)$/.test(email_address)) {
-                return alert('Please enter a valid Gmail or HTCGSC email address.');
+            if (emailChanged) {
+                const emailError = validateEmail(email_address);
+                if (emailError) return alert(emailError);
             }
 
-            const phoneValue = phone_number.replace(/\s+/g, '');
-            if (phoneChanged && phoneValue !== '' && !/^(09|\+639)\d{9}$/.test(phoneValue)) {
-                return alert('Please enter a valid Philippine mobile number.');
+            if (phoneChanged) {
+                const phoneError = validatePhone(phone_number);
+                if (phoneError) return alert(phoneError);
             }
 
             const personName = [first_name, middle_name, last_name, suffix].filter(Boolean).join(' ');
+
+            if (this.modal) {
+                window.dispatchEvent(new CustomEvent('close-modal', { detail: { id: config.formId } }));
+            }
+
             this.showLoader(true, personName);
 
             try {
@@ -176,13 +186,6 @@ document.addEventListener('alpine:init', () => {
                 const data = await response.json();
                 if (!response.ok) throw data;
 
-                window.notify('success', data.message);
-
-                if (data.redirect) {
-                    window.location.href = data.redirect;
-                    return;
-                }
-
                 Object.keys(this.form).forEach((key) => {
                     if (key in this.original) this.original[key] = this.form[key];
                 });
@@ -190,42 +193,71 @@ document.addEventListener('alpine:init', () => {
                 this.form.hasNewFile = false;
                 this.form.remove_picture = '0';
 
-                if (this.modal) {
-                    window.dispatchEvent(new CustomEvent('close-modal', { detail: { id: config.formId } }));
+                if (data.redirect) {
+                    window.location.href = data.redirect;
+                    return;
                 }
 
-                this.showLoader(false);
-                window.Livewire?.dispatch('refreshList');
+                if (window.Livewire) {
+                    onNextLivewireCommit(() => {
+                        this.showLoader(false);
+                        window.notify('success', data.message);
+                    });
+
+                    window.Livewire.dispatch('refreshList');
+                } else {
+                    this.showLoader(false);
+                    window.notify('success', data.message);
+                }
             } catch (error) {
                 this.showLoader(false);
-                const msg = error.errors ? Object.values(error.errors).flat().join(' ') : error.message || 'Connection lost. Please try again.';
+                const msg = error.errors
+                    ? Object.values(error.errors)
+                          .flatMap((v) => v)
+                          .join(' ')
+                    : error.message || 'Connection lost. Please try again.';
                 window.notify('error', msg);
             }
-        },
-
-        showLoader(show, name = '') {
-            if (!this.isSelf) {
-                window.showLoading(show, 'Updating user profile...', name);
-                return;
-            }
-
-            const loader = el(this.loaderId);
-
-            loader?.classList.toggle('hidden', !show);
-            loader?.classList.toggle('flex', show);
         },
     }));
 
     Alpine.data('userPasswordModal', (hasPasswordErrors) => ({
         showErrors: hasPasswordErrors,
+        isOpen: hasPasswordErrors,
+
         init() {
-            if (this.showErrors) {
-                setTimeout(() => (this.showErrors = false), 5000);
+            if (!this.showErrors) return;
+            setTimeout(() => {
+                this.showErrors = false;
+            }, 5000);
+        },
+
+        openModal(event) {
+            if (!event.detail.show) {
+                this.isOpen = false;
+                return;
             }
+
+            const changed = getChangedFields();
+
+            if (changed.length > 0) {
+                const formatter = new Intl.ListFormat('en', { style: 'long', type: 'conjunction' });
+                alert(`You cannot change your password while changing your ${formatter.format(changed)}.`);
+                return;
+            }
+
+            this.isOpen = true;
+        },
+
+        closeModal() {
+            this.isOpen = false;
+            this.showErrors = false;
+        },
+
+        submitPassword() {
+            this.isOpen = false;
+            const loader = el('loadingPassword');
+            loader?.classList.replace('hidden', 'flex');
         },
     }));
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-    el('passwordForm')?.addEventListener('submit', handlePasswordSubmit);
 });

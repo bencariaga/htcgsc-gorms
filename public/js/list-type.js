@@ -1,24 +1,22 @@
-document.addEventListener("livewire:init", () => {
-    const el = (id) => document.getElementById(id);
+document.addEventListener('livewire:init', () => {
+    const getScreen = () => el('loading-screen');
+    const getMessage = () => el('loading-message');
+    const getPerson = () => el('loading-person');
 
-    const elements = {
-        screen: el("loading-screen"),
-        message: el("loading-message"),
-        person: el("loading-person"),
-    };
-
-    window.addEventListener("show-loading-accounts", ({ detail }) => {
-        const { screen, message, person } = elements;
-
+    window.addEventListener('show-loading-accounts', ({ detail }) => {
+        const screen = getScreen();
         if (!screen) return;
+
+        const message = getMessage();
+        const person = getPerson();
+
         if (message) message.textContent = detail.message;
         if (person) person.textContent = detail.userName;
 
-        screen.classList.replace("hidden", "flex");
+        screen.classList.replace('hidden', 'flex');
     });
 
-    window.addEventListener("hide-loading-accounts", () => {
-        const { screen } = elements;
-        if (screen) screen.classList.replace("flex", "hidden");
+    window.addEventListener('hide-loading-accounts', () => {
+        getScreen()?.classList.replace('flex', 'hidden');
     });
 });

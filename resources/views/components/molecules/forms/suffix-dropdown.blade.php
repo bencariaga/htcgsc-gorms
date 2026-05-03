@@ -1,10 +1,8 @@
-@props(['suffixes'])
-
 <div class="space-y-1 md:col-span-1">
     <x-atoms.forms.field-label label="Suffix" />
 
     <div class="relative" @click.away="suffixOpen = false">
-        <input type="hidden" name="suffix" x-model="form.suffix">
+        <input type="hidden" id="suffixInput" name="suffix" x-model="form.suffix">
 
         <button type="button" @click="suffixOpen = !suffixOpen" :class="isDirty('suffix') ? 'bg-orange-50 border-orange-300 dark:bg-orange-900/20' : 'bg-gray-100 dark:bg-slate-900'" class="w-full h-[50px] pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all text-left flex items-center justify-between dark:text-white">
             <span x-text="form.suffix || 'N / A'"></span>

@@ -29,7 +29,12 @@ abstract class BaseListType extends Component
     protected array $queryString = ['search' => ['except' => ''], 'sortField', 'sortDirection' => ['alwaysShow' => false], 'perPage', 'filter' => ['except' => 'All']];
 
     /** @var array */
-    protected $listeners = ['refreshList' => '$refresh', 'filterUpdated' => '$refresh'];
+    protected $listeners = ['refreshList' => 'refreshListData', 'filterUpdated' => '$refresh'];
+
+    public function refreshListData()
+    {
+        $this->dispatch('hide-loading-accounts');
+    }
 
     protected ?string $view = null;
 

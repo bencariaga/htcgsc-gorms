@@ -6,7 +6,7 @@ use Illuminate\View\Component;
 
 class Ls extends Component
 {
-    public function __construct(public ?string $id = null, public ?string $message = null) {}
+    public function __construct(public ?string $id = null, public ?string $message = null, public bool $absolute = false) {}
 
     public function render()
     {

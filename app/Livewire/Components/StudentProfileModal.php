@@ -18,7 +18,7 @@ class StudentProfileModal extends Component
     /** @var array */
     protected $listeners = ['open-modal' => 'handleOpenModal'];
 
-    public function handleOpenModal(string $id, array $student): void
+    public function handleOpenModal(string $id, ?array $student = null): void
     {
         if ($id === $this->modalId) {
             $this->open($student);

@@ -2,7 +2,7 @@
 
 @once <script src="{{ asset('js/student-profile.js') }}"></script> @endonce
 
-<form id="{{ $id }}" action="{{ route('student-profile.update') }}" method="POST" x-data="studentProfileForm({ formId: '{{ $id }}', modal: @js($modal) })" @submit.prevent="submit()" x-cloak>
+<form id="{{ $id }}" action="{{ route('student-profile.update') }}" method="POST" x-data="studentProfileForm({ formId: '{{ $id }}', modal: @js($modal), loaderId: @js($loaderId) })" @submit.prevent="submit()" x-cloak>
     @csrf
 
     <input type="hidden" name="student_id" x-model="form.student_id">
@@ -13,13 +13,13 @@
             <p class="text-base text-slate-500 dark:text-slate-400 mt-1 font-medium transition-colors duration-300">Manage the information of this student.</p>
         </div>
 
-        <button type="button" x-on:click="show = false" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors">
+        <button type="button" @click="$dispatch('close-modal', { id: '{{ $id }}' })" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors">
             <i class="fas fa-times text-2xl"></i>
         </button>
     </div>
 
     <div class="p-8 space-y-6">
-        @foreach(ProfileFormStyling::sections('student') as $key => $section)
+        @foreach(ProfileFormStyling::sections() as $key => $section)
             <div class="{{ $section['grid'] }} gap-6">
                 @foreach($section['fields'] as $field)
                     <div class="space-y-1 {{ $field['colSpan'] }}">
@@ -39,7 +39,7 @@
         @endforeach
     </div>
 
-    <div class="px-8 py-6 bg-slate-50 dark:bg-slate-800/50 border-t border-slate-100 dark:border-slate-700">
-        <x-molecules.forms.profile-action-bar />
+    <div class="px-8 py-6 flex justify-end bg-slate-50 dark:bg-slate-800/50 border-t border-slate-100 dark:border-slate-700">
+        <x-molecules.forms.profile-action-bar :show-password-button="false" />
     </div>
 </form>

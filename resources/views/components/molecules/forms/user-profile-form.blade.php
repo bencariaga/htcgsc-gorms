@@ -36,7 +36,7 @@
 
     <x-molecules.forms.profile-photo-editor title="User Profile Settings" description="Manage the information of your user account." />
 
-    @foreach(ProfileFormStyling::sections('user') as $key => $section)
+    @foreach(ProfileFormStyling::sections() as $key => $section)
         <div class="{{ $section['grid'] }} gap-x-6 gap-y-4">
             @foreach($section['fields'] as $field)
                 <div class="space-y-1 {{ $field['colSpan'] }}">
@@ -55,10 +55,5 @@
         </div>
     @endforeach
 
-    <x-molecules.forms.profile-action-bar>
-        <button type="button" onclick="toggleModal(true)" class="text-lg w-[14rem] flex justify-between items-center px-4 py-2 font-semibold text-blue-600 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-slate-700 rounded-xl transition-all group">
-            <i class="fas fa-key mr-2.5 text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform"></i>
-            <span>Change Password</span>
-        </button>
-    </x-molecules.forms.profile-action-bar>
+    <x-molecules.forms.profile-action-bar :show-password-button="true" />
 </form>

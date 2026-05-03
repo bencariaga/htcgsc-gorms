@@ -1,6 +1,4 @@
-@props(['title', 'description'])
-
-<div class="flex justify-center items-center gap-6 mb-4 pb-4 border-slate-100 dark:border-slate-700">
+<div class="flex justify-center items-center gap-6 mb-4 pb-4 border-b-2 border-slate-100 dark:border-slate-700">
     <div class="relative group">
         <div :class="photoDirty ? 'border-orange-400 bg-orange-50 dark:bg-orange-900/20' : 'border-gray-400 dark:border-gray-600 bg-slate-50 dark:bg-slate-900'" class="h-[8rem] w-[8rem] rounded-2xl overflow-hidden border-2 shadow-sm transition-colors duration-300">
             <template x-if="previewUrl">
