@@ -16,14 +16,14 @@ class UserProfileController extends Controller
             $redirectRoute = $profileService->handleUpdate($user, $request->validated(), $otpService, $request->file('profilePicture'), $request->input('remove_picture') === '1');
 
             if ($request->ajax() || $request->wantsJson()) {
-                return response()->json(['status' => 'success', 'message' => 'User profile updated successfully!', 'redirect' => $redirectRoute ? route($redirectRoute) : null]);
+                return response()->json(['status' => 'success', 'message' => 'User profile has been <strong>updated</strong> successfully!', 'redirect' => $redirectRoute ? route($redirectRoute) : null]);
             }
 
             if ($redirectRoute) {
                 return redirect()->route($redirectRoute);
             }
 
-            return redirect()->back()->with('success', 'User profile updated successfully!');
+            return redirect()->back()->with('success', 'User profile has been <strong>updated</strong> successfully!');
         } catch (Exception $e) {
             if ($request->ajax() || $request->wantsJson()) {
                 return response()->json(['status' => 'error', 'message' => $e->getMessage()], 400);

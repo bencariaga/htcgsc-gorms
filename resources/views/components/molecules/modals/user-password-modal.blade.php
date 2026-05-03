@@ -14,14 +14,6 @@
             <form action="{{ route('user-profile.updatePassword', $user->user_id) }}" method="POST" id="passwordForm" class="space-y-5" @submit="submitPassword()">
                 @csrf
 
-                @php
-                    $passwordFields = [
-                        ['name' => 'full_name', 'label' => 'Full Name', 'icon' => 'fa-user', 'placeholder' => $fullName, 'type' => 'text'],
-                        ['name' => 'newPassword', 'label' => 'New Password', 'icon' => 'fa-lock', 'placeholder' => 'Minimum is 8 characters.', 'type' => 'password', 'canToggle' => true],
-                        ['name' => 'newPassword_confirmation', 'label' => 'Confirm New Password', 'icon' => 'fa-check-double', 'placeholder' => 'Repeat that password.', 'type' => 'password', 'canToggle' => true],
-                    ];
-                @endphp
-
                 @foreach($passwordFields as $field)
                     <div class="space-y-1" @if($field['canToggle'] ?? false) x-data="{ show: false }" @endif>
                         <label class="block text-base font-semibold text-slate-700 dark:text-slate-200">{{ $field['label'] }}</label>

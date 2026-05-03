@@ -7,7 +7,7 @@ use App\Livewire\Forms\{PasswordChangeForm, UserProfileForm};
 use App\Services\Miscellaneous\{OTPService, ProfileService};
 use Exception;
 use Illuminate\Support\Facades\{Auth, Log};
-use Livewire\{Attributes\Layout, Attributes\Title, Component, WithFileUploads};
+use Livewire\{Attributes\Layout, Attributes\On, Attributes\Title, Component, WithFileUploads};
 
 #[Title('User Profile')]
 #[Layout('layouts.personal-pages', ['padding' => '1rem', 'important' => '!important'])]
@@ -24,6 +24,13 @@ class UserProfile extends Component
     public ?Person $person = null;
 
     public string $fullName = '';
+
+    #[On('refreshList')]
+    #[On('refreshProfile')]
+    public function refreshData(): void
+    {
+        $this->mount($this->user);
+    }
 
     public function mount(?User $user = null): void
     {

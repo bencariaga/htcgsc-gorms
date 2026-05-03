@@ -9,10 +9,7 @@ function otpTimer(expiryTimestamp) {
         },
 
         updateTimer() {
-            this.remaining = Math.max(
-                0,
-                Math.round((this.expiry - Date.now()) / 1000),
-            );
+            this.remaining = Math.max(0, Math.round((this.expiry - Date.now()) / 1000));
         },
 
         resetTimer(seconds) {
@@ -25,14 +22,11 @@ function otpTimer(expiryTimestamp) {
 function otpHandler(component) {
     return {
         focusNext(index) {
-            if (this.$refs["otp" + index]) this.$refs["otp" + index].focus();
+            if (this.$refs['otp' + index]) this.$refs['otp' + index].focus();
         },
 
         checkComplete() {
-            const otpValues = Array.from(
-                { length: 6 },
-                (_, i) => this.$refs["otp" + i]?.value || "",
-            );
+            const otpValues = Array.from({ length: 6 }, (_, i) => this.$refs['otp' + i]?.value || '');
 
             if (otpValues.every((val) => /^\d$/.test(val))) {
                 component.verify();
@@ -41,8 +35,7 @@ function otpHandler(component) {
 
         handleInput(e, index) {
             const value = e.target.value;
-            if (!/^\d$/.test(value)) return (e.target.value = "");
-
+            if (!/^\d$/.test(value)) return (e.target.value = '');
             component.set(`otp_array.${index}`, value);
 
             if (index < 5) {
@@ -55,26 +48,25 @@ function otpHandler(component) {
         handleBackspace(e, index) {
             if (!e.target.value && index > 0) {
                 this.focusNext(index - 1);
-                this.$refs["otp" + (index - 1)].value = "";
-                component.set(`otp_array.${index - 1}`, "");
+                this.$refs['otp' + (index - 1)].value = '';
+                component.set(`otp_array.${index - 1}`, '');
             }
         },
 
         handleArrows(e, index) {
-            if (e.key === "ArrowLeft" && index > 0) this.focusNext(index - 1);
-            if (e.key === "ArrowRight" && index < 5) this.focusNext(index + 1);
+            if (e.key === 'ArrowLeft' && index > 0) this.focusNext(index - 1);
+            if (e.key === 'ArrowRight' && index < 5) this.focusNext(index + 1);
         },
 
         handlePaste(e) {
             e.preventDefault();
-            const data = e.clipboardData.getData("text").trim().slice(0, 6);
+            const data = e.clipboardData.getData('text').trim().slice(0, 6);
             if (!/^\d+$/.test(data)) return;
 
-            data.split("").forEach((digit, i) => {
-                if (this.$refs["otp" + i]) {
-                    this.$refs["otp" + i].value = digit;
-                    component.set(`otp_array.${i}`, digit);
-                }
+            data.split('').forEach((digit, i) => {
+                if (!this.$refs['otp' + i]) return;
+                this.$refs['otp' + i].value = digit;
+                component.set(`otp_array.${i}`, digit);
             });
 
             if (data.length === 6) {

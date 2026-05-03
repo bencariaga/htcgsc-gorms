@@ -1,21 +1,3 @@
-const onNextLivewireCommit = (cb) => {
-    const off = window.Livewire.hook('commit', ({ succeed }) => {
-        succeed(() => {
-            off();
-            cb();
-        });
-    });
-};
-
-const extractErrorMessage = (data, status) => {
-    if (status === 422 && data.errors) {
-        return Object.values(data.errors)
-            .flatMap((v) => v)
-            .join(' ');
-    }
-    return data.message || 'An unexpected error occurred.';
-};
-
 document.addEventListener('alpine:init', () => {
     Alpine.data('studentProfileForm', (config) => ({
         modal: config.modal,
@@ -50,12 +32,13 @@ document.addEventListener('alpine:init', () => {
                     email_address: person.email_address,
                     phone_number: person.phone_number || '',
                 };
+
                 this.original = { ...this.form };
             });
         },
 
         isDirty(field) {
-            return this.form[field] !== this.original[field];
+            return String(this.form[field] ?? '') !== String(this.original[field] ?? '');
         },
 
         get anyDirty() {
@@ -86,10 +69,10 @@ document.addEventListener('alpine:init', () => {
             const personName = [first_name, middle_name, last_name, suffix].filter(Boolean).join(' ');
 
             if (this.modal) {
-                this.showModalLoader(true);
-            } else {
-                window.showLoading(true, 'Updating student profile...', personName);
+                window.dispatchEvent(new CustomEvent('close-modal', { detail: { id: config.formId } }));
             }
+
+            window.showLoading(true, 'Updating student profile...', personName);
 
             try {
                 const response = await fetch(this.$el.action, {
@@ -105,37 +88,24 @@ document.addEventListener('alpine:init', () => {
                 const data = await response.json();
 
                 if (!response.ok) {
-                    throw new Error(extractErrorMessage(data, response.status));
+                    throw new Error(window.extractErrorMessage(data, response.status));
                 }
 
                 this.original = { ...this.form };
 
-                if (window.Livewire) {
-                    onNextLivewireCommit(() => {
-                        if (this.modal) {
-                            this.showModalLoader(false);
-                        } else {
-                            window.showLoading(false);
-                        }
-                        window.notify('success', data.message);
-                    });
+                const notifySuccess = () => {
+                    window.showLoading(false);
+                    setTimeout(() => window.notify('success', data.message), 300);
+                };
 
+                if (window.Livewire) {
+                    window.onNextLivewireCommit(notifySuccess);
                     window.Livewire.dispatch('refreshList');
                 } else {
-                    if (this.modal) {
-                        this.showModalLoader(false);
-                    } else {
-                        window.showLoading(false);
-                    }
-                    window.notify('success', data.message);
+                    notifySuccess();
                 }
             } catch (error) {
-                if (this.modal) {
-                    this.showModalLoader(false);
-                } else {
-                    window.showLoading(false);
-                }
-
+                window.showLoading(false);
                 window.notify('error', error.message || 'Connection lost. Please try again.');
             }
         },

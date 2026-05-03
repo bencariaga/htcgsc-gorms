@@ -16,7 +16,7 @@
             <div class="relative z-10 h-32">
                 <svg viewBox="0 0 400 100" preserveAspectRatio="none" class="w-full h-full overflow-visible">
                     @foreach($data as $index => $date)
-                        @if($date['is_first_of_month'])
+                        @if($date['is_last_of_month'])
                             <line x1="{{ $points[$index][0] }}" y1="-20" x2="{{ $points[$index][0] }}" y2="100" :stroke="darkMode ? '#ffffff' : '#000000'" stroke-width="2" stroke-dasharray="8" />
                             <text x="{{ $points[$index][0] }}" y="-30" text-anchor="middle" class="text-[12px] text-slate-700 dark:fill-slate-300 font-bold tracking-wide">{{ \Illuminate\Support\Carbon::parse("{$date['month_name']} {$date['year']}")->format('F Y') }}</text>
                         @endif

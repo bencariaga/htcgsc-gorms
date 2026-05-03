@@ -27,11 +27,11 @@ class RenderChartStatistics
                 $year = $date->format('Y');
                 $month_num = $date->format('m');
                 $month_name = $date->format('F');
-                $is_first_of_month = $date->day === 1;
+                $is_last_of_month = $date->day === $date->daysInMonth;
                 $is_today = $date->isToday();
                 $count = $chart['model']::whereDate('created_at', '<=', $date->toDateString())->count();
 
-                return compact('label', 'year', 'month_num', 'month_name', 'is_first_of_month', 'is_today', 'count');
+                return compact('label', 'year', 'month_num', 'month_name', 'is_last_of_month', 'is_today', 'count');
             })->values();
 
             $maxCount = $data->pluck('count')->max() ?: 1;

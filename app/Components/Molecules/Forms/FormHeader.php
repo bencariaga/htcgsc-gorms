@@ -6,7 +6,7 @@ use Illuminate\View\Component;
 
 class FormHeader extends Component
 {
-    public function __construct(public string $context = '', public ?string $title = null, public ?string $form = null, public ?string $description = null, public ?string $identifier = null) {}
+    public function __construct(public string $context = '', public ?string $title = null, public mixed $form = null, public ?string $description = null, public ?string $identifier = null) {}
 
     public function render()
     {

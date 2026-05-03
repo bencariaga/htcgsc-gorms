@@ -1,12 +1,3 @@
-const onNextLivewireCommit = (cb) => {
-    const off = window.Livewire.hook('commit', ({ succeed }) => {
-        succeed(() => {
-            off();
-            cb();
-        });
-    });
-};
-
 const getChangedFields = () => {
     const fieldMap = {
         firstNameInput: 'first name',
@@ -24,30 +15,6 @@ const getChangedFields = () => {
 
 window.toggleModal = (show) => {
     window.dispatchEvent(new CustomEvent('open-password-modal', { detail: { show } }));
-};
-
-const validateNameLength = (form, formatter) => {
-    const nameFields = [
-        { n: 'first name', v: form.first_name.trim() },
-        { n: 'middle name', v: form.middle_name.trim() },
-        { n: 'last name', v: form.last_name.trim() },
-    ]
-        .filter((f) => f.v && f.v.length < 2)
-        .map((f) => f.n);
-
-    if (nameFields.length === 0) return null;
-    return `The ${formatter.format(nameFields)} ${nameFields.length > 1 ? 'must all' : 'must'} be at least 2 characters long.`;
-};
-
-const validateEmail = (email) => {
-    if (/^[a-zA-Z0-9._%+-]+@(gmail\.com|online\.htcgsc\.edu\.ph)$/.test(email)) return null;
-    return 'Please enter a valid Gmail or HTCGSC email address.';
-};
-
-const validatePhone = (phone) => {
-    const cleaned = phone.replace(/\s+/g, '');
-    if (cleaned === '' || /^(09|\+639)\d{9}$/.test(cleaned)) return null;
-    return 'Please enter a valid Philippine mobile number.';
 };
 
 window.addEventListener('pageshow', (e) => {
@@ -78,7 +45,7 @@ document.addEventListener('alpine:init', () => {
         },
 
         isDirty(field) {
-            return this.form[field] !== this.original[field];
+            return String(this.form[field] ?? '') !== String(this.original[field] ?? '');
         },
 
         get photoDirty() {
@@ -150,17 +117,17 @@ document.addEventListener('alpine:init', () => {
             }
 
             if (nameChanged) {
-                const nameError = validateNameLength(this.form, formatter);
+                const nameError = window.validateNameLength(this.form, formatter);
                 if (nameError) return alert(nameError);
             }
 
             if (emailChanged) {
-                const emailError = validateEmail(email_address);
+                const emailError = window.validateEmail(email_address);
                 if (emailError) return alert(emailError);
             }
 
             if (phoneChanged) {
-                const phoneError = validatePhone(phone_number);
+                const phoneError = window.validatePhone(phone_number);
                 if (phoneError) return alert(phoneError);
             }
 
@@ -184,7 +151,7 @@ document.addEventListener('alpine:init', () => {
                 });
 
                 const data = await response.json();
-                if (!response.ok) throw data;
+                if (!response.ok) throw new Error(window.extractErrorMessage(data, response.status));
 
                 Object.keys(this.form).forEach((key) => {
                     if (key in this.original) this.original[key] = this.form[key];
@@ -198,25 +165,20 @@ document.addEventListener('alpine:init', () => {
                     return;
                 }
 
-                if (window.Livewire) {
-                    onNextLivewireCommit(() => {
-                        this.showLoader(false);
-                        window.notify('success', data.message);
-                    });
+                const notifySuccess = () => {
+                    this.showLoader(false);
+                    setTimeout(() => window.notify('success', data.message), 300);
+                };
 
+                if (window.Livewire) {
+                    window.onNextLivewireCommit(notifySuccess);
                     window.Livewire.dispatch('refreshList');
                 } else {
-                    this.showLoader(false);
-                    window.notify('success', data.message);
+                    notifySuccess();
                 }
             } catch (error) {
                 this.showLoader(false);
-                const msg = error.errors
-                    ? Object.values(error.errors)
-                          .flatMap((v) => v)
-                          .join(' ')
-                    : error.message || 'Connection lost. Please try again.';
-                window.notify('error', msg);
+                window.notify('error', error.message || 'Connection lost. Please try again.');
             }
         },
     }));

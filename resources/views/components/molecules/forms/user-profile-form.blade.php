@@ -2,8 +2,8 @@
 
 @once <script src="{{ asset('js/user-profile.js') }}"></script> @endonce
 
-<form id="{{ $id }}" action="{{ route('user-profile.update', $user->user_id) }}" method="POST"
-    enctype="multipart/form-data" class="space-y-6 py-[20px] px-[2rem]" x-data="userProfileForm({
+<form id="{{ $id }}" action="{{ route('user-profile.update', $user->user_id) }}" method="POST" enctype="multipart/form-data" class="space-y-6 py-[20px] px-[2rem] border-2 border-slate-300 dark:border-slate-700 rounded-2xl"
+    x-data="userProfileForm({
         formId: '{{ $id }}',
         modal: @js($modal),
         isSelf: @js($isSelf),

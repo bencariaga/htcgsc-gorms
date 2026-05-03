@@ -44,7 +44,7 @@ class UserProfileModal extends Component
             $service->update($this->form->user, $validated);
             $this->show = false;
             $this->dispatch('hide-loading-accounts');
-            $this->dispatch('notify', ['type' => 'success', 'message' => 'User profile updated successfully!']);
+            $this->dispatch('notify', ['type' => 'success', 'message' => 'User profile has been <strong>updated</strong> successfully!']);
             $this->dispatch('refreshList');
         } catch (Exception $e) {
             $this->dispatch('hide-loading-accounts');

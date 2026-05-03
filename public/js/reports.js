@@ -45,7 +45,11 @@ document.addEventListener('alpine:init', () => {
 
             if (action === 'reset to default') return !this.anyFieldDirty();
             if (action === 'download report') return !this.isSelected || this.anyFieldDirty();
-            if (action === 'generate report' || action === 'regenerate report') return this.isSelected ? !this.anyFieldDirty() || !this.allFieldsValid() : !this.allFieldsValid();
+            if (action === 'generate report' || action === 'regenerate report') {
+                if (!this.allFieldsValid()) return true;
+                if (this.isSelected && !this.anyFieldDirty()) return true;
+                return false;
+            }
 
             return false;
         },
@@ -56,7 +60,6 @@ document.addEventListener('alpine:init', () => {
 
         handleReportLoaded(data) {
             const isDataValid = !!data;
-
             this.setupForm(isDataValid ? data : config.initial);
             this.isSelected = isDataValid;
 

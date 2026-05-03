@@ -45,6 +45,7 @@ class RenderTextStatistics
                 $relations[$relation]($query);
             }
 
+            /** @var mixed $type */
             $type = (new \ReflectionClass(DashboardStyling::class))->getConstant('TOTAL_' . str($key)->snake()->upper());
             $rawStats[] = ['type' => $type, 'total' => (clone $query)->count(), 'subtext' => $type->generateSubtext((clone $query)->whereYear('created_at', $now->year)->count())];
         }

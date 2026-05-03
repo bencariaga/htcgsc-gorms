@@ -2,10 +2,10 @@
     <x-atoms.forms.field-label label="Suffix" />
 
     <div class="relative" @click.away="suffixOpen = false">
-        <input type="hidden" id="suffixInput" name="suffix" x-model="form.suffix">
+        <input type="hidden" id="suffixInput" name="suffix" x-model="form.suffix" :data-original="original.suffix !== null ? original.suffix : ''">
 
         <button type="button" @click="suffixOpen = !suffixOpen" :class="isDirty('suffix') ? 'bg-orange-50 border-orange-300 dark:bg-orange-900/20' : 'bg-gray-100 dark:bg-slate-900'" class="w-full h-[50px] pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all text-left flex items-center justify-between dark:text-white">
-            <span x-text="form.suffix || 'N / A'"></span>
+            <span x-text="{{ \App\Support\Json::encode((object) $suffixes) }}[form.suffix] || 'N / A'"></span>
         </button>
 
         <x-atoms.forms.field-icon icon="fa-user" class="top-1/2 -translate-y-1/2" />
@@ -21,7 +21,7 @@
                 </button>
 
                 @foreach($suffixes as $value => $label)
-                    <button type="button" @click="form.suffix = '{{ $value }}'; suffixOpen = false" class="w-full text-left px-4 py-2 text-lg transition-colors rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800" :class="form.suffix === '{{ $value }}' ? 'bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 font-bold' : 'text-slate-700 dark:text-slate-300'">
+                    <button type="button" @click="form.suffix = '{{ $value }}'; suffixOpen = false" class="w-full text-left px-4 py-2 text-lg transition-colors rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800" :class="form.suffix == '{{ $value }}' ? 'bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 font-bold' : 'text-slate-700 dark:text-slate-300'">
                         {{ $label }}
                     </button>
                 @endforeach

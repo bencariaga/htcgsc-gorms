@@ -18,7 +18,7 @@
 
         <style>
             body {
-                background-color: #0f172a;
+                background-color: #f8fafc;
                 background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0)), url("{{ asset('images/HTCGSC-campus.png') }}");
                 background-position: center;
                 background-repeat: no-repeat;
@@ -30,7 +30,7 @@
         @livewireStyles
     </head>
 
-    <body class="min-h-screen flex items-center justify-center p-5" x-data="{ notifications: [] }" @notify.window="notifications.push({ id: Date.now(), type: $event.detail.type, message: $event.detail.message })" data-flash="{{ json_encode(collect(['success', 'error', 'warning', 'info'])->mapWithKeys(fn($t) => [$t => session($t)])->filter()->all()) }}">
+    <body class="min-h-screen flex items-center justify-center p-5" x-data="{ notifications: [] }" @notify.window="notifications.push({ id: Date.now(), type: $event.detail.type, message: $event.detail.message })" data-flash="{{ \App\Support\Json::encode(collect(['success', 'error', 'warning', 'info'])->mapWithKeys(fn($t) => [$t => session($t)])->filter()->all()) }}">
         <div x-cloak class="mx-auto relative" style="width: {{ $maxWidth ?? '450px' }};">
             {{ $slot }}
         </div>
