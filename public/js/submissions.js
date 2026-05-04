@@ -4,10 +4,10 @@ document.addEventListener('alpine:init', () => {
 
         load(data) {
             this.activeSubmission = data;
-        }
+        },
     });
 
     Alpine.store('download', {
-        type: ''
+        type: '',
     });
 });

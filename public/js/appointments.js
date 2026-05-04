@@ -48,7 +48,7 @@ document.addEventListener('alpine:init', () => {
 
         get canSubmit() {
             if (!this.selectedDate || !this.$wire.newTime) return false;
-            
+
             const isoTime = this.getIsoTime(this.$wire.newTime);
             return this.isSlotAvailable(this.$wire.newTime, isoTime);
         },
@@ -78,6 +78,6 @@ document.addEventListener('alpine:init', () => {
         submitReschedule() {
             this.$dispatch('show-loading');
             this.$wire.rescheduleAppointment(this.appointmentId);
-        }
+        },
     }));
 });

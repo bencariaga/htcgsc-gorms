@@ -1,5 +1,5 @@
 <aside class="bg-[#006134] text-white transition-all duration-300 ease-in-out flex flex-col shadow-xl z-20 sidebar-lock" :class="sidebarOpen ? 'w-72' : 'w-20'" x-init="$el.classList.remove('sidebar-lock')">
-    <div class="h-20 px-[13px] flex items-center border-b border-white/10 overflow-hidden">
+    <div class="h-20 px-[13px] flex items-center border-b-2 border-white/10 overflow-hidden">
         <div class="flex items-center">
             <div class="h-[54px] w-[54px] flex items-center justify-center shrink-0">
                 <x-atoms.images.system-logo class="h-full object-contain" />
