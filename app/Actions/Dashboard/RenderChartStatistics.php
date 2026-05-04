@@ -23,10 +23,11 @@ class RenderChartStatistics
 
         return collect($chartDefinitions)->map(function ($chart) {
             $data = $chart['dates']->map(function ($date) use ($chart) {
-                $label = $date->format('d');
-                $year = $date->format('Y');
-                $month_num = $date->format('m');
-                $month_name = $date->format('F');
+                $current = $date->modify('+1 month');
+                $label = $current->format('d');
+                $year = $current->format('Y');
+                $month_num = $current->format('m');
+                $month_name = $current->format('F');
                 $is_last_of_month = $date->day === $date->daysInMonth;
                 $is_today = $date->isToday();
                 $count = $chart['model']::whereDate('created_at', '<=', $date->toDateString())->count();
