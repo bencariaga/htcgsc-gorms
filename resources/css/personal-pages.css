@@ -1,0 +1,49 @@
+[x-cloak] {
+    display: none !important;
+}
+
+html.dark,
+html:not(.dark) {
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease;
+}
+
+:root {
+    --color-background: 255 255 255;
+    --color-surface: 249 250 251;
+    --color-text: 17 24 39;
+}
+
+.dark {
+    --color-background: 17 24 39;
+    --color-surface: 31 41 55;
+    --color-text: 243 244 246;
+}
+
+body {
+    font-family: "Inter", sans-serif;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+a.phpdebugbar-restore-btn {
+    position: fixed !important;
+    bottom: 0 !important;
+    right: 0 !important;
+    background: #252a37 !important;
+    border-top: 2px solid #eb4432 !important;
+}
+
+#livewire-error-modal > div {
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 !important;
+}
