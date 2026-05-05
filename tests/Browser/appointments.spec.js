@@ -2,10 +2,10 @@ import { expect, test } from '@playwright/test';
 
 test.describe('Appointment CRUD', () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto('/login');
-        await page.fill('input[name="email"]', 'admin@example.com');
-        await page.fill('input[name="password"]', '12345678');
-        await page.click('button[type="submit"]');
+        await page.goto('/');
+        await page.getByPlaceholder('Enter your email address or phone number.').fill('bencariaga13@gmail.com');
+        await page.getByPlaceholder('Enter your password.').fill('12345678');
+        await page.click('button:has-text("Sign In")');
     });
 
     test('should list and complete appointments', async ({ page }) => {

@@ -36,5 +36,6 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
-/original-htcgsc-gorms
+/playwright-report
+/test-results
 vibe-coding-prompts
