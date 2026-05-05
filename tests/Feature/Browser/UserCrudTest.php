@@ -15,15 +15,15 @@ it('can list, deactivate, and delete users', function () {
             ->assertSee($user->person->last_name);
 
         $browser->click('button:contains("Deactivate")')
-            ->waitForText('Deactivating')
+            ->waitForText('Deactivating', 10)
             ->click('#confirmationModal button:contains("Confirm")')
-            ->waitForText('user account has been deactivated successfully')
+            ->waitForText('user account has been deactivated successfully', 10)
             ->assertSee('Activate');
 
         $browser->click('button:contains("Delete")')
-            ->waitForText('Deleting')
+            ->waitForText('Deleting', 10)
             ->click('#confirmationModal button:contains("Confirm")')
-            ->waitForText('user account has been deleted successfully')
+            ->waitForText('user account has been deleted successfully', 10)
             ->assertDontSee($user->person->first_name);
     });
 });

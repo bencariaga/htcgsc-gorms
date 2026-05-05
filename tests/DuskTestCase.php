@@ -3,13 +3,15 @@
 namespace Tests;
 
 use Facebook\WebDriver\{Chrome\ChromeOptions, Remote\DesiredCapabilities, Remote\RemoteWebDriver};
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\DatabaseTruncation;
 use Laravel\Dusk\{Concerns\ProvidesBrowser, TestCase as BaseTestCase};
 use Pest\{Arch\Concerns\Architectable, Browser\Browsable};
 
 abstract class DuskTestCase extends BaseTestCase
 {
-    use Architectable, Browsable, DatabaseMigrations, ProvidesBrowser;
+    use Architectable, Browsable, DatabaseTruncation, ProvidesBrowser;
+
+    protected $seed = true;
 
     public static function prepare()
     {
@@ -33,5 +35,11 @@ abstract class DuskTestCase extends BaseTestCase
     protected function shouldStartMaximized(): bool
     {
         return collect($_SERVER)->has('DUSK_START_MAXIMIZED') || collect($_ENV)->has('DUSK_START_MAXIMIZED');
+    }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+        static::closeAll();
     }
 }

@@ -56,8 +56,7 @@ return new class extends Migration {
                 FROM appointments
                 JOIN referrals ON referrals.referral_id = appointments.referral_id
             )";
-
-        return "CREATE VIEW all_activities AS ($query)";
+        return "CREATE OR REPLACE VIEW all_activities AS ($query)";
     }
 
     private function dropView(): string
