@@ -2,10 +2,10 @@ import { expect, test } from '@playwright/test';
 
 test.describe('User CRUD', () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto('/login');
-        await page.getByPlaceholder('Email Address').fill('admin@example.com');
-        await page.getByPlaceholder('Password').fill('12345678');
-        await page.click('button:has-text("Login")');
+        await page.goto('/');
+        await page.getByPlaceholder('Enter your email address or phone number.').fill('bencariaga13@gmail.com');
+        await page.getByPlaceholder('Enter your password.').fill('12345678');
+        await page.click('button:has-text("Sign In")');
     });
 
     test('should list, deactivate and delete users', async ({ page }) => {

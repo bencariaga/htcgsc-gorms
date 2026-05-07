@@ -18,12 +18,12 @@ class PersonFactory extends Factory
         $locale = 'en_PH';
 
         return [
-            'type' => null,
+            'type' => PersonType::Employee,
             'last_name' => fake($locale)->lastName(),
             'first_name' => fake($locale)->firstName(),
             'middle_name' => fake($locale)->lastName(),
             'suffix' => fake()->boolean(20) ? collect(PersonSuffix::cases())->random() : null,
-            'email_address' => fn (array $attributes) => match ($attributes['type']) {
+            'email_address' => fn (array $attributes) => match ($attributes['type'] ?? PersonType::Employee) {
                 PersonType::Student => str(fake()->unique()->userName())->append('@online.htcgsc.edu.ph')->toString(),
                 default => str(fake()->unique()->userName())->append('@gmail.com')->toString(),
             },

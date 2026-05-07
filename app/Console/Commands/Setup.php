@@ -11,22 +11,24 @@ class Setup extends BaseCommand
     public function handle(): int
     {
         $this->components->info('Setting up the system.');
+        $this->components->task('Clearing system cache', fn () => $this->callSilent('optimize:clear') === 0);
+        $this->components->task('Wiping database and dropping views', fn () => $this->callSilent('db:wipe', ['--force' => true, '--drop-views' => true]) === 0);
+        $this->components->task('Running Laravel core migrations', fn () => $this->callSilent('migrate', ['--path' => 'database/migrations/laravel', '--ansi' => true, '--force' => true]) === 0);
+        $this->components->info('Running system migrations in sequence...');
 
-        $this->components->task('Wiping database and dropping views', fn () => $this->callSilent('db:wipe', ['--force' => true, '--drop-views' => true]));
+        $migrationFiles = glob(database_path('migrations/system/*.php'));
 
-        $this->components->task('Running system migrations', fn () => $this->callSilent('migrate', ['--path' => 'database/migrations/laravel', '--ansi' => true, '--force' => true]));
+        sort($migrationFiles);
 
-        $tables = ['persons', 'students', 'users', 'referrers', 'referrals', 'appointments', 'reports', 'all_activities'];
-
-        $migrations = collect($tables)->map(fn ($table) => "database/migrations/system/create_{$table}_" . ($table === 'all_activities' ? 'view' : 'table') . '.php')->all();
-
-        $this->newLine();
-
-        $this->withProgressBar($migrations, fn ($path) => $this->callSilent('migrate', ['--path' => $path, '--ansi' => true, '--force' => true]));
+        $this->withProgressBar($migrationFiles, function ($file) {
+            $path = str((string) $file)->after(base_path())->trim('/\\')->replace('\\', '/')->toString();
+            $this->callSilent('migrate', ['--path' => $path, '--ansi' => true, '--force' => true]);
+        });
 
         $this->newLine(2);
 
-        $this->components->task('Seeding database....', fn () => $this->callSilent('db:seed', ['--ansi' => true, '--force' => true]) === 0);
+        $this->components->task('Seeding database', fn () => $this->callSilent('db:seed', ['--ansi' => true, '--force' => true]) === 0);
+        $this->components->task('Linking storage', fn () => $this->callSilent('storage:link') === 0);
 
         $this->newLine();
 
