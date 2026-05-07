@@ -1,12 +1,16 @@
 <?php
 
-use App\Models\User;
+use App\{Enums\PersonType, Models\User};
 use Laravel\Dusk\Browser;
 
-it('verifies the audit logs page loads for an admin', function () {
-    $admin = User::factory()->administrator()->active()->create();
+it('can view audit logs', function () {
+    $admin = User::factory()->create();
+    $admin->person->update(['type' => PersonType::Administrator]);
 
     $this->browse(function (Browser $browser) use ($admin) {
-        $browser->loginAs($admin)->visit('/audit-logs')->waitForText('Audit Logs', 10)->assertSee('Audit Logs');
+        $browser->loginAs($admin)
+            ->visitRoute('audit-logs.index')
+            ->waitForText('Audit Logs')
+            ->assertSee('Audit Logs');
     });
 });

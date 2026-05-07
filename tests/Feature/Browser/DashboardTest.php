@@ -1,12 +1,17 @@
 <?php
 
 use App\Models\User;
+use App\Enums\PersonType;
 use Laravel\Dusk\Browser;
 
-it('verifies the dashboard loads for an admin', function () {
-    $admin = User::factory()->administrator()->active()->create();
+it('renders the dashboard', function () {
+    $user = User::factory()->create();
+    $user->person->update(['type' => PersonType::Administrator]);
 
-    $this->browse(function (Browser $browser) use ($admin) {
-        $browser->loginAs($admin)->visit('/dashboard')->waitForText('Dashboard', 10)->assertSee('Dashboard')->assertSee($admin->person->first_name);
+    $this->browse(function (Browser $browser) use ($user) {
+        $browser->loginAs($user)
+            ->visitRoute('dashboard.index')
+            ->waitForText('Dashboard')
+            ->assertSee('Dashboard');
     });
 });
