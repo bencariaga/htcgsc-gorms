@@ -42,6 +42,16 @@ document.addEventListener('alpine:init', () => {
             }
         },
 
+        async download() {
+            window.showLoading(true, 'Downloading QR Code...');
+
+            try {
+                await this.$wire.download();
+            } finally {
+                setTimeout(() => window.showLoading(false), 500);
+            }
+        },
+
         notifySuccess() {
             this.copied = true;
 

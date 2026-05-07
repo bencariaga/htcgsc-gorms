@@ -16,6 +16,7 @@ use BadMethodCallException;
  * @method static array pageButtonStyling()
  * @method static array paginationStyling()
  * @method static array philippineHolidays()
+ * @method static array profileFormStyling()
  * @method static array qrCodeStyling()
  * @method static array reportDownloadDataStyling()
  * @method static array reportFormStyling()
@@ -39,6 +40,7 @@ final class NonDBEnums
             'pageButtonStyling' => PageButtonStyling::class,
             'paginationStyling' => PaginationStyling::class,
             'philippineHolidays' => PhilippineHolidays::class,
+            'profileFormStyling' => ProfileFormStyling::class,
             'qrCodeStyling' => QrCodeStyling::class,
             'reportDownloadDataStyling' => ReportDownloadDataStyling::class,
             'reportFormStyling' => ReportFormStyling::class,
