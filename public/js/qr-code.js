@@ -1,66 +1,74 @@
-document.addEventListener('alpine:init', () => {
-    Alpine.data('qrCodeManager', (url) => ({
-        copied: false,
-        url: url,
+(function () {
+    const init = () => {
+        Alpine.data('qrCodeManager', (url) => ({
+            copied: false,
+            url: url,
 
-        async copyToClipboard() {
-            try {
-                if (!navigator.clipboard || !window.isSecureContext) {
-                    this.fallbackCopy();
-                    return;
+            async copyToClipboard() {
+                try {
+                    if (!navigator.clipboard || !window.isSecureContext) {
+                        this.fallbackCopy();
+                        return;
+                    }
+
+                    await navigator.clipboard.writeText(this.url);
+                    this.notifySuccess();
+                } catch (err) {
+                    console.error('Copy failed', err);
                 }
+            },
 
-                await navigator.clipboard.writeText(this.url);
-                this.notifySuccess();
-            } catch (err) {
-                console.error('Copy failed', err);
-            }
-        },
+            fallbackCopy() {
+                const textArea = document.createElement('textarea');
+                textArea.value = this.url;
 
-        fallbackCopy() {
-            const textArea = document.createElement('textarea');
-            textArea.value = this.url;
+                Object.assign(textArea.style, {
+                    position: 'fixed',
+                    left: '-999999px',
+                    top: '-999999px',
+                });
 
-            Object.assign(textArea.style, {
-                position: 'fixed',
-                left: '-999999px',
-                top: '-999999px',
-            });
+                document.body.appendChild(textArea);
 
-            document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
 
-            textArea.focus();
-            textArea.select();
+                try {
+                    document.execCommand('copy');
+                    this.notifySuccess();
+                } catch (err) {
+                    console.error('Fallback copy failed', err);
+                } finally {
+                    document.body.removeChild(textArea);
+                }
+            },
 
-            try {
-                document.execCommand('copy');
-                this.notifySuccess();
-            } catch (err) {
-                console.error('Fallback copy failed', err);
-            } finally {
-                document.body.removeChild(textArea);
-            }
-        },
+            async download() {
+                window.showLoading(true, 'Downloading QR Code...');
 
-        async download() {
-            window.showLoading(true, 'Downloading QR Code...');
+                try {
+                    await this.$wire.download();
+                } finally {
+                    setTimeout(() => window.showLoading(false), 500);
+                }
+            },
 
-            try {
-                await this.$wire.download();
-            } finally {
-                setTimeout(() => window.showLoading(false), 500);
-            }
-        },
+            notifySuccess() {
+                this.copied = true;
 
-        notifySuccess() {
-            this.copied = true;
+                this.$dispatch('notify', {
+                    type: 'success',
+                    message: 'Google Form link has been <strong>copied to clipboard</strong>!',
+                });
 
-            this.$dispatch('notify', {
-                type: 'success',
-                message: 'Google Form link has been <strong>copied to clipboard</strong>!',
-            });
+                setTimeout(() => (this.copied = false), 3000);
+            },
+        }));
+    };
 
-            setTimeout(() => (this.copied = false), 3000);
-        },
-    }));
-});
+    if (window.Alpine) {
+        init();
+    } else {
+        document.addEventListener('alpine:init', init);
+    }
+})();

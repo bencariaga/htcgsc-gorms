@@ -1,7 +1,7 @@
 <div class="flex flex-col items-center justify-center" x-data="qrCodeManager('{{ $url }}')">
     <x-molecules.loading-screens.ls-list-type />
 
-    <script src="{{ asset('js/qr-code.js') }}"></script>
+    <script src="{{ asset('js/qr-code.js') }}?v={{ time() }}"></script>
     <script src="{{ asset('js/list-type.js') }}"></script>
 
     <div class="max-w-[35rem] w-full bg-slate-100 dark:bg-slate-800 shadow-2xl border-2 border-gray-300 dark:border-slate-700 rounded-2xl overflow-hidden">
