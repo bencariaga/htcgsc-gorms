@@ -1,0 +1,112 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: appointments.spec.js >> Appointment CRUD >> should cancel appointments
+- Location: tests\Browser\appointments.spec.js:19:5
+
+# Error details
+
+```
+Test timeout of 30000ms exceeded.
+```
+
+```
+Error: page.click: Test timeout of 30000ms exceeded.
+Call log:
+  - waiting for locator('button:has-text("Cancel")')
+
+```
+
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e4]:
+    - generic [ref=e6]:
+      - img "HTCGSC-GORMS Logo" [ref=e7]
+      - heading "Guidance Office Records Management System" [level=1] [ref=e8]
+    - generic [ref=e9]:
+      - generic [ref=e10]:
+        - generic [ref=e12]:
+          - generic [ref=e13]: Email Address or Phone Number *
+          - textbox "Enter your email address or phone number." [ref=e16]
+        - generic [ref=e18]:
+          - generic [ref=e19]: Password *
+          - generic [ref=e20]:
+            - textbox "Enter your password." [ref=e22]
+            - button [ref=e23] [cursor=pointer]
+      - link "Forgot password?" [ref=e26] [cursor=pointer]:
+        - /url: http://localhost:8000/forgot-password
+      - button "Sign In" [ref=e27] [cursor=pointer]:
+        - generic [ref=e28]: Sign In
+      - paragraph [ref=e31]:
+        - text: Don't have an account?
+        - link "Request the admin to create yours." [ref=e32] [cursor=pointer]:
+          - /url: http://localhost:8000/create-account
+  - generic [ref=e35]:
+    - generic [ref=e37]:
+      - generic [ref=e38] [cursor=pointer]:
+        - generic: Request
+      - generic [ref=e39] [cursor=pointer]:
+        - generic: Timeline
+      - generic [ref=e40] [cursor=pointer]:
+        - generic: Views
+        - generic [ref=e41]: "16"
+      - generic [ref=e42] [cursor=pointer]:
+        - generic: Route
+      - generic [ref=e43] [cursor=pointer]:
+        - generic: Queries
+        - generic [ref=e44]: "0"
+      - generic [ref=e45] [cursor=pointer]:
+        - generic: Livewire
+        - generic [ref=e46]: "1"
+      - generic [ref=e47] [cursor=pointer]:
+        - generic: Auth
+      - generic [ref=e48] [cursor=pointer]:
+        - generic: Session
+    - generic [ref=e49]:
+      - generic [ref=e56] [cursor=pointer]:
+        - generic [ref=e57]: "2"
+        - generic [ref=e58]: GET /
+      - generic [ref=e59] [cursor=pointer]:
+        - generic: 171ms
+      - generic [ref=e61] [cursor=pointer]:
+        - generic: 4MB
+```
+
+# Test source
+
+```ts
+  1  | import { expect, test } from '@playwright/test';
+  2  | 
+  3  | test.describe('Appointment CRUD', () => {
+  4  |     test.beforeEach(async ({ page }) => {
+  5  |         await page.goto('/');
+  6  |         await page.getByPlaceholder('Enter your email address or phone number.').fill('bencariaga13@gmail.com');
+  7  |         await page.getByPlaceholder('Enter your password.').fill('12345678');
+  8  |         await page.click('button:has-text("Sign In")');
+  9  |     });
+  10 | 
+  11 |     test('should list and complete appointments', async ({ page }) => {
+  12 |         await page.goto('/appointments');
+  13 |         await expect(page.locator('h1')).toContainText('Appointments');
+  14 |         await page.click('button:has-text("Mark as Done")');
+  15 |         await page.click('button:has-text("Confirm")');
+  16 |         await expect(page.locator('body')).toContainText('mark as done successfully');
+  17 |     });
+  18 | 
+  19 |     test('should cancel appointments', async ({ page }) => {
+  20 |         await page.goto('/appointments');
+> 21 |         await page.click('button:has-text("Cancel")');
+     |                    ^ Error: page.click: Test timeout of 30000ms exceeded.
+  22 |         await page.click('button:has-text("Confirm")');
+  23 |         await expect(page.locator('body')).toContainText('cancel successfully');
+  24 |     });
+  25 | });
+  26 | 
+```
