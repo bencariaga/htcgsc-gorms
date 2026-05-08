@@ -1,10 +1,10 @@
-# AMPING-MAMANS
+# HTCGSC-GORMS
 
-<p align="center"><img src="public/images/main/amping-logo-white.png" width="200" alt="AMPING Logo"></a></p>
+<p align="center"><img src="public/images/HTCGSC-GORMS-logo.png" width="200" alt="System Logo"></a></p>
 
 **Project Name (Spelled Out):**
 
-Auxiliaries and Medical Program for Individuals and Needy Generals (AMPING) – Medical Assistance Monitoring and Notification System (MAMANS)
+Holy Trinity College of General Santos City (HTCGSC) – Guidance Office Records Management System (GORMS)
 
 **POWERED BY:**
 
@@ -12,7 +12,7 @@ Auxiliaries and Medical Program for Individuals and Needy Generals (AMPING) – 
 
 ## Table of Contents
 
-- [AMPING-MAMANS](#amping-mamans)
+- [HTCGSC-GORMS](#htcgsc-gorms)
   - [Table of Contents](#table-of-contents)
   - [Before Everything Else](#before-everything-else)
     - [Links](#links)
@@ -115,113 +115,110 @@ The current application process, however, heavily relies on physical materials, 
 
 ## What It is Built With?
 
-| Tool Name | Home Page URL | Prerequisite Version | Notes |
-| :--- | :--- | :--- | :--- |
-| HTML | [https://html.spec.whatwg.org/](https://html.spec.whatwg.org/) | Living Standard | as Laravel Blade |
-| CSS | [https://www.w3.org/TR/css/](https://www.w3.org/TR/css/) | CSS Snapshot 2025 | plain CSS |
-| Bootstrap | [https://getbootstrap.com/](https://getbootstrap.com/) | 5.3.8 | for ready-made UI components |
-| Font Awesome | [https://fontawesome.com/](https://fontawesome.com/) | 7.0.1 | for icons |
-| JavaScript | [https://ecma-international.org/](https://ecma-international.org/publications-and-standards/standards/ecma-262/) | ECMAScript 2025 | plain JavaScript |
-| Node.js | [https://nodejs.org/](https://nodejs.org/) | 24.6.0 | for package management for Bootstrap and Font Awesome |
-| PHP | [https://www.php.net/](https://www.php.net/) | 8.4.12 | programming language that Laravel is based on |
-| Laravel | [https://laravel.com/](https://laravel.com/) | 12.25.0 | a full-stack PHP framework, the foundation part of the system |
-| Composer | [https://getcomposer.org/](https://getcomposer.org/) | 2.8.11 | for PHP-related or Laravel-related package management |
-| Apache | [https://httpd.apache.org/](https://httpd.apache.org/) | 2.4.65 | server |
-| MySQL | [https://www.mysql.com/](https://www.mysql.com/) | 9.4.0 | database management system |
-| phpMyAdmin | [https://www.phpmyadmin.net/](https://www.phpmyadmin.net/) | 5.2.2 | database user interface platform |
-| XAMPP | [https://www.apachefriends.org/](https://www.apachefriends.org/) | 8.2.12 | package that holds Apache, MySQL, and phpMyAdmin together |
-| NGINX | [https://nginx.org/](https://nginx.org/) | 1.29.1 | can be used to replace Apache if possible |
-| Laragon | [https://laragon.org/](https://laragon.org/) | 8.2.3 | can be used to replace XAMPP if possible |
-| Semaphore | [https://semaphore.co/](https://semaphore.co/) | 4 | SMS API to enable text messaging |
+| Tool Name    | Home Page URL                                                                                                    | Prerequisite Version | Notes                                                         |
+| :----------- | :--------------------------------------------------------------------------------------------------------------- | :------------------- | :------------------------------------------------------------ |
+| HTML         | [https://html.spec.whatwg.org/](https://html.spec.whatwg.org/)                                                   | Living Standard      | as Laravel Blade                                              |
+| CSS          | [https://www.w3.org/TR/css/](https://www.w3.org/TR/css/)                                                         | CSS Snapshot 2025    | plain CSS                                                     |
+| Bootstrap    | [https://getbootstrap.com/](https://getbootstrap.com/)                                                           | 5.3.8                | for ready-made UI components                                  |
+| Font Awesome | [https://fontawesome.com/](https://fontawesome.com/)                                                             | 7.0.1                | for icons                                                     |
+| JavaScript   | [https://ecma-international.org/](https://ecma-international.org/publications-and-standards/standards/ecma-262/) | ECMAScript 2025      | plain JavaScript                                              |
+| Node.js      | [https://nodejs.org/](https://nodejs.org/)                                                                       | 24.6.0               | for package management for Bootstrap and Font Awesome         |
+| PHP          | [https://www.php.net/](https://www.php.net/)                                                                     | 8.4.12               | programming language that Laravel is based on                 |
+| Laravel      | [https://laravel.com/](https://laravel.com/)                                                                     | 12.25.0              | a full-stack PHP framework, the foundation part of the system |
+| Composer     | [https://getcomposer.org/](https://getcomposer.org/)                                                             | 2.8.11               | for PHP-related or Laravel-related package management         |
+| Apache       | [https://httpd.apache.org/](https://httpd.apache.org/)                                                           | 2.4.65               | server                                                        |
+| MySQL        | [https://www.mysql.com/](https://www.mysql.com/)                                                                 | 9.4.0                | database management system                                    |
+| phpMyAdmin   | [https://www.phpmyadmin.net/](https://www.phpmyadmin.net/)                                                       | 5.2.2                | database user interface platform                              |
+| XAMPP        | [https://www.apachefriends.org/](https://www.apachefriends.org/)                                                 | 8.2.12               | package that holds Apache, MySQL, and phpMyAdmin together     |
+| NGINX        | [https://nginx.org/](https://nginx.org/)                                                                         | 1.29.1               | can be used to replace Apache if possible                     |
+| Laragon      | [https://laragon.org/](https://laragon.org/)                                                                     | 8.2.3                | can be used to replace XAMPP if possible                      |
+| Semaphore    | [https://semaphore.co/](https://semaphore.co/)                                                                   | 4                    | SMS API to enable text messaging                              |
 
 ---
 
-> ***Notes:***
+> **_Notes:_**
 >
 > 1. **Apache**, **MySQL**, and **phpMyAdmin** currently and temporarily use **XAMPP** for local hosting.
->
 > 2. **NGINX** can be a suitable candidate to be the system's server.
->
 > 3. **Laragon** can be a suitable candidate to be the system runner.
->
 
 ---
 
 ## Dependencies
 
-> ***Note:***
+> **_Note:_**
 > The following tabular lists are in no particular order.
 
 ### JavaScript / Node.js
 
-| Tool Name | Installation CLI Command |
-| :--- | :--- |
-| Bootstrap | `npm install bootstrap@5.3.8` |
+| Tool Name    | Installation CLI Command                          |
+| :----------- | :------------------------------------------------ |
+| Bootstrap    | `npm install bootstrap@5.3.8`                     |
 | Font Awesome | `npm install @fortawesome/fontawesome-free@7.0.1` |
-| Popper.js | `npm install @popperjs/core@2.11.8` |
-| Axios | `npm install axios@1.9.0` |
-| Concurrently | `npm install concurrently@9.1.2` |
-| Vite | `npm install vite@6.3.5` |
-| Laravel Vite | `npm install laravel-vite-plugin@1.2.0` |
+| Popper.js    | `npm install @popperjs/core@2.11.8`               |
+| Axios        | `npm install axios@1.9.0`                         |
+| Concurrently | `npm install concurrently@9.1.2`                  |
+| Vite         | `npm install vite@6.3.5`                          |
+| Laravel Vite | `npm install laravel-vite-plugin@1.2.0`           |
 
 ---
 
 ### Laravel / Composer
 
-| Package Name | GitHub Repository URL | Purpose |
-| :--- | :--- | :--- |
-| humans/semaphore-php | [https://github.com/humans/semaphore-php](https://github.com/humans/semaphore-php) | integrate Semaphore SMS API into a Laravel-based computer system |
-| livewire/livewire | [https://github.com/livewire/livewire](https://github.com/livewire/livewire) | live CRUD operations through data input submissions without page reload to update the data output, still works with plain JavaScript |
-| openspout/openspout | [https://github.com/openspout/openspout](https://github.com/openspout/openspout) | read and write spreadsheet files (CSV, XLSX and ODS), in a fast and scalable way |
-| wemersonjanuario/wkhtmltopdf-windows | [https://github.com/wemersonjanuario/wkhtmltopdf-windows](https://github.com/wemersonjanuario/wkhtmltopdf-windows) | converts high-level code to binary code to PDF |
-| laravel/tinker | [https://github.com/laravel/tinker](https://github.com/laravel/tinker) | converts plaintext passwords to hashed passwords |
-| laravel/scout | [https://github.com/laravel/scout](https://github.com/laravel/scout) | provides a driver based solution to searching your Eloquent models |
-| laravel/pint | [https://github.com/laravel/pint](https://github.com/laravel/pint) | makes the code follow the standardized, opinionated, organized, and efficient coding rules |
-| barryvdh/laravel-ide-helper | [https://github.com/barryvdh/laravel-ide-helper](https://github.com/barryvdh/laravel-ide-helper) | generates helper files that enable your IDE to provide accurate autocompletion |
-| barryvdh/laravel-debugbar | [https://github.com/barryvdh/laravel-debugbar](https://github.com/barryvdh/laravel-debugbar) | integrates PHP Debug Bar with Laravel |
-| barryvdh/laravel-snappy | [https://github.com/barryvdh/laravel-snappy](https://github.com/barryvdh/laravel-snappy) | enables PDF creation function through HTML and CSS codes |
-| spatie/laravel-permission | [https://github.com/spatie/laravel-permission](https://github.com/spatie/laravel-permission) | associates users with permissions and roles |
-| spatie/laravel-activitylog | [https://github.com/spatie/laravel-activitylog](https://github.com/spatie/laravel-activitylog) | provides easy to use functions to log the activities of the users of the website |
+| Package Name                         | GitHub Repository URL                                                                                              | Purpose                                                                                                                              |
+| :----------------------------------- | :----------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------- |
+| humans/semaphore-php                 | [https://github.com/humans/semaphore-php](https://github.com/humans/semaphore-php)                                 | integrate Semaphore SMS API into a Laravel-based computer system                                                                     |
+| livewire/livewire                    | [https://github.com/livewire/livewire](https://github.com/livewire/livewire)                                       | live CRUD operations through data input submissions without page reload to update the data output, still works with plain JavaScript |
+| openspout/openspout                  | [https://github.com/openspout/openspout](https://github.com/openspout/openspout)                                   | read and write spreadsheet files (CSV, XLSX and ODS), in a fast and scalable way                                                     |
+| wemersonjanuario/wkhtmltopdf-windows | [https://github.com/wemersonjanuario/wkhtmltopdf-windows](https://github.com/wemersonjanuario/wkhtmltopdf-windows) | converts high-level code to binary code to PDF                                                                                       |
+| laravel/tinker                       | [https://github.com/laravel/tinker](https://github.com/laravel/tinker)                                             | converts plaintext passwords to hashed passwords                                                                                     |
+| laravel/scout                        | [https://github.com/laravel/scout](https://github.com/laravel/scout)                                               | provides a driver based solution to searching your Eloquent models                                                                   |
+| laravel/pint                         | [https://github.com/laravel/pint](https://github.com/laravel/pint)                                                 | makes the code follow the standardized, opinionated, organized, and efficient coding rules                                           |
+| barryvdh/laravel-ide-helper          | [https://github.com/barryvdh/laravel-ide-helper](https://github.com/barryvdh/laravel-ide-helper)                   | generates helper files that enable your IDE to provide accurate autocompletion                                                       |
+| barryvdh/laravel-debugbar            | [https://github.com/barryvdh/laravel-debugbar](https://github.com/barryvdh/laravel-debugbar)                       | integrates PHP Debug Bar with Laravel                                                                                                |
+| barryvdh/laravel-snappy              | [https://github.com/barryvdh/laravel-snappy](https://github.com/barryvdh/laravel-snappy)                           | enables PDF creation function through HTML and CSS codes                                                                             |
+| spatie/laravel-permission            | [https://github.com/spatie/laravel-permission](https://github.com/spatie/laravel-permission)                       | associates users with permissions and roles                                                                                          |
+| spatie/laravel-activitylog           | [https://github.com/spatie/laravel-activitylog](https://github.com/spatie/laravel-activitylog)                     | provides easy to use functions to log the activities of the users of the website                                                     |
 
 ## Visual Studio Code Extensions Used
 
-> ***Note:***
+> **_Note:_**
 > The following tabular lists are in alphabetical order.
 
 ### Code Editor Theme Extensions
 
-| Extension Name | Extension ID |
-|---|---|
-| Atom One Dark Theme | akamud.vscode-theme-onedark |
-| FiraCode font - Professional Font for Developers | SeyyedKhandon.firacode |
-| Material Icon Theme | PKief.material-icon-theme |
+| Extension Name                                   | Extension ID                |
+| ------------------------------------------------ | --------------------------- |
+| Atom One Dark Theme                              | akamud.vscode-theme-onedark |
+| FiraCode font - Professional Font for Developers | SeyyedKhandon.firacode      |
+| Material Icon Theme                              | PKief.material-icon-theme   |
 
 ---
 
 ### Code Writing Extensions
 
-| Extension Name | Extension ID |
-|---|---|
-| Auto Close Tag | formulahendry.auto-close-tag |
-| Auto Complete Tag | formulahendry.auto-complete-tag |
-| Auto Rename Tag | formulahendry.auto-rename-tag |
-| Better Comments | aaron-bond.better-comments |
-| Bootstrap 5 Quick Snippets | AnbuselvanRocky.bootstrap5-vscode |
-| CSS Navigation | pucelle.vscode-css-navigation |
-| CSS Peek | pranaygp.vscode-css-peek |
-| ENV | IronGeek.vscode-env |
-| Error Lens | usernamehw\.errorlens |
-| ESLint | dbaeumer.vscode-eslint |
-| Highlight Matching Tag | vincaslt.highlight-matching-tag |
-| HTML CSS Support | ecmel.vscode-html-css |
-| HTML to CSS autocompletion | solnurkarim.html-to-css-autocompletion |
-| HTML/CSS/JavaScript Snippets | wscats.html-snippets |
-| Hungry Delete | jasonlhy.hungry-delete |
-| indent-rainbow | oderwat.indent-rainbow |
-| IntelliSense for CSS class names in HTML | Zignd.html-css-class-completion |
-| JavaScript (ES6) code snippets | xabikos.JavaScriptSnippets |
-| Path Autocomplete | ionutvmi.path-autocomplete |
-| VS HTML to CSS | neptunedesign.vs-html-to-css |
+| Extension Name                           | Extension ID                           |
+| ---------------------------------------- | -------------------------------------- |
+| Auto Close Tag                           | formulahendry.auto-close-tag           |
+| Auto Complete Tag                        | formulahendry.auto-complete-tag        |
+| Auto Rename Tag                          | formulahendry.auto-rename-tag          |
+| Better Comments                          | aaron-bond.better-comments             |
+| Bootstrap 5 Quick Snippets               | AnbuselvanRocky.bootstrap5-vscode      |
+| CSS Navigation                           | pucelle.vscode-css-navigation          |
+| CSS Peek                                 | pranaygp.vscode-css-peek               |
+| ENV                                      | IronGeek.vscode-env                    |
+| Error Lens                               | usernamehw\.errorlens                  |
+| ESLint                                   | dbaeumer.vscode-eslint                 |
+| Highlight Matching Tag                   | vincaslt.highlight-matching-tag        |
+| HTML CSS Support                         | ecmel.vscode-html-css                  |
+| HTML to CSS autocompletion               | solnurkarim.html-to-css-autocompletion |
+| HTML/CSS/JavaScript Snippets             | wscats.html-snippets                   |
+| Hungry Delete                            | jasonlhy.hungry-delete                 |
+| indent-rainbow                           | oderwat.indent-rainbow                 |
+| IntelliSense for CSS class names in HTML | Zignd.html-css-class-completion        |
+| JavaScript (ES6) code snippets           | xabikos.JavaScriptSnippets             |
+| Path Autocomplete                        | ionutvmi.path-autocomplete             |
+| VS HTML to CSS                           | neptunedesign.vs-html-to-css           |
 
 ---
 
@@ -229,407 +226,402 @@ The current application process, however, heavily relies on physical materials, 
 
 #### Multiple Extension Installation
 
-| Extension Name | Extension ID |
-|---|---|
-| PHP | DEVSENSE.phptools-vscode |
+| Extension Name         | Extension ID                      |
+| ---------------------- | --------------------------------- |
+| PHP                    | DEVSENSE.phptools-vscode          |
 | Laravel Extension Pack | onecentlin.laravel-extension-pack |
 
 #### Individual Extension Installation
 
-| Extension Name | Extension ID |
-|---|---|
-| Composer | DEVSENSE.composer-php-vscode |
-| IntelliPHP - AI Autocomplete for PHP | DEVSENSE.intelli-php-vscode |
-| Laravel | laravel.vscode-laravel |
-| Laravel Artisan | ryannaddy.laravel-artisan |
-| Laravel Blade formatter | shufo.vscode-blade-formatter |
-| Laravel Blade Snippets | onecentlin.laravel-blade |
-| Laravel Blade Wrapper | IHunte.laravel-blade-wrapper |
-| Laravel Create View | glitchbl.laravel-create-view |
-| Laravel Extra Intellisense | amiralizadeh9480.laravel-extra-intellisense |
-| Laravel goto view | codingyu.laravel-goto-view |
-| Laravel Snippets | onecentlin.laravel5-snippets |
-| laravel-goto-components | naoray.laravel-goto-components |
-| laravel-jump-controller | pgl.laravel-jump-controller |
-| Livewire Language Support | cierra.livewire-vscode |
-| PHP Debug | xdebug.php-debug |
-| PHP Intelephense | bmewburn.vscode-intelephense-client |
-| PHP Profiler | DEVSENSE.profiler-php-vscode |
+| Extension Name                       | Extension ID                                |
+| ------------------------------------ | ------------------------------------------- |
+| Composer                             | DEVSENSE.composer-php-vscode                |
+| IntelliPHP - AI Autocomplete for PHP | DEVSENSE.intelli-php-vscode                 |
+| Laravel                              | laravel.vscode-laravel                      |
+| Laravel Artisan                      | ryannaddy.laravel-artisan                   |
+| Laravel Blade formatter              | shufo.vscode-blade-formatter                |
+| Laravel Blade Snippets               | onecentlin.laravel-blade                    |
+| Laravel Blade Wrapper                | IHunte.laravel-blade-wrapper                |
+| Laravel Create View                  | glitchbl.laravel-create-view                |
+| Laravel Extra Intellisense           | amiralizadeh9480.laravel-extra-intellisense |
+| Laravel goto view                    | codingyu.laravel-goto-view                  |
+| Laravel Snippets                     | onecentlin.laravel5-snippets                |
+| laravel-goto-components              | naoray.laravel-goto-components              |
+| laravel-jump-controller              | pgl.laravel-jump-controller                 |
+| Livewire Language Support            | cierra.livewire-vscode                      |
+| PHP Debug                            | xdebug.php-debug                            |
+| PHP Intelephense                     | bmewburn.vscode-intelephense-client         |
+| PHP Profiler                         | DEVSENSE.profiler-php-vscode                |
 
 ### Miscellaneous Extensions
 
-| Extension Name | Extension ID | Purpose |
-|---|---|---|
-| File Tree Extractor | Fuzionix.file-tree-extractor | extract file system structure from anywhere in a computer system project |
-| GitLens — Git supercharged | eamodio.gitlens | integrating GitHub functionality into VS Code |
-| Live Server | ritwickdey.LiveServer | testing pure HTML code files as single pages before using them as Laravel Blade code files |
-| Markdown All in One | yzhang.markdown-all-in-one | write Markdown code with keyboard shortcuts, table of contents, auto preview, and more |
-| Markdown PDF | yzane.markdown-pdf | convert Markdown files (.md) to PDF files (.pdf) |
-| markdownlint | DavidAnson.vscode-markdownlint | linting Markdown code files |
-| Multiple cursor case preserve | Cardinal90.multi-cursor-case-preserve | preserves case when editing with multiple cursors |
-| npm Intellisense | christian-kohler.npm-intellisense | autocompletes npm modules in import statements |
+| Extension Name                | Extension ID                          | Purpose                                                                                    |
+| ----------------------------- | ------------------------------------- | ------------------------------------------------------------------------------------------ |
+| File Tree Extractor           | Fuzionix.file-tree-extractor          | extract file system structure from anywhere in a computer system project                   |
+| GitLens — Git supercharged    | eamodio.gitlens                       | integrating GitHub functionality into VS Code                                              |
+| Live Server                   | ritwickdey.LiveServer                 | testing pure HTML code files as single pages before using them as Laravel Blade code files |
+| Markdown All in One           | yzhang.markdown-all-in-one            | write Markdown code with keyboard shortcuts, table of contents, auto preview, and more     |
+| Markdown PDF                  | yzane.markdown-pdf                    | convert Markdown files (.md) to PDF files (.pdf)                                           |
+| markdownlint                  | DavidAnson.vscode-markdownlint        | linting Markdown code files                                                                |
+| Multiple cursor case preserve | Cardinal90.multi-cursor-case-preserve | preserves case when editing with multiple cursors                                          |
+| npm Intellisense              | christian-kohler.npm-intellisense     | autocompletes npm modules in import statements                                             |
 
 ## Database Schema
 
-> ***Notes:***
+> **_Notes:_**
 >
 > - This is almost final (functional, but accepting room for improvement).
->
 > - **YEAR** (format) = 2000, 2025, etc.
->
 > - **MONTH** (format, **MON**) = JAN, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV, DEC
->
 
 ---
 
 ### 1. `data` table
 
-| Column       | ID Format             | Key | Data Type |                                        Enum | Length | Scale | Nullable |
-| ------------ | ------------------- | --: | --------- | ---------------------------------------------------: | -----------------: | ----: | -------: |
-| data\_id     | DATA-YEAR-MON-00000 |  PK | varchar   |                                                      |                 19 |       |       no |
-| data\_status |                     |     | enum      | ('Draft','Archived','Unarchived','Currently Used') |                    |       |       no |
-| created\_at  |                     |     | datetime  |                                                      |                    |       |       no |
-| updated\_at  |                     |     | datetime  |                                                      |                    |       |       no |
-| archived\_at |                     |     | datetime  |                                                      |                    |       |      yes |
+| Column      | ID Format           |  Key | Data Type |                                               Enum | Length | Scale | Nullable |
+| ----------- | ------------------- | ---: | --------- | -------------------------------------------------: | -----: | ----: | -------: |
+| data_id     | DATA-YEAR-MON-00000 |   PK | varchar   |                                                    |     19 |       |       no |
+| data_status |                     |      | enum      | ('Draft','Archived','Unarchived','Currently Used') |        |       |       no |
+| created_at  |                     |      | datetime  |                                                    |        |       |       no |
+| updated_at  |                     |      | datetime  |                                                    |        |       |       no |
+| archived_at |                     |      | datetime  |                                                    |        |       |      yes |
 
 ---
 
 ### 2. `accounts` table
 
-| Column                | ID Format                | Key | Data Type |                             Enum | Length | Scale | Nullable |
-| --------------------- | ---------------------- | --: | --------- | ----------------------------------------: | -----------------: | ----: | -------: |
-| account\_id           | ACCOUNT-YEAR-MON-00000 |  PK | varchar   |                                           |                 22 |       |       no |
-| data\_id              | DATA-YEAR-MON-00000    |  FK | varchar   |                                           |                 19 |       |       no |
-| account\_status       |                        |     | enum      | ('Archived','Unarchived','Recently Used') |                    |       |       no |
-| last\_deactivated\_at |                        |     | datetime  |                                           |                    |       |      yes |
-| last\_reactivated\_at |                        |     | datetime  |                                           |                    |       |      yes |
+| Column              | ID Format              |  Key | Data Type |                                      Enum | Length | Scale | Nullable |
+| ------------------- | ---------------------- | ---: | --------- | ----------------------------------------: | -----: | ----: | -------: |
+| account_id          | ACCOUNT-YEAR-MON-00000 |   PK | varchar   |                                           |     22 |       |       no |
+| data_id             | DATA-YEAR-MON-00000    |   FK | varchar   |                                           |     19 |       |       no |
+| account_status      |                        |      | enum      | ('Archived','Unarchived','Recently Used') |        |       |       no |
+| last_deactivated_at |                        |      | datetime  |                                           |        |       |      yes |
+| last_reactivated_at |                        |      | datetime  |                                           |        |       |      yes |
 
 ---
 
 ### 3. `members` table
 
-| Column       | ID Format                | Key | Data Type |                                                                                 Enum | Length | Scale | Nullable |
-| ------------ | ---------------------- | --: | --------- | --------------------------------------------------------------------------------------------: | -----------------: | ----: | -------: |
-| member\_id   | MEMBER-YEAR-MON-00000  |  PK | varchar   |                                                                                               |                 21 |       |       no |
-| account\_id  | ACCOUNT-YEAR-MON-00000 |  FK | varchar   |                                                                                               |                 22 |       |       no |
-| member\_type |                        |     | enum      | ('Staff','Signer','Third Party','Applicant','Patient','Emergency Contact','Household Member') |                    |       |       no |
-| first\_name  |                        |     | varchar   |                                                                                               |                 20 |       |       no |
-| middle\_name |                        |     | varchar   |                                                                                               |                 20 |       |      yes |
-| last\_name   |                        |     | varchar   |                                                                                               |                 20 |       |       no |
-| suffix       |                        |     | enum      |                                                             ('Jr.','Sr.','II','III','IV','V') |                    |       |      yes |
+| Column      | ID Format              |  Key | Data Type |                                                                                          Enum | Length | Scale | Nullable |
+| ----------- | ---------------------- | ---: | --------- | --------------------------------------------------------------------------------------------: | -----: | ----: | -------: |
+| member_id   | MEMBER-YEAR-MON-00000  |   PK | varchar   |                                                                                               |     21 |       |       no |
+| account_id  | ACCOUNT-YEAR-MON-00000 |   FK | varchar   |                                                                                               |     22 |       |       no |
+| member_type |                        |      | enum      | ('Staff','Signer','Third Party','Applicant','Patient','Emergency Contact','Household Member') |        |       |       no |
+| first_name  |                        |      | varchar   |                                                                                               |     20 |       |       no |
+| middle_name |                        |      | varchar   |                                                                                               |     20 |       |      yes |
+| last_name   |                        |      | varchar   |                                                                                               |     20 |       |       no |
+| suffix      |                        |      | enum      |                                                             ('Jr.','Sr.','II','III','IV','V') |        |       |      yes |
 
 ---
 
 ### 4. `roles` table
 
-| Column           | ID Format             | Key | Data Type | Enum | Length | Scale | Nullable |
-| ---------------- | ------------------- | --: | --------- | ------------: | -----------------: | ----: | -------: |
-| role\_id         | ROLE-YEAR-MON-00000 |  PK | varchar   |               |                 19 |       |       no |
-| role             |                     |     | varchar   |               |                 20 |       |       no |
-| allowed\_actions |                     |     | text      |               |                    |       |      yes |
-| access\_scope    |                     |     | text      |               |                    |       |      yes |
+| Column          | ID Format           |  Key | Data Type | Enum | Length | Scale | Nullable |
+| --------------- | ------------------- | ---: | --------- | ---: | -----: | ----: | -------: |
+| role_id         | ROLE-YEAR-MON-00000 |   PK | varchar   |      |     19 |       |       no |
+| role            |                     |      | varchar   |      |     20 |       |       no |
+| allowed_actions |                     |      | text      |      |        |       |      yes |
+| access_scope    |                     |      | text      |      |        |       |      yes |
 
 ---
 
 ### 5. `files` table
 
-| Column          | ID Format               | Key | Data Type |               Enum | Length | Scale | Nullable |
-| --------------- | --------------------- | --: | --------- | --------------------------: | -----------------: | ----: | -------: |
-| file\_id        | FILE-YEAR-MON-00000   |  PK | varchar   |                             |                 19 |       |       no |
-| data\_id        | DATA-YEAR-MON-00000   |  FK | varchar   |                             |                 19 |       |       no |
-| member\_id      | MEMBER-YEAR-MON-00000 |  FK | varchar   |                             |                 21 |       |       no |
-| file\_type      |                       |     | enum      |           ('Image','Other') |                    |       |       no |
-| file\_name      |                       |     | text      |                             |                    |       |       no |
-| file\_extension |                       |     | varchar   |                             |                 10 |       |       no |
-| purpose         |                       |     | enum      | ('Profile Picture','Other') |                    |       |       no |
+| Column         | ID Format             |  Key | Data Type |                        Enum | Length | Scale | Nullable |
+| -------------- | --------------------- | ---: | --------- | --------------------------: | -----: | ----: | -------: |
+| file_id        | FILE-YEAR-MON-00000   |   PK | varchar   |                             |     19 |       |       no |
+| data_id        | DATA-YEAR-MON-00000   |   FK | varchar   |                             |     19 |       |       no |
+| member_id      | MEMBER-YEAR-MON-00000 |   FK | varchar   |                             |     21 |       |       no |
+| file_type      |                       |      | enum      |           ('Image','Other') |        |       |       no |
+| file_name      |                       |      | text      |                             |        |       |       no |
+| file_extension |                       |      | varchar   |                             |     10 |       |       no |
+| purpose        |                       |      | enum      | ('Profile Picture','Other') |        |       |       no |
 
 ---
 
 ### 6. `staff` table
 
-| Column     | ID Format               | Key | Data Type | Enum | Length | Scale | Nullable |
-| ---------- | --------------------- | --: | --------- | ------------: | -----------------: | ----: | -------: |
-| staff\_id  | STAFF-YEAR-MON-00000  |  PK | varchar   |               |                 20 |       |       no |
-| member\_id | MEMBER-YEAR-MON-00000 |  FK | varchar   |               |                 21 |       |       no |
-| role\_id   | ROLE-YEAR-MON-00000   |  FK | varchar   |               |                 19 |       |       no |
-| password   |                       |     | varchar   |               |                255 |       |       no |
+| Column    | ID Format             |  Key | Data Type | Enum | Length | Scale | Nullable |
+| --------- | --------------------- | ---: | --------- | ---: | -----: | ----: | -------: |
+| staff_id  | STAFF-YEAR-MON-00000  |   PK | varchar   |      |     20 |       |       no |
+| member_id | MEMBER-YEAR-MON-00000 |   FK | varchar   |      |     21 |       |       no |
+| role_id   | ROLE-YEAR-MON-00000   |   FK | varchar   |      |     19 |       |       no |
+| password  |                       |      | varchar   |      |    255 |       |       no |
 
 ---
 
 ### 7. `logs` table
 
-| Column       | ID Format              | Key | Data Type |                      Enum | Length | Scale | Nullable |
-| ------------ | -------------------- | --: | --------- | ---------------------------------: | -----------------: | ----: | -------: |
-| log\_id      | LOG-YEAR-MON-00000   |  PK | varchar   |                                    |                 18 |       |       no |
-| staff\_id    | STAFF-YEAR-MON-00000 |  FK | varchar   |                                    |                 20 |       |       no |
-| log\_type    |                      |     | enum      | ('Info','Warning','Error','Debug') |                    |       |       no |
-| log\_info    |                      |     | text      |                                    |                    |       |       no |
-| happened\_at |                      |     | datetime  |                                    |                    |       |      yes |
+| Column      | ID Format            |  Key | Data Type |                               Enum | Length | Scale | Nullable |
+| ----------- | -------------------- | ---: | --------- | ---------------------------------: | -----: | ----: | -------: |
+| log_id      | LOG-YEAR-MON-00000   |   PK | varchar   |                                    |     18 |       |       no |
+| staff_id    | STAFF-YEAR-MON-00000 |   FK | varchar   |                                    |     20 |       |       no |
+| log_type    |                      |      | enum      | ('Info','Warning','Error','Debug') |        |       |       no |
+| log_info    |                      |      | text      |                                    |        |       |       no |
+| happened_at |                      |      | datetime  |                                    |        |       |      yes |
 
 ---
 
 ### 8. `reports` table
 
-| Column       | ID Format               | Key | Data Type |                         Enum | Length | Scale | Nullable |
-| ------------ | --------------------- | --: | --------- | ------------------------------------: | -----------------: | ----: | -------: |
-| report\_id   | REPORT-YEAR-MON-00000 |  PK | varchar   |                                       |                 21 |       |       no |
-| file\_id     | FILE-YEAR-MON-00000   |  FK | varchar   |                                       |                 19 |       |       no |
-| report\_type |                       |     | enum      | ('Daily','Weekly','Monthly','Ad Hoc') |                    |       |       no |
+| Column      | ID Format             |  Key | Data Type |                                  Enum | Length | Scale | Nullable |
+| ----------- | --------------------- | ---: | --------- | ------------------------------------: | -----: | ----: | -------: |
+| report_id   | REPORT-YEAR-MON-00000 |   PK | varchar   |                                       |     21 |       |       no |
+| file_id     | FILE-YEAR-MON-00000   |   FK | varchar   |                                       |     19 |       |       no |
+| report_type |                       |      | enum      | ('Daily','Weekly','Monthly','Ad Hoc') |        |       |       no |
 
 ---
 
 ### 9. `occupations` table
 
-| Column         | ID Format                   | Key | Data Type | Enum | Length | Scale | Nullable |
-| -------------- | ------------------------- | --: | --------- | ------------: | -----------------: | ----: | -------: |
-| occupation\_id | OCCUP-YEAR-MON-00000 |  PK | varchar   |               |                 20 |       |       no |
-| occupation     |                           |     | varchar   |               |                 30 |       |       no |
+| Column        | ID Format            |  Key | Data Type | Enum | Length | Scale | Nullable |
+| ------------- | -------------------- | ---: | --------- | ---: | -----: | ----: | -------: |
+| occupation_id | OCCUP-YEAR-MON-00000 |   PK | varchar   |      |     20 |       |       no |
+| occupation    |                      |      | varchar   |      |     30 |       |       no |
 
 ---
 
 ### 10. `clients` table
 
-| Column          | ID Format                   | Key | Data Type |                              Enum | Length | Scale | Nullable |
-| --------------- | ------------------------- | --: | --------- | -----------------------------------------: | -----------------: | ----: | -------: |
-| client\_id      | CLIENT-YEAR-MON-00000     |  PK | varchar   |                                            |                 21 |       |       no |
-| member\_id      | MEMBER-YEAR-MON-00000     |  FK | varchar   |                                            |                 21 |       |       no |
-| occupation\_id  | OCCUP-YEAR-MON-00000 |  FK | varchar   |                                            |                 20 |       |       no |
-| birthdate       |                           |     | date      |                                            |                    |       |       no |
-| sex             |                           |     | enum      |                          ('Male','Female') |                    |       |       no |
-| civil\_status   |                           |     | enum      | ('Single','Married','Separated','Widowed') |                    |       |       no |
-| monthly\_income |                           |     | decimal   |                                            |                  9 |     2 |      yes |
+| Column         | ID Format             |  Key | Data Type |                                       Enum | Length | Scale | Nullable |
+| -------------- | --------------------- | ---: | --------- | -----------------------------------------: | -----: | ----: | -------: |
+| client_id      | CLIENT-YEAR-MON-00000 |   PK | varchar   |                                            |     21 |       |       no |
+| member_id      | MEMBER-YEAR-MON-00000 |   FK | varchar   |                                            |     21 |       |       no |
+| occupation_id  | OCCUP-YEAR-MON-00000  |   FK | varchar   |                                            |     20 |       |       no |
+| birthdate      |                       |      | date      |                                            |        |       |       no |
+| sex            |                       |      | enum      |                          ('Male','Female') |        |       |       no |
+| civil_status   |                       |      | enum      | ('Single','Married','Separated','Widowed') |        |       |       no |
+| monthly_income |                       |      | decimal   |                                            |      9 |     2 |      yes |
 
 ---
 
 ### 11. `applicants` table
 
-| Column                | ID Format                  | Key | Data Type |                                                                                                                                                                                                                                                                                                           Enum | Length | Scale | Nullable |
-| --------------------- | ------------------------ | --: | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | -----------------: | ----: | -------: |
-| applicant\_id         | APPLICANT-YEAR-MON-00000 |  PK | varchar   |                                                                                                                                                                                                                                                                                                                         |                 24 |       |       no |
-| client\_id            | CLIENT-YEAR-MON-00000    |  FK | varchar   |                                                                                                                                                                                                                                                                                                                         |                 21 |       |       no |
-| province              |                          |     | enum      |                                                                                                                                                                                                                                                                                              ('South Cotabato','Other') |                    |       |      yes |
-| city                  |                          |     | enum      |                                                                                                                                                                                                                                                                                              ('General Santos','Other') |                    |       |      yes |
-| municipality          |                          |     | enum      |                                                                                                                                                                                                                                                                                                               ('Other') |                    |       |      yes |
-| barangay              |                          |     | enum      | ('Apopong','Baluan','Batomelong','Buayan','Bula','Calumpang','City Heights','Conel','Dadiangas East','Dadiangas North','Dadiangas South','Dadiangas West','Fatima','Katangawan','Labangal','Lagao','Ligaya','Mabuhay','Olympog','San Isidro','San Jose','Siguel','Sinawal','Tambler','Tinagacan','Upper Labay','Other') |                    |       |      yes |
-| subdivision           |                          |     | varchar   |                                                                                                                                                                                                                                                                                                                         |                 20 |       |      yes |
-| purok                 |                          |     | varchar   |                                                                                                                                                                                                                                                                                                                         |                 20 |       |      yes |
-| sitio                 |                          |     | varchar   |                                                                                                                                                                                                                                                                                                                         |                 20 |       |      yes |
-| street                |                          |     | varchar   |                                                                                                                                                                                                                                                                                                                         |                 20 |       |      yes |
-| phase                 |                          |     | varchar   |                                                                                                                                                                                                                                                                                                                         |                 10 |       |      yes |
-| lot\_number           |                          |     | varchar   |                                                                                                                                                                                                                                                                                                                         |                 10 |       |      yes |
-| room\_number         |                          |     | varchar   |                                                                                                                                                                                                                                                                                                                         |                 10 |       |      yes |
-| job\_status           |                          |     | enum      |                                                                                                                                                                                                                                                                                    ('Permanent','Contractual','Casual') |                    |       |       no |
-| representing\_patient |                          |     | enum      |                                                                                                                                                                                                                                                                 ('Self','Other Individual','Self and Other Individual') |                    |       |       no |
-| house\_occup\_status  |                          |     | enum      |                                                                                                                                                                                                                                                                                       ('Owner','Renter','House Sharer') |                    |       |       no |
-| lot\_occup\_status    |                          |     | enum      |                                                                                                                                                                                                                                                                      ('Owner','Renter','Lot Sharer','Informal Settler') |                    |       |       no |
-| phic\_affiliation     |                          |     | enum      |                                                                                                                                                                                                                                                                                           ('Affiliated','Unaffiliated') |                    |       |       no |
-| phic\_category        |                          |     | enum      |                                                                                                                                                                                                                                                                                ('Self-Employed','Sponsored','Employed') |                    |       |      yes |
+| Column               | ID Format                |  Key | Data Type |                                                                                                                                                                                                                                                                                                                    Enum | Length | Scale | Nullable |
+| -------------------- | ------------------------ | ---: | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | -----: | ----: | -------: |
+| applicant_id         | APPLICANT-YEAR-MON-00000 |   PK | varchar   |                                                                                                                                                                                                                                                                                                                         |     24 |       |       no |
+| client_id            | CLIENT-YEAR-MON-00000    |   FK | varchar   |                                                                                                                                                                                                                                                                                                                         |     21 |       |       no |
+| province             |                          |      | enum      |                                                                                                                                                                                                                                                                                              ('South Cotabato','Other') |        |       |      yes |
+| city                 |                          |      | enum      |                                                                                                                                                                                                                                                                                              ('General Santos','Other') |        |       |      yes |
+| municipality         |                          |      | enum      |                                                                                                                                                                                                                                                                                                               ('Other') |        |       |      yes |
+| barangay             |                          |      | enum      | ('Apopong','Baluan','Batomelong','Buayan','Bula','Calumpang','City Heights','Conel','Dadiangas East','Dadiangas North','Dadiangas South','Dadiangas West','Fatima','Katangawan','Labangal','Lagao','Ligaya','Mabuhay','Olympog','San Isidro','San Jose','Siguel','Sinawal','Tambler','Tinagacan','Upper Labay','Other') |        |       |      yes |
+| subdivision          |                          |      | varchar   |                                                                                                                                                                                                                                                                                                                         |     20 |       |      yes |
+| purok                |                          |      | varchar   |                                                                                                                                                                                                                                                                                                                         |     20 |       |      yes |
+| sitio                |                          |      | varchar   |                                                                                                                                                                                                                                                                                                                         |     20 |       |      yes |
+| street               |                          |      | varchar   |                                                                                                                                                                                                                                                                                                                         |     20 |       |      yes |
+| phase                |                          |      | varchar   |                                                                                                                                                                                                                                                                                                                         |     10 |       |      yes |
+| lot_number           |                          |      | varchar   |                                                                                                                                                                                                                                                                                                                         |     10 |       |      yes |
+| room_number          |                          |      | varchar   |                                                                                                                                                                                                                                                                                                                         |     10 |       |      yes |
+| job_status           |                          |      | enum      |                                                                                                                                                                                                                                                                                    ('Permanent','Contractual','Casual') |        |       |       no |
+| representing_patient |                          |      | enum      |                                                                                                                                                                                                                                                                 ('Self','Other Individual','Self and Other Individual') |        |       |       no |
+| house_occup_status   |                          |      | enum      |                                                                                                                                                                                                                                                                                       ('Owner','Renter','House Sharer') |        |       |       no |
+| lot_occup_status     |                          |      | enum      |                                                                                                                                                                                                                                                                      ('Owner','Renter','Lot Sharer','Informal Settler') |        |       |       no |
+| phic_affiliation     |                          |      | enum      |                                                                                                                                                                                                                                                                                           ('Affiliated','Unaffiliated') |        |       |       no |
+| phic_category        |                          |      | enum      |                                                                                                                                                                                                                                                                                ('Self-Employed','Sponsored','Employed') |        |       |      yes |
 
 ---
 
 ### 12. `patients` table
 
-| Column        | ID Format                  | Key | Data Type | Enum | Length | Scale | Nullable |
-| ------------- | ------------------------ | --: | --------- | ------------: | -----------------: | ----: | -------: |
-| patient\_id   | PATIENT-YEAR-MON-00000   |  PK | varchar   |               |                 22 |       |       no |
-| applicant\_id | APPLICANT-YEAR-MON-00000 |  FK | varchar   |               |                 24 |       |       no |
-| member\_id    | MEMBER-YEAR-MON-00000    |  FK | varchar   |               |                 21 |       |       no |
+| Column       | ID Format                |  Key | Data Type | Enum | Length | Scale | Nullable |
+| ------------ | ------------------------ | ---: | --------- | ---: | -----: | ----: | -------: |
+| patient_id   | PATIENT-YEAR-MON-00000   |   PK | varchar   |      |     22 |       |       no |
+| applicant_id | APPLICANT-YEAR-MON-00000 |   FK | varchar   |      |     24 |       |       no |
+| member_id    | MEMBER-YEAR-MON-00000    |   FK | varchar   |      |     21 |       |       no |
 
 ---
 
 ### 13. `contacts` table
 
-| Column        | ID Format                | Key | Data Type |               Enum | Length | Scale | Nullable |
-| ------------- | ---------------------- | --: | --------- | --------------------------: | -----------------: | ----: | -------: |
-| contact\_id   | CONTACT-YEAR-MON-00000 |  PK | varchar   |                             |                 22 |       |       no |
-| client\_id    | CLIENT-YEAR-MON-00000  |  FK | varchar   |                             |                 21 |       |       no |
-| contact\_type |                        |     | enum      | ('Application','Emergency') |                    |       |       no |
-| phone\_number |                        |     | varchar   |                             |                 13 |       |       no |
+| Column       | ID Format              |  Key | Data Type |                        Enum | Length | Scale | Nullable |
+| ------------ | ---------------------- | ---: | --------- | --------------------------: | -----: | ----: | -------: |
+| contact_id   | CONTACT-YEAR-MON-00000 |   PK | varchar   |                             |     22 |       |       no |
+| client_id    | CLIENT-YEAR-MON-00000  |   FK | varchar   |                             |     21 |       |       no |
+| contact_type |                        |      | enum      | ('Application','Emergency') |        |       |       no |
+| phone_number |                        |      | varchar   |                             |     13 |       |       no |
 
 ---
 
 ### 14. `households` table
 
-| Column                  | ID Format                  | Key | Data Type |                                                                   Enum | Length | Scale | Nullable |
-| ----------------------- | ------------------------ | --: | --------- | ------------------------------------------------------------------------------: | -----------------: | ----: | -------: |
-| household\_id           | HOUSEHOLD-YEAR-MON-00000 |  PK | varchar   |                                                                                 |                 24 |       |       no |
-| client\_id              | CLIENT-YEAR-MON-00000    |  FK | varchar   |                                                                                 |                 21 |       |       no |
-| household\_name         |                          |     | varchar   |                                                                                 |                 20 |       |       no |
-| education\_attainment   |                          |     | enum      |                                          ('Elementary','High School','College') |                    |       |       no |
-| relation\_to\_applicant |                          |     | enum      | ('Self','Friend','Sibling','Child','Parent','Grandchild','Grandparent','Other') |                    |       |       no |
+| Column                | ID Format                |  Key | Data Type |                                                                            Enum | Length | Scale | Nullable |
+| --------------------- | ------------------------ | ---: | --------- | ------------------------------------------------------------------------------: | -----: | ----: | -------: |
+| household_id          | HOUSEHOLD-YEAR-MON-00000 |   PK | varchar   |                                                                                 |     24 |       |       no |
+| client_id             | CLIENT-YEAR-MON-00000    |   FK | varchar   |                                                                                 |     21 |       |       no |
+| household_name        |                          |      | varchar   |                                                                                 |     20 |       |       no |
+| education_attainment  |                          |      | enum      |                                          ('Elementary','High School','College') |        |       |       no |
+| relation_to_applicant |                          |      | enum      | ('Self','Friend','Sibling','Child','Parent','Grandchild','Grandparent','Other') |        |       |       no |
 
 ---
 
 ### 15. `affiliate_partners` table
 
-| Column                   | ID Format                | Key | Data Type |                                        Enum | Length | Scale | Nullable |
-| ------------------------ | ---------------------- | --: | --------- | ---------------------------------------------------: | -----------------: | ----: | -------: |
-| affiliate\_partner\_id   | AP-YEAR-MON-00000      |  PK | varchar   |                                                      |                 17 |       |       no |
-| account\_id              | ACCOUNT-YEAR-MON-00000 |  FK | varchar   |                                                      |                 22 |       |       no |
-| affiliate\_partner\_name |                        |     | varchar   |                                                      |                 60 |       |       no |
-| affiliate\_partner\_type |                        |     | enum      | ('Hospital / Clinic','Pharmacy / Drugstore','Other') |                    |       |       no |
+| Column                 | ID Format              |  Key | Data Type |                                                 Enum | Length | Scale | Nullable |
+| ---------------------- | ---------------------- | ---: | --------- | ---------------------------------------------------: | -----: | ----: | -------: |
+| affiliate_partner_id   | AP-YEAR-MON-00000      |   PK | varchar   |                                                      |     17 |       |       no |
+| account_id             | ACCOUNT-YEAR-MON-00000 |   FK | varchar   |                                                      |     22 |       |       no |
+| affiliate_partner_name |                        |      | varchar   |                                                      |     60 |       |       no |
+| affiliate_partner_type |                        |      | enum      | ('Hospital / Clinic','Pharmacy / Drugstore','Other') |        |       |       no |
 
 ---
 
 ### 16. `sponsors` table
 
-| Column             | ID Format                | Key | Data Type |                           Enum | Length | Scale | Nullable |
-| ------------------ | ---------------------- | --: | --------- | --------------------------------------: | -----------------: | ----: | -------: |
-| sponsor\_id        | SPONSOR-YEAR-MON-00000 |  PK | varchar   |                                         |                 22 |       |       no |
-| member\_id         | MEMBER-YEAR-MON-00000  |  FK | varchar   |                                         |                 21 |       |       no |
-| sponsor\_type      |                        |     | enum      | ('Politician','Business Owner','Other') |                    |       |       no |
-| designation        |                        |     | varchar   |                                         |                 30 |       |      yes |
-| organization\_name |                        |     | varchar   |                                         |                 60 |       |      yes |
+| Column            | ID Format              |  Key | Data Type |                                    Enum | Length | Scale | Nullable |
+| ----------------- | ---------------------- | ---: | --------- | --------------------------------------: | -----: | ----: | -------: |
+| sponsor_id        | SPONSOR-YEAR-MON-00000 |   PK | varchar   |                                         |     22 |       |       no |
+| member_id         | MEMBER-YEAR-MON-00000  |   FK | varchar   |                                         |     21 |       |       no |
+| sponsor_type      |                        |      | enum      | ('Politician','Business Owner','Other') |        |       |       no |
+| designation       |                        |      | varchar   |                                         |     30 |       |      yes |
+| organization_name |                        |      | varchar   |                                         |     60 |       |      yes |
 
 ---
 
 ### 17. `signers` table
 
-| Column                 | ID Format               | Key | Data Type |                           Enum | Length | Scale | Nullable |
-| ---------------------- | --------------------- | --: | --------- | --------------------------------------: | -----------------: | ----: | -------: |
-| signer\_id             | SIGNER-YEAR-000       |  PK | varchar   |                                         |                 15 |       |       no |
-| member\_id             | MEMBER-YEAR-MON-00000 |  FK | varchar   |                                         |                 21 |       |       no |
-| signer\_type           |                       |     | enum      | ('Mayor','Executive Assistant','Other') |                    |       |       no |
-| post\_nominal\_letters |                       |     | varchar   |                                         |                 20 |       |      yes |
+| Column               | ID Format             |  Key | Data Type |                                    Enum | Length | Scale | Nullable |
+| -------------------- | --------------------- | ---: | --------- | --------------------------------------: | -----: | ----: | -------: |
+| signer_id            | SIGNER-YEAR-000       |   PK | varchar   |                                         |     15 |       |       no |
+| member_id            | MEMBER-YEAR-MON-00000 |   FK | varchar   |                                         |     21 |       |       no |
+| signer_type          |                       |      | enum      | ('Mayor','Executive Assistant','Other') |        |       |       no |
+| post_nominal_letters |                       |      | varchar   |                                         |     20 |       |      yes |
 
 ---
 
 ### 18. `services` table
 
-| Column      | ID Format                | Key | Data Type | Enum | Length | Scale | Nullable |
-| ----------- | ---------------------- | --: | --------- | ------------: | -----------------: | ----: | -------: |
-| service\_id | SERVICE-YEAR-MON-00000 |  PK | varchar   |               |                 22 |       |       no |
-| service     |                        |     | varchar   |               |                 20 |       |       no |
+| Column     | ID Format              |  Key | Data Type | Enum | Length | Scale | Nullable |
+| ---------- | ---------------------- | ---: | --------- | ---: | -----: | ----: | -------: |
+| service_id | SERVICE-YEAR-MON-00000 |   PK | varchar   |      |     22 |       |       no |
+| service    |                        |      | varchar   |      |     20 |       |       no |
 
 ---
 
 ### 19. `tariff_lists` table
 
-| Column            | ID Format             | Key | Data Type | Enum | Length | Scale | Nullable |
-| ----------------- | ------------------- | --: | --------- | ------------: | -----------------: | ----: | -------: |
-| tariff\_list\_id  | TL-YEAR-MON-00000   |  PK | varchar   |               |                 17 |       |       no |
-| data\_id          | DATA-YEAR-MON-00000 |  FK | varchar   |               |                 19 |       |       no |
-| effectivity\_date |                     |     | date      |               |                    |       |       no |
+| Column           | ID Format           |  Key | Data Type | Enum | Length | Scale | Nullable |
+| ---------------- | ------------------- | ---: | --------- | ---: | -----: | ----: | -------: |
+| tariff_list_id   | TL-YEAR-MON-00000   |   PK | varchar   |      |     17 |       |       no |
+| data_id          | DATA-YEAR-MON-00000 |   FK | varchar   |      |     19 |       |       no |
+| effectivity_date |                     |      | date      |      |        |       |       no |
 
 ---
 
 ### 20. `budget_updates` table
 
-| Column              | ID Format                 | Key | Data Type |                                                                                     Enum | Length | Scale | Nullable |
-| ------------------- | ----------------------- | --: | --------- | ------------------------------------------------------------------------------------------------: | -----------------: | ----: | -------: |
-| budget\_update\_id  | BUDGETUP-YEAR-MON-00000 |  PK | varchar   |                                                                                                   |                 22 |       |       no |
-| data\_id            | DATA-YEAR-MON-00000     |  FK | varchar   |                                                                                                   |                 19 |       |       no |
-| possessor           |                         |     | enum      |                                                                              ('AMPING','Sponsor') |                    |       |       no |
-| amount\_accumulated |                         |     | decimal   |                                                                                                   |                 18 |     2 |       no |
-| amount\_recent      |                         |     | decimal   |                                                                                                   |                 12 |     2 |       no |
-| amount\_before      |                         |     | decimal   |                                                                                                   |                 12 |     2 |       no |
-| amount\_change      |                         |     | decimal   |                                                                                                   |                 12 |     2 |       no |
-| amount\_spent       |                         |     | decimal   |                                                                                                   |                 18 |     2 |       no |
-| direction           |                         |     | enum      |                                                                           ('Increase','Decrease') |                    |       |       no |
-| reason              |                         |     | enum      | ('Budget Provision','Supplementary Budget','GL Release','Sponsor Donation','Budget Manipulation') |                    |       |      yes |
+| Column             | ID Format               |  Key | Data Type |                                                                                              Enum | Length | Scale | Nullable |
+| ------------------ | ----------------------- | ---: | --------- | ------------------------------------------------------------------------------------------------: | -----: | ----: | -------: |
+| budget_update_id   | BUDGETUP-YEAR-MON-00000 |   PK | varchar   |                                                                                                   |     22 |       |       no |
+| data_id            | DATA-YEAR-MON-00000     |   FK | varchar   |                                                                                                   |     19 |       |       no |
+| possessor          |                         |      | enum      |                                                                              ('AMPING','Sponsor') |        |       |       no |
+| amount_accumulated |                         |      | decimal   |                                                                                                   |     18 |     2 |       no |
+| amount_recent      |                         |      | decimal   |                                                                                                   |     12 |     2 |       no |
+| amount_before      |                         |      | decimal   |                                                                                                   |     12 |     2 |       no |
+| amount_change      |                         |      | decimal   |                                                                                                   |     12 |     2 |       no |
+| amount_spent       |                         |      | decimal   |                                                                                                   |     18 |     2 |       no |
+| direction          |                         |      | enum      |                                                                           ('Increase','Decrease') |        |       |       no |
+| reason             |                         |      | enum      | ('Budget Provision','Supplementary Budget','GL Release','Sponsor Donation','Budget Manipulation') |        |       |      yes |
 
 ---
 
 ### 21. `expense_ranges` table
 
-| Column             | ID Format                  | Key | Data Type | Enum | Length | Scale | Nullable |
-| ------------------ | ------------------------ | --: | --------- | ------------: | -----------------: | ----: | -------: |
-| exp\_range\_id     | EXP-RANGE-YEAR-MON-00000 |  PK | varchar   |               |                 24 |       |       no |
-| tariff\_list\_id   | TL-YEAR-MON-00000        |  FK | varchar   |               |                 17 |       |       no |
-| service\_id        | SERVICE-YEAR-MON-00000   |  FK | varchar   |               |                 22 |       |       no |
-| exp\_range\_min    |                          |     | decimal   |               |                  9 |     2 |      yes |
-| exp\_range\_max    |                          |     | decimal   |               |                  9 |     2 |      yes |
-| assistance\_amount |                          |     | decimal   |               |                  9 |     2 |      yes |
+| Column            | ID Format                |  Key | Data Type | Enum | Length | Scale | Nullable |
+| ----------------- | ------------------------ | ---: | --------- | ---: | -----: | ----: | -------: |
+| exp_range_id      | EXP-RANGE-YEAR-MON-00000 |   PK | varchar   |      |     24 |       |       no |
+| tariff_list_id    | TL-YEAR-MON-00000        |   FK | varchar   |      |     17 |       |       no |
+| service_id        | SERVICE-YEAR-MON-00000   |   FK | varchar   |      |     22 |       |       no |
+| exp_range_min     |                          |      | decimal   |      |      9 |     2 |      yes |
+| exp_range_max     |                          |      | decimal   |      |      9 |     2 |      yes |
+| assistance_amount |                          |      | decimal   |      |      9 |     2 |      yes |
 
 ---
 
 ### 22. `applications` table
 
-| Column                 | ID Format                    | Key | Data Type | Enum | Length | Scale | Nullable |
-| ---------------------- | -------------------------- | --: | --------- | ------------: | -----------------: | ----: | -------: |
-| application\_id        | APPLICATION-YEAR-MON-00000 |  PK | varchar   |               |                 26 |       |       no |
-| applicant\_id          | APPLICANT-YEAR-MON-00000   |  FK | varchar   |               |                 24 |       |       no |
-| patient\_id            | PATIENT-YEAR-MON-00000     |  FK | varchar   |               |                 22 |       |       no |
-| affiliate\_partner\_id | AP-YEAR-MON-00000          |  FK | varchar   |               |                 17 |       |       no |
-| exp\_range\_id         | EXP-RANGE-YEAR-MON-00000   |  FK | varchar   |               |                 24 |       |       no |
-| billed\_amount         |                            |     | decimal   |               |                  9 |     2 |       no |
-| applied\_at            |                            |     | date      |               |                    |       |       no |
-| reapply\_at            |                            |     | date      |               |                    |       |       no |
+| Column               | ID Format                  |  Key | Data Type | Enum | Length | Scale | Nullable |
+| -------------------- | -------------------------- | ---: | --------- | ---: | -----: | ----: | -------: |
+| application_id       | APPLICATION-YEAR-MON-00000 |   PK | varchar   |      |     26 |       |       no |
+| applicant_id         | APPLICANT-YEAR-MON-00000   |   FK | varchar   |      |     24 |       |       no |
+| patient_id           | PATIENT-YEAR-MON-00000     |   FK | varchar   |      |     22 |       |       no |
+| affiliate_partner_id | AP-YEAR-MON-00000          |   FK | varchar   |      |     17 |       |       no |
+| exp_range_id         | EXP-RANGE-YEAR-MON-00000   |   FK | varchar   |      |     24 |       |       no |
+| billed_amount        |                            |      | decimal   |      |      9 |     2 |       no |
+| applied_at           |                            |      | date      |      |        |       |       no |
+| reapply_at           |                            |      | date      |      |        |       |       no |
 
 ---
 
 ### 23. `guarantee_letters` table
 
-| Column             | ID Format                    | Key | Data Type | Enum | Length | Scale | Nullable |
-| ------------------ | -------------------------- | --: | --------- | ------------: | -----------------: | ----: | -------: |
-| gl\_id             | GL-YEAR-MON-00000          |  PK | varchar   |               |                 17 |       |       no |
-| application\_id    | APPLICATION-YEAR-MON-00000 |  FK | varchar   |               |                 26 |       |       no |
-| budget\_update\_id | BDG-UPD-YEAR-MON-00000     |  FK | varchar   |               |                 22 |       |       no |
-| sponsor\_id        | SPONSOR-YEAR-MON-00000     |  FK | varchar   |               |                 22 |       |      yes |
-| is\_sponsored      |                            |     | enum      |  ('Yes','No') |                    |       |       no |
-| signers            |                            |     | text      |               |                    |       |       no |
+| Column           | ID Format                  |  Key | Data Type |         Enum | Length | Scale | Nullable |
+| ---------------- | -------------------------- | ---: | --------- | -----------: | -----: | ----: | -------: |
+| gl_id            | GL-YEAR-MON-00000          |   PK | varchar   |              |     17 |       |       no |
+| application_id   | APPLICATION-YEAR-MON-00000 |   FK | varchar   |              |     26 |       |       no |
+| budget_update_id | BDG-UPD-YEAR-MON-00000     |   FK | varchar   |              |     22 |       |       no |
+| sponsor_id       | SPONSOR-YEAR-MON-00000     |   FK | varchar   |              |     22 |       |      yes |
+| is_sponsored     |                            |      | enum      | ('Yes','No') |        |       |       no |
+| signers          |                            |      | text      |              |        |       |       no |
 
 ---
 
 ### 24. `message_templates` table
 
-| Column          | ID Format                | Key | Data Type | Enum | Length | Scale | Nullable |
-| --------------- | ---------------------- | --: | --------- | ------------: | -----------------: | ----: | -------: |
-| msg\_tmp\_id    | MSG-TMP-YEAR-MON-00000 |  PK | varchar   |               |                 22 |       |       no |
-| data\_id        | DATA-YEAR-MON-00000    |  FK | varchar   |               |                 19 |       |       no |
-| msg\_tmp\_title |                        |     | varchar   |               |                 30 |       |       no |
-| msg\_tmp\_text  |                        |     | text      |               |                    |       |       no |
+| Column        | ID Format              |  Key | Data Type | Enum | Length | Scale | Nullable |
+| ------------- | ---------------------- | ---: | --------- | ---: | -----: | ----: | -------: |
+| msg_tmp_id    | MSG-TMP-YEAR-MON-00000 |   PK | varchar   |      |     22 |       |       no |
+| data_id       | DATA-YEAR-MON-00000    |   FK | varchar   |      |     19 |       |       no |
+| msg_tmp_title |                        |      | varchar   |      |     30 |       |       no |
+| msg_tmp_text  |                        |      | text      |      |        |       |       no |
 
 ---
 
 ### 25. `messages` table
 
-| Column       | ID Format                | Key | Data Type | Enum | Length | Scale | Nullable |
-| ------------ | ---------------------- | --: | --------- | ------------: | -----------------: | ----: | -------: |
-| message\_id  | MESSAGE-YEAR-MON-00000 |  PK | varchar   |               |                 22 |       |       no |
-| msg\_tmp\_id | MSG-TMP-YEAR-MON-00000 |  FK | varchar   |               |                 22 |       |       no |
-| staff\_id    | STAFF-YEAR-MON-00000   |  FK | varchar   |               |                 20 |       |       no |
-| contact\_id  | CONTACT-YEAR-MON-00000 |  FK | varchar   |               |                 22 |       |       no |
-| sent\_at     |                        |     | datetime  |               |                    |       |       no |
+| Column     | ID Format              |  Key | Data Type | Enum | Length | Scale | Nullable |
+| ---------- | ---------------------- | ---: | --------- | ---: | -----: | ----: | -------: |
+| message_id | MESSAGE-YEAR-MON-00000 |   PK | varchar   |      |     22 |       |       no |
+| msg_tmp_id | MSG-TMP-YEAR-MON-00000 |   FK | varchar   |      |     22 |       |       no |
+| staff_id   | STAFF-YEAR-MON-00000   |   FK | varchar   |      |     20 |       |       no |
+| contact_id | CONTACT-YEAR-MON-00000 |   FK | varchar   |      |     22 |       |       no |
+| sent_at    |                        |      | datetime  |      |        |       |       no |
 
 ---
 
 ### 26. `cache` table (generated by Laravel)
 
-| Column     | ID Format | Key | Data Type  | Enum | Length | Scale | Nullable |
-| ---------- | ------- | --: | ---------- | ------------: | -----------------: | ----: | -------: |
-| key        |         |  PK | varchar    |               |                255 |       |       no |
-| value      |         |     | mediumtext |               |                    |       |       no |
-| expiration |         |     | int        |               |                 11 |       |       no |
+| Column     | ID Format |  Key | Data Type  | Enum | Length | Scale | Nullable |
+| ---------- | --------- | ---: | ---------- | ---: | -----: | ----: | -------: |
+| key        |           |   PK | varchar    |      |    255 |       |       no |
+| value      |           |      | mediumtext |      |        |       |       no |
+| expiration |           |      | int        |      |     11 |       |       no |
 
 ---
 
 ### 27. `cache_locks` table (generated by Laravel)
 
-| Column     | ID Format | Key | Data Type | Enum | Length | Scale | Nullable |
-| ---------- | ------- | --: | --------- | ------------: | -----------------: | ----: | -------: |
-| key        |         |  PK | varchar   |               |                255 |       |       no |
-| owner      |         |     | varchar   |               |                255 |       |       no |
-| expiration |         |     | int       |               |                 11 |       |       no |
+| Column     | ID Format |  Key | Data Type | Enum | Length | Scale | Nullable |
+| ---------- | --------- | ---: | --------- | ---: | -----: | ----: | -------: |
+| key        |           |   PK | varchar   |      |    255 |       |       no |
+| owner      |           |      | varchar   |      |    255 |       |       no |
+| expiration |           |      | int       |      |     11 |       |       no |
 
 ---
 
 ### 28. `migrations` table (generated by Laravel)
 
-| Column    | ID Format | Key | Data Type      | Enum | Length | Scale | Nullable |
-| --------- | ------- | --: | -------------- | ------------: | -----------------: | ----: | -------: |
-| id        |         |  PK | int (unsigned) |               |                 10 |       |       no |
-| migration |         |     | varchar        |               |                255 |       |       no |
-| batch     |         |     | int            |               |                 11 |       |       no |
+| Column    | ID Format |  Key | Data Type      | Enum | Length | Scale | Nullable |
+| --------- | --------- | ---: | -------------- | ---: | -----: | ----: | -------: |
+| id        |           |   PK | int (unsigned) |      |     10 |       |       no |
+| migration |           |      | varchar        |      |    255 |       |       no |
+| batch     |           |      | int            |      |     11 |       |       no |
 
 ## Project File System Directory Map
 
-> ***Notes:***
+> **_Notes:_**
 >
 > - The backend file directory map is inspired by the controller code partition principle proposed by Povilas Korop, a Lithuanian Laravel developer, such as the use of "**actions**", "**jobs**", and "**services**" alongside "**models**" and "**controllers**".
->
 > - For more information about this, open and see [https://laraveldaily.com/video/laravel-controller-code-move-to-model-service-action-or-job](https://laraveldaily.com/video/laravel-controller-code-move-to-model-service-action-or-job)
->
 
 ### Backend
 
@@ -918,12 +910,10 @@ app/
 
 ### Frontend
 
-> ***Notes:***
+> **_Notes:_**
 >
 > - The frontend file directory map is inspired by the principle of Atomic Design by Brad Frost, an American web designer, such as the use of "**atoms**", "**molecules**", "**organisms**", "**templates**", and "**pages**".
->
 > - For more information about this, open and see [https://atomicdesign.bradfrost.com/table-of-contents/](https://atomicdesign.bradfrost.com/table-of-contents/)
->
 
 ---
 
