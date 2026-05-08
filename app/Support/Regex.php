@@ -119,4 +119,9 @@ class Regex
     {
         return "<php>\n        <env name=\"TERMINATE_ON_WARNING\" value=\"false\"/>\n    </php>";
     }
+
+    public static function otpPageClassName(): string
+    {
+        return '/(?<=[a-z])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])/';
+    }
 }

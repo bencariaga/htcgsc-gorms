@@ -2,7 +2,8 @@
 
 namespace App\Livewire\Bases;
 
-use App\{Models\User, Services\Miscellaneous\OTPService, Traits\Handles\HandlesOTP};
+use App\{Models\User, Services\Miscellaneous\OTPService};
+use App\{Support\Regex, Traits\Handles\HandlesOTP};
 use Illuminate\Support\Facades\Session;
 use Livewire\{Attributes\Layout, Component};
 
@@ -68,7 +69,7 @@ abstract class BaseOTPType extends Component
 
     public function render()
     {
-        $view = str(static::class)->after('App\\Livewire\\')->explode('\\')->map(fn ($segment) => str($segment)->kebab())->implode('.');
+        $view = str(static::class)->after('App\\Livewire\\')->explode('\\')->map(fn ($segment) => strtolower(str($segment)->replaceMatches(Regex::otpPageClassName(), '-')->value()))->implode('.');
         $livewireComponent = "livewire.{$view}";
 
         return view($livewireComponent);
