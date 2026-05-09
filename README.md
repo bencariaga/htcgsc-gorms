@@ -310,7 +310,6 @@ Before the creation of this project, the **Guidance and Testing Center (GTC)** o
 | [Error Lens](https://marketplace.visualstudio.com/items?itemName=usernamehw.errorlens)                                        | `usernamehw.errorlens`                        |
 | [Highlight Matching Tag](https://marketplace.visualstudio.com/items?itemName=vincaslt.highlight-matching-tag)                 | `vincaslt.highlight-matching-tag`             |
 | [PHP TypeHints](https://marketplace.visualstudio.com/items?itemName=vix.php-typehints-vsc)                                    | `vix.php-typehints-vsc`                       |
-| [vscode-icons](https://marketplace.visualstudio.com/items?itemName=vscode-icons-team.vscode-icons)                            | `vscode-icons-team.vscode-icons`              |
 | [Nginx Configuration](https://marketplace.visualstudio.com/items?itemName=william-voyek.vscode-nginx)                         | `william-voyek.vscode-nginx`                  |
 | [HTML Snippets](https://marketplace.visualstudio.com/items?itemName=wscats.html-snippets)                                     | `wscats.html-snippets`                        |
 | [Batch Formatter](https://marketplace.visualstudio.com/items?itemName=wwnao.bat-formatter)                                    | `wwnao.bat-formatter`                         |
