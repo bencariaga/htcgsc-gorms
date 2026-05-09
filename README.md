@@ -81,6 +81,8 @@
 
 ## Before Everything Else
 
+- HTCGSC-GORMS has been developed using **XAMPP** on a computer with **Windows 11**.
+
 - Make sure to study, install, and integrate each of the following needed to set up the system:
   - [Visual Studio Code](https://code.visualstudio.com/download)
   - [Visual Studio Code Extensions](https://marketplace.visualstudio.com/vscode)
