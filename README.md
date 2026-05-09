@@ -7,9 +7,9 @@
     Guidance Office Records Management System
 </p>
 
-<p align="center" style="font-weight: bold;">Project Name (Abbreviation): <span style="font-weight: normal;">HTCGSC-GORMS</span></p>
+<p align="center"><b>Project Name</b> (<b>Abbreviation</b>): HTCGSC-GORMS</p>
 
-<p align="center" style="font-weight: bold;">POWERED BY:</p>
+<p align="center"><b>POWERED BY:</b></p>
 
 <p align="center">
     <img src="https://img.shields.io/badge/HTML-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="HTML">
@@ -74,7 +74,7 @@
       - [app](#app)
     - [Frontend](#frontend)
       - [Assets](#assets)
-      - [HTML (Laravel Blade)](#html-laravel-blade)
+      - [Laravel Blade](#laravel-blade)
 
 ---
 
@@ -1057,7 +1057,7 @@ app/
 > **_Notes:_**
 >
 > - The frontend file directory map is inspired by the principle of Atomic Design by Brad Frost, an American web designer, such as the use of "**atoms**", "**molecules**", "**organisms**", "**templates**", and "**pages**".
-> - For more information about this, open and see [https://atomicdesign.bradfrost.com/table-of-contents/](https://atomicdesign.bradfrost.com/table-of-contents/)
+> - For more information about this, open and see "**[Atomic Design](https://atomicdesign.bradfrost.com/table-of-contents/)**".
 
 ---
 
@@ -1096,7 +1096,7 @@ public/
 
 ---
 
-#### HTML (Laravel Blade)
+#### Laravel Blade
 
 in "**root/resources/**"
 
