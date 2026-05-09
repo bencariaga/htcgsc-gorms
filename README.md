@@ -71,6 +71,7 @@
       - [config](#config)
       - [database](#database)
       - [storage](#storage)
+      - [tests](#tests)
       - [app](#app)
     - [Frontend](#frontend)
       - [Assets](#assets)
@@ -381,14 +382,14 @@ Records the actual referral instance.
 
 Manages the scheduling of guidance sessions.
 
-| Column               | Data Type                                     | Nullable | Notes                 |
-| :------------------- | :-------------------------------------------- | :------- | :-------------------- |
-| `appointment_id`     | int(10) UNSIGNED                              | no       | PK, auto-increment    |
-| `referrer_id`        | int(10) UNSIGNED                              | no       | FK to `referrers`     |
-| `referral_id`        | int(10) UNSIGNED                              | no       | FK to `referrals`     |
-| `appointment_date`   | date                                          | no       | date of appointment   |
-| `appointment_time`   | time                                          | no       | time of appointment   |
-| `appointment_status` | enum('Scheduled','Done','Cancelled','Missed') | no       | status of appointment |
+| Column               | Data Type                                                                                                                             | Nullable | Notes                 |
+| :------------------- | :------------------------------------------------------------------------------------------------------------------------------------ | :------- | :-------------------- |
+| `appointment_id`     | int(10) UNSIGNED                                                                                                                      | no       | PK, auto-increment    |
+| `referrer_id`        | int(10) UNSIGNED                                                                                                                      | no       | FK to `referrers`     |
+| `referral_id`        | int(10) UNSIGNED                                                                                                                      | no       | FK to `referrals`     |
+| `appointment_date`   | date                                                                                                                                  | no       | date of appointment   |
+| `appointment_time`   | enum('8:30 AM - 9:30 AM', '9:30 AM - 10:30 AM', '10:30 AM - 11:30 AM', '1:30 PM - 2:30 PM', '2:30 PM - 3:30 PM', '3:30 PM - 4:30 PM') | no       | time of appointment   |
+| `appointment_status` | enum('Scheduled','Done','Cancelled','Missed')                                                                                         | no       | status of appointment |
 
 ### 7. `reports` table
 
@@ -405,23 +406,23 @@ Logs generated system reports.
 
 Shows all the activities that have been made in the system, combining data from referrals and appointments.
 
-| Column                 | Data Type                                     | Nullable | Notes                                  |
-| ---------------------- | --------------------------------------------- | -------- | -------------------------------------- |
-| `referral_id`          | int(10) UNSIGNED                              | no       | PK in referrals, FK in appointments    |
-| `student_id`           | decimal(10,0)                                 | yes      | ID of the student involved             |
-| `referrer_id`          | decimal(10,0)                                 | yes      | ID of the person making the referral   |
-| `created_at`           | timestamp                                     | yes      | Record creation timestamp              |
-| `updated_at`           | timestamp                                     | yes      | Record last update timestamp           |
-| `appointment_id`       | decimal(10,0)                                 | yes      | Unique ID for the appointment          |
-| `referral_type`        | enum('Yourself','Someone Else')               | yes      | Type of referral made                  |
-| `reason`               | varchar(255)                                  | yes      | Reason for the activity                |
-| `appointment_date`     | date                                          | yes      | Scheduled date for the appointment     |
-| `appointment_time`     | enum('8:30 AM - 9:30 AM', ...)                | yes      | Time slot for the appointment          |
-| `appointment_status`   | enum('Scheduled','Done','Cancelled','Missed') | yes      | Current status of the appointment      |
-| `laravel_foreign_key`  | int(10) UNSIGNED                              | yes      | Internal key for Laravel relationships |
-| `laravel_model`        | varchar(22)                                   | no       | Polymorphic model class name           |
-| `laravel_placeholders` | varchar(88)                                   | yes      | Metadata for dynamic fields            |
-| `laravel_with`         | varchar(0)                                    | yes      | Placeholder for eager loading strings  |
+| Column                 | Data Type                                                                                                                             | Nullable | Notes                                  |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | -------- | -------------------------------------- |
+| `referral_id`          | int(10) UNSIGNED                                                                                                                      | no       | PK in referrals, FK in appointments    |
+| `student_id`           | decimal(10,0)                                                                                                                         | yes      | ID of the student involved             |
+| `referrer_id`          | decimal(10,0)                                                                                                                         | yes      | ID of the person making the referral   |
+| `created_at`           | timestamp                                                                                                                             | yes      | Record creation timestamp              |
+| `updated_at`           | timestamp                                                                                                                             | yes      | Record last update timestamp           |
+| `appointment_id`       | decimal(10,0)                                                                                                                         | yes      | Unique ID for the appointment          |
+| `referral_type`        | enum('Yourself','Someone Else')                                                                                                       | yes      | Type of referral made                  |
+| `reason`               | varchar(255)                                                                                                                          | yes      | Reason for the activity                |
+| `appointment_date`     | date                                                                                                                                  | yes      | Scheduled date for the appointment     |
+| `appointment_time`     | enum('8:30 AM - 9:30 AM', '9:30 AM - 10:30 AM', '10:30 AM - 11:30 AM', '1:30 PM - 2:30 PM', '2:30 PM - 3:30 PM', '3:30 PM - 4:30 PM') | yes      | Time slot for the appointment          |
+| `appointment_status`   | enum('Scheduled','Done','Cancelled','Missed')                                                                                         | yes      | Current status of the appointment      |
+| `laravel_foreign_key`  | int(10) UNSIGNED                                                                                                                      | yes      | Internal key for Laravel relationships |
+| `laravel_model`        | varchar(22)                                                                                                                           | no       | Polymorphic model class name           |
+| `laravel_placeholders` | varchar(88)                                                                                                                           | yes      | Metadata for dynamic fields            |
+| `laravel_with`         | varchar(0)                                                                                                                            | yes      | Placeholder for eager loading strings  |
 
 ---
 
@@ -553,6 +554,41 @@ storage/
    │  └─ google-forms-YYYY-MM-DD.log
    ├─ .gitignore
    └─ laravel-YYYY-MM-DD.log
+```
+
+---
+
+#### tests
+
+in "**root/tests/**"
+
+```text
+tests/
+├─ Browser/
+│  ├─ console/
+│  ├─ screenshots/
+│  ├─ appointments.spec.js
+│  ├─ reports.spec.js
+│  ├─ students.spec.js
+│  └─ users.spec.js
+├─ Feature/
+│  ├─ Browser/
+│  │  ├─ AppointmentCrudTest.php
+│  │  ├─ AuditLogsTest.php
+│  │  ├─ DashboardTest.php
+│  │  ├─ ReportCrudTest.php
+│  │  ├─ StudentCrudTest.php
+│  │  ├─ SubmissionsTest.php
+│  │  ├─ UserCrudTest.php
+│  │  └─ UserProfileTest.php
+│  └─ Logic/
+│     ├─ AuthenticationTest.php
+│     └─ ModelTest.php
+├─ Unit/
+├─ DuskTestCase.php
+├─ Pest.php
+├─ TestCase.php
+└─ UnitTestCase.php 
 ```
 
 ---
@@ -1288,7 +1324,7 @@ resources/
 ---
 
 <p align="center">
-    Thank you for understanding and reaching the end of the description!
+    <b>Thank you for understanding and reaching the end of the description!</b>
     <br>
     Developed with ❤️ by <b>Benhur L. Cariaga</b>
 </p>
