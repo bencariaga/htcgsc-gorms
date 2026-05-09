@@ -7,6 +7,10 @@
     Guidance Office Records Management System
 </p>
 
+<p align="center" style="font-weight: bold;">Project Name (Abbreviation): <span style="font-weight: normal;">HTCGSC-GORMS</span></p>
+
+<p align="center" style="font-weight: bold;">POWERED BY:</p>
+
 <p align="center">
     <img src="https://img.shields.io/badge/HTML-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="HTML">
     <img src="https://img.shields.io/badge/CSS-663399?style=for-the-badge&logo=css&logoColor=white" alt="CSS">
@@ -39,14 +43,6 @@
     <img src="https://img.shields.io/badge/TextBee-FFC400?style=for-the-badge&logo=googlemessages&logoColor=black" alt="TextBee">
 </p>
 
-**Project Name (Spelled Out):**
-
-Holy Trinity College of General Santos City – Guidance Office Records Management System (HTCGSC-GORMS)
-
-**POWERED BY:**
-
-<p align="center"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="600" alt="Laravel Logo"></p>
-
 ## Table of Contents
 
 - [HTCGSC-GORMS](#htcgsc-gorms)
@@ -72,6 +68,9 @@ Holy Trinity College of General Santos City – Guidance Office Records Manageme
   - [Project File System Directory Map](#project-file-system-directory-map)
     - [Backend](#backend)
       - [routes](#routes)
+      - [config](#config)
+      - [database](#database)
+      - [storage](#storage)
       - [app](#app)
     - [Frontend](#frontend)
       - [Assets](#assets)
@@ -431,7 +430,7 @@ Shows all the activities that have been made in the system, combining data from 
 > **_Notes:_**
 >
 > - The backend file directory map is inspired by the controller code partition principle proposed by Povilas Korop, a Lithuanian Laravel developer, such as the use of "**actions**", "**data transfer objects**", and "**services**" alongside "**models**" and "**controllers**".
-> - For more information about this, open and see [https://www.youtube.com/watch?v=ZUMQEkoF1_c](https://www.youtube.com/watch?v=ZUMQEkoF1_c)
+> - For more information about this, open and see "**[SOLID Principles in Laravel](https://www.youtube.com/watch?v=ZUMQEkoF1_c)**".
 
 ### Backend
 
@@ -447,7 +446,113 @@ routes/
 ├─ livewire.php
 ├─ miscellaneous.php
 └─ web.php
+```
 
+---
+
+#### config
+
+in "**root/config/**"
+
+```text
+config/
+├─ app.php
+├─ auth.php
+├─ browsershot.php
+├─ cache.php
+├─ cors.php
+├─ database.php
+├─ debugbar.php
+├─ filesystems.php
+├─ holidays.php
+├─ ide-helper.php
+├─ livewire.php
+├─ log-viewer.php
+├─ logging.php
+├─ mail.php
+├─ octane.php
+├─ profanity.php
+├─ querydetector.php
+├─ queue.php
+├─ services.php
+└─ session.php
+```
+
+---
+
+#### database
+
+in "**root/database/**"
+
+```text
+database/
+├─ factories/
+│  ├─ AppointmentFactory.php
+│  ├─ PersonFactory.php
+│  ├─ ReferralFactory.php
+│  ├─ ReferrerFactory.php
+│  ├─ StudentFactory.php
+│  └─ UserFactory.php
+├─ migrations/
+│  ├─ laravel/
+│  │  ├─ create_cache_locks_table.php
+│  │  ├─ create_cache_table.php
+│  │  ├─ create_failed_jobs_table.php
+│  │  ├─ create_job_batches_table.php
+│  │  ├─ create_jobs_table.php
+│  │  └─ create_sessions_table.php
+│  └─ system/
+│     ├─ 01_create_persons_table.php
+│     ├─ 02_create_students_table.php
+│     ├─ 03_create_users_table.php
+│     ├─ 04_create_referrers_table.php
+│     ├─ 05_create_referrals_table.php
+│     ├─ 06_create_appointments_table.php
+│     ├─ 07_create_reports_table.php
+│     └─ 08_create_all_activities_view.php
+├─ seeders/
+│  ├─ AppointmentSeeder.php
+│  ├─ DatabaseSeeder.php
+│  ├─ ReportSeeder.php
+│  ├─ StudentSeeder.php
+│  └─ UserSeeder.php
+├─ special_scripts/
+│  ├─ add_auto_increment.php
+│  ├─ empty_database.php
+│  ├─ empty_db_except_admin.php
+│  ├─ nuke_database.php
+│  ├─ nuke_db_if_db_exists.php
+│  ├─ randomize_timestamps.php
+│  └─ remove_auto_increment.php
+├─ .gitignore
+└─ testing.sqlite
+```
+
+---
+
+#### storage
+
+in "**root/storage/**"
+
+```text
+storage/
+├─ app/
+│  ├─ browsershot-cache/
+│  ├─ private/
+│  │  ├─ livewire-tmp/
+│  │  └─ .gitignore
+│  ├─ public/
+│  │  ├─ profile-pictures/
+│  │  │  └─ *.jpg
+│  │  └─ .gitignore
+│  └─ .gitignore
+├─ debugbar/
+├─ framework/
+└─ logs/
+   ├─ google-forms/
+   │  └─ google-forms-YYYY-MM-DD.log
+   ├─ .gitignore
+   └─ laravel-YYYY-MM-DD.log
 ```
 
 ---
@@ -943,7 +1048,6 @@ app/
    └─ Sets/
       ├─ SetsDefaultStatus.php
       └─ SetsHighPriority.php
-
 ```
 
 ---
@@ -988,7 +1092,6 @@ public/
 ├─ .htaccess
 ├─ index.php
 └─ robots.txt
-
 ```
 
 ---
@@ -999,249 +1102,187 @@ in "**root/resources/**"
 
 ```text
 resources/
-├─ views/
-│  ├─ components/
-│  │  ├─ atoms/
-│  │  │  ├─ alerts/
-│  │  │  │  ├─ alert.blade.php
-│  │  │  │  ├─ error-message.blade.php
-│  │  │  │  ├─ info-message.blade.php
-│  │  │  │  ├─ success-message.blade.php
-│  │  │  │  └─ warning-message.blade.php
-│  │  │  ├─ badges/
-│  │  │  │  └─ badge.blade.php
-│  │  │  ├─ buttons/
-│  │  │  │  ├─ button-group.blade.php
-│  │  │  │  ├─ close-buttons.blade.php
-│  │  │  │  ├─ create-buttons.blade.php
-│  │  │  │  ├─ delete-buttons.blade.php
-│  │  │  │  ├─ read-buttons.blade.php
-│  │  │  │  ├─ theme-toggler-home.blade.php
-│  │  │  │  ├─ theme-toggler-personal-pages.blade.php
-│  │  │  │  └─ update-buttons.blade.php
-│  │  │  ├─ forms/
-│  │  │  │  ├─ checkbox.blade.php
-│  │  │  │  ├─ dropdown.blade.php
-│  │  │  │  ├─ file-input.blade.php
-│  │  │  │  ├─ form-controls.blade.php
-│  │  │  │  ├─ form-selects.blade.php
-│  │  │  │  ├─ input-mask.blade.php
-│  │  │  │  ├─ radio.blade.php
-│  │  │  │  ├─ text-area.blade.php
-│  │  │  │  └─ text-input.blade.php
-│  │  │  ├─ loaders/
-│  │  │  │  ├─ loader.blade.php
-│  │  │  │  ├─ progress-bar.blade.php
-│  │  │  │  └─ spinner.blade.php
-│  │  │  ├─ media/
-│  │  │  ├─ typography/
-│  │  │  └─ utilities/
-│  │  │     ├─ date.blade.php
-│  │  │     ├─ icons.blade.php
-│  │  │     └─ links.blade.php
-│  │  ├─ molecules/
-│  │  │  ├─ cards/
-│  │  │  │  ├─ card-body.blade.php
-│  │  │  │  ├─ card-footer.blade.php
-│  │  │  │  ├─ card-header.blade.php
-│  │  │  │  └─ card.blade.php
-│  │  │  ├─ forms/
-│  │  │  │  ├─ filter-form.blade.php
-│  │  │  │  ├─ form-group.blade.php
-│  │  │  │  ├─ input-group.blade.php
-│  │  │  │  ├─ search-form.blade.php
-│  │  │  │  └─ validation-feedback.blade.php
-│  │  │  ├─ list-groups/
-│  │  │  │  └─ list-group.blade.php
-│  │  │  ├─ modals/
-│  │  │  │  ├─ modal-body.blade.php
-│  │  │  │  ├─ modal-footer.blade.php
-│  │  │  │  ├─ modal-header.blade.php
-│  │  │  │  └─ modal.blade.php
-│  │  │  ├─ navigation/
-│  │  │  │  ├─ breadcrumb.blade.php
-│  │  │  │  ├─ navlink.blade.php
-│  │  │  │  └─ pagination.blade.php
-│  │  │  └─ tables/
-│  │  │     ├─ table-body.blade.php
-│  │  │     ├─ table-cell.blade.php
-│  │  │     ├─ table-footer.blade.php
-│  │  │     ├─ table-header.blade.php
-│  │  │     ├─ table-row.blade.php
-│  │  │     └─ table.blade.php
-│  │  └─ organisms/
-│  │     ├─ cards/
-│  │     │  ├─ application-card.blade.php
-│  │     │  ├─ avatar.blade.php
-│  │     │  ├─ chart.blade.php
-│  │     │  ├─ report-card.blade.php
-│  │     │  ├─ statistics.blade.php
-│  │     │  ├─ tariff-list-card.blade.php
-│  │     │  └─ user-card.blade.php
-│  │     ├─ forms/
-│  │     │  ├─ application-form.blade.php
-│  │     │  ├─ assistance-request-form.blade.php
-│  │     │  ├─ budget-form.blade.php
-│  │     │  ├─ guarantee-letter-form.blade.php
-│  │     │  ├─ login-form.blade.php
-│  │     │  ├─ registration-form.blade.php
-│  │     │  ├─ send-text-message.blade.php
-│  │     │  └─ sms-template-form.blade.php
-│  │     ├─ headers/
-│  │     │  ├─ authentication-header.blade.php
-│  │     │  ├─ dashboard-header.blade.php
-│  │     │  ├─ header.blade.php
-│  │     │  └─ main-header.blade.php
-│  │     ├─ modals/
-│  │     │  ├─ affiliate-partners.blade.php
-│  │     │  ├─ confirmation.blade.php
-│  │     │  ├─ occupations.blade.php
-│  │     │  ├─ roles.blade.php
-│  │     │  ├─ services.blade.php
-│  │     │  └─ sponsors.blade.php
-│  │     ├─ navigation/
-│  │     │  ├─ footer.blade.php
-│  │     │  ├─ navbar.blade.php
-│  │     │  ├─ offcanvas.blade.php
-│  │     │  └─ sidebar.blade.php
-│  │     └─ tables/
-│  │        ├─ applicants-table.blade.php
-│  │        ├─ applications-table.blade.php
-│  │        ├─ budget-table.blade.php
-│  │        ├─ logs-table.blade.php
-│  │        ├─ reports-table.blade.php
-│  │        ├─ sms-templates-table.blade.php
-│  │        ├─ tariff-lists-table.blade.php
-│  │        ├─ text-messages-table.blade.php
-│  │        └─ users-table.blade.php
-│  ├─ errors/
-│  │  ├─ 400.blade.php
-│  │  ├─ 401.blade.php
-│  │  ├─ 403.blade.php
-│  │  ├─ 404.blade.php
-│  │  ├─ 405.blade.php
-│  │  ├─ 406.blade.php
-│  │  ├─ 407.blade.php
-│  │  ├─ 408.blade.php
-│  │  ├─ 409.blade.php
-│  │  ├─ 410.blade.php
-│  │  ├─ 411.blade.php
-│  │  ├─ 412.blade.php
-│  │  ├─ 413.blade.php
-│  │  ├─ 414.blade.php
-│  │  ├─ 415.blade.php
-│  │  ├─ 416.blade.php
-│  │  ├─ 417.blade.php
-│  │  ├─ 419.blade.php
-│  │  ├─ 421.blade.php
-│  │  ├─ 422.blade.php
-│  │  ├─ 425.blade.php
-│  │  ├─ 426.blade.php
-│  │  ├─ 428.blade.php
-│  │  ├─ 429.blade.php
-│  │  ├─ 431.blade.php
-│  │  ├─ 500.blade.php
-│  │  ├─ 501.blade.php
-│  │  ├─ 502.blade.php
-│  │  ├─ 503.blade.php
-│  │  └─ 504.blade.php
-│  ├─ livewire/
-│  │  ├─ authentication/
-│  │  │  ├─ deactivated-account.blade.php
-│  │  │  └─ login.blade.php
-│  │  ├─ dashboard/
-│  │  │  ├─ budget-updates/
-│  │  │  │  ├─ contribution/
-│  │  │  │  │  ├─ contribution-tables.blade.php
-│  │  │  │  │  └─ contributors.blade.php
-│  │  │  │  └─ tariff-list/
-│  │  │  │     ├─ tariff-list-create.blade.php
-│  │  │  │     └─ tariff-list-tables.blade.php
-│  │  │  └─ landing/
-│  │  │     ├─ allocate-budget.blade.php
-│  │  │     ├─ application-list.blade.php
-│  │  │     ├─ remaining-budget.blade.php
-│  │  │     ├─ supplementary-budget.blade.php
-│  │  │     ├─ tariff-list-versions.blade.php
-│  │  │     └─ used-budget.blade.php
-│  │  └─ sidebar/
-│  │     ├─ application-entry/
-│  │     │  ├─ assistance-request.blade.php
-│  │     │  ├─ guarantee-letter.blade.php
-│  │     │  └─ send-text-message.blade.php
-│  │     ├─ profiles/
-│  │     │  ├─ list/
-│  │     │  │  ├─ applicant-list.blade.php
-│  │     │  │  ├─ household-list.blade.php
-│  │     │  │  └─ user-list.blade.php
-│  │     │  ├─ profile/
-│  │     │  │  ├─ applicants.blade.php
-│  │     │  │  ├─ households.blade.php
-│  │     │  │  └─ users.blade.php
-│  │     │  └─ register/
-│  │     │     ├─ applicant.blade.php
-│  │     │     ├─ household.blade.php
-│  │     │     └─ user.blade.php
-│  │     ├─ system/
-│  │     │  ├─ archives.blade.php
-│  │     │  ├─ deactivated-accounts.blade.php
-│  │     │  ├─ logs.blade.php
-│  │     │  └─ reports.blade.php
-│  │     └─ templates/
-│  │        ├─ guarantee-letters.blade.php
-│  │        └─ text-messages.blade.php
-│  ├─ pages/
-│  │  ├─ authentication/
-│  │  │  ├─ deactivated-account.blade.php
-│  │  │  └─ login.blade.php
-│  │  ├─ dashboard/
-│  │  │  ├─ budget-updates/
-│  │  │  │  ├─ contribution/
-│  │  │  │  │  ├─ contribution-tables.blade.php
-│  │  │  │  │  └─ contributors.blade.php
-│  │  │  │  └─ tariff-list/
-│  │  │  │     ├─ tariff-list-create.blade.php
-│  │  │  │     └─ tariff-list-tables.blade.php
-│  │  │  └─ landing/
-│  │  │     ├─ allocate-budget.blade.php
-│  │  │     ├─ application-list.blade.php
-│  │  │     ├─ remaining-budget.blade.php
-│  │  │     ├─ supplementary-budget.blade.php
-│  │  │     ├─ tariff-list-versions.blade.php
-│  │  │     └─ used-budget.blade.php
-│  │  └─ sidebar/
-│  │     ├─ application-entry/
-│  │     │  ├─ assistance-request.blade.php
-│  │     │  ├─ guarantee-letter.blade.php
-│  │     │  └─ send-text-message.blade.php
-│  │     ├─ profiles/
-│  │     │  ├─ list/
-│  │     │  │  ├─ applicant-list.blade.php
-│  │     │  │  ├─ household-list.blade.php
-│  │     │  │  └─ user-list.blade.php
-│  │     │  ├─ profile/
-│  │     │  │  ├─ applicants.blade.php
-│  │     │  │  ├─ households.blade.php
-│  │     │  │  └─ users.blade.php
-│  │     │  └─ register/
-│  │     │     ├─ applicant.blade.php
-│  │     │     ├─ household.blade.php
-│  │     │     └─ user.blade.php
-│  │     ├─ system/
-│  │     │  ├─ archives.blade.php
-│  │     │  ├─ deactivated-accounts.blade.php
-│  │     │  ├─ logs.blade.php
-│  │     │  └─ reports.blade.php
-│  │     └─ templates/
-│  │        ├─ guarantee-letters.blade.php
-│  │        └─ text-messages.blade.php
-│  └─ templates/
-│     ├─ errors.blade.php
-│     ├─ home.blade.php
-│     └─ personal-pages.blade.php
-├─ about.blade.php
-├─ dashboard.blade.php
-└─ welcome.blade.php
+├─ css/
+│  └─ app.css
+├─ js/
+│  └─ app.js
+└─ views/
+   ├─ components/
+   │  ├─ atoms/
+   │  │  ├─ buttons/
+   │  │  │  ├─ action-buttons/
+   │  │  │  │  ├─ appointment-group.blade.php
+   │  │  │  │  ├─ audit-log-group.blade.php
+   │  │  │  │  ├─ student-group.blade.php
+   │  │  │  │  └─ user-group.blade.php
+   │  │  │  ├─ button-groups/
+   │  │  │  │  ├─ audit-log-button-group.blade.php
+   │  │  │  │  ├─ filter-button-group.blade.php
+   │  │  │  │  └─ page-button-group.blade.php
+   │  │  │  └─ theme-toggler.blade.php
+   │  │  ├─ feedback/
+   │  │  │  └─ validation-error.blade.php
+   │  │  ├─ forms/
+   │  │  │  ├─ field-icon.blade.php
+   │  │  │  └─ field-label.blade.php
+   │  │  ├─ images/
+   │  │  │  ├─ system-logo.blade.php
+   │  │  │  └─ user-avatar.blade.php
+   │  │  ├─ inputs/
+   │  │  │  └─ auth-input.blade.php
+   │  │  └─ utility/
+   │  │     ├─ digital-clock.blade.php
+   │  │     ├─ spinner.blade.php
+   │  │     ├─ status-badge.blade.php
+   │  │     └─ status-dot.blade.php
+   │  ├─ google-forms/
+   │  │  ├─ base.blade.php
+   │  │  ├─ image.blade.php
+   │  │  ├─ info-section.blade.php
+   │  │  └─ pdf.blade.php
+   │  ├─ layouts/
+   │  │  ├─ notice-email.blade.php
+   │  │  ├─ otp-email.blade.php
+   │  │  └─ otp-page.blade.php
+   │  ├─ molecules/
+   │  │  ├─ data-display/
+   │  │  │  ├─ line-chart.blade.php
+   │  │  │  ├─ qr-code-display.blade.php
+   │  │  │  └─ statistics-card.blade.php
+   │  │  ├─ forms/
+   │  │  │  ├─ auth-form.blade.php
+   │  │  │  ├─ form-footer.blade.php
+   │  │  │  ├─ form-header.blade.php
+   │  │  │  ├─ google-form.blade.php
+   │  │  │  ├─ profile-action-bar.blade.php
+   │  │  │  ├─ profile-photo-editor.blade.php
+   │  │  │  ├─ report-form.blade.php
+   │  │  │  ├─ student-profile-form.blade.php
+   │  │  │  ├─ suffix-dropdown.blade.php
+   │  │  │  └─ user-profile-form.blade.php
+   │  │  ├─ loading-screens/
+   │  │  │  ├─ ls-auth.blade.php
+   │  │  │  ├─ ls-list-type.blade.php
+   │  │  │  ├─ ls-livewire.blade.php
+   │  │  │  ├─ ls.blade.php
+   │  │  │  └─ template-ls.blade.php
+   │  │  ├─ modals/
+   │  │  │  ├─ audit-log-message-modal.blade.php
+   │  │  │  ├─ confirmation-modal.blade.php
+   │  │  │  ├─ reschedule-appointment-modal.blade.php
+   │  │  │  └─ user-password-modal.blade.php
+   │  │  ├─ navigation/
+   │  │  │  └─ qr-code-actions.blade.php
+   │  │  ├─ sidebars/
+   │  │  │  ├─ audit-logs-sidebar.blade.php
+   │  │  │  ├─ reports-sidebar.blade.php
+   │  │  │  ├─ submissions-sidebar.blade.php
+   │  │  │  └─ template-sidebar.blade.php
+   │  │  └─ toast-notifications/
+   │  │     ├─ template-tn.blade.php
+   │  │     ├─ tn-auth.blade.php
+   │  │     └─ tn.blade.php
+   │  ├─ organisms/
+   │  │  ├─ layouts/
+   │  │  │  ├─ footer.blade.php
+   │  │  │  ├─ header.blade.php
+   │  │  │  └─ sidebar.blade.php
+   │  │  ├─ main/
+   │  │  │  └─ submissions-body.blade.php
+   │  │  ├─ navigation/
+   │  │  │  ├─ pagination-group.blade.php
+   │  │  │  ├─ pagination-results.blade.php
+   │  │  │  ├─ pagination.blade.php
+   │  │  │  ├─ rows-per-page.blade.php
+   │  │  │  ├─ search.blade.php
+   │  │  │  └─ sort.blade.php
+   │  │  └─ tables/
+   │  │     ├─ columns/
+   │  │     │  ├─ appointment.blade.php
+   │  │     │  ├─ audit-log.blade.php
+   │  │     │  ├─ student.blade.php
+   │  │     │  └─ user.blade.php
+   │  │     ├─ rows/
+   │  │     │  ├─ appointment.blade.php
+   │  │     │  ├─ audit-log.blade.php
+   │  │     │  ├─ student.blade.php
+   │  │     │  └─ user.blade.php
+   │  │     ├─ empty-state.blade.php
+   │  │     ├─ infinite-scroll-loader.blade.php
+   │  │     ├─ table-column.blade.php
+   │  │     ├─ table-row.blade.php
+   │  │     └─ table.blade.php
+   │  ├─ pages/
+   │  │  └─ list-type.blade.php
+   │  └─ reports/
+   │     ├─ base.blade.php
+   │     ├─ form-submissions.blade.php
+   │     ├─ students.blade.php
+   │     └─ users.blade.php
+   ├─ emails/
+   │  ├─ notice-account-activation.blade.php
+   │  ├─ notice-account-deactivation.blade.php
+   │  ├─ notice-account-deletion.blade.php
+   │  ├─ notice-referral-appointment.blade.php
+   │  ├─ otp-email-address-change.blade.php
+   │  └─ otp-login.blade.php
+   ├─ errors/
+   │  ├─ 400.blade.php
+   │  ├─ 401.blade.php
+   │  ├─ 403.blade.php
+   │  ├─ 404.blade.php
+   │  ├─ 405.blade.php
+   │  ├─ 406.blade.php
+   │  ├─ 407.blade.php
+   │  ├─ 408.blade.php
+   │  ├─ 409.blade.php
+   │  ├─ 410.blade.php
+   │  ├─ 411.blade.php
+   │  ├─ 412.blade.php
+   │  ├─ 413.blade.php
+   │  ├─ 414.blade.php
+   │  ├─ 415.blade.php
+   │  ├─ 416.blade.php
+   │  ├─ 417.blade.php
+   │  ├─ 419.blade.php
+   │  ├─ 421.blade.php
+   │  ├─ 422.blade.php
+   │  ├─ 423.blade.php
+   │  ├─ 425.blade.php
+   │  ├─ 426.blade.php
+   │  ├─ 428.blade.php
+   │  ├─ 429.blade.php
+   │  ├─ 431.blade.php
+   │  ├─ 500.blade.php
+   │  ├─ 501.blade.php
+   │  ├─ 502.blade.php
+   │  ├─ 503.blade.php
+   │  ├─ 504.blade.php
+   │  └─ errors.blade.php
+   ├─ layouts/
+   │  ├─ authentication-pages.blade.php
+   │  └─ personal-pages.blade.php
+   └─ livewire/
+      ├─ authentication/
+      │  ├─ create-account.blade.php
+      │  ├─ forgot-password.blade.php
+      │  ├─ login.blade.php
+      │  ├─ one-time-password-eac.blade.php
+      │  ├─ one-time-password-login.blade.php
+      │  └─ one-time-password-pnc.blade.php
+      ├─ components/
+      │  ├─ student-profile-modal.blade.php
+      │  └─ user-profile-modal.blade.php
+      └─ pages/
+         ├─ appointments.blade.php
+         ├─ audit-logs.blade.php
+         ├─ dashboard.blade.php
+         ├─ qr-code.blade.php
+         ├─ reports.blade.php
+         ├─ students.blade.php
+         ├─ submissions.blade.php
+         ├─ user-profile.blade.php
+         └─ users.blade.php
 ```
 
 ---
