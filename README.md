@@ -256,7 +256,6 @@ Before the creation of this project, the **Guidance and Testing Center (GTC)** o
 | [Path IntelliSense](https://marketplace.visualstudio.com/items?itemName=christian-kohler.path-intellisense)                   | `christian-kohler.path-intellisense`          |
 | [Laravel Livewire](https://marketplace.visualstudio.com/items?itemName=cierra.livewire-vscode)                                | `cierra.livewire-vscode`                      |
 | [Laravel Goto View](https://marketplace.visualstudio.com/items?itemName=codingyu.laravel-goto-view)                           | `codingyu.laravel-goto-view`                  |
-| [DevDB](https://marketplace.visualstudio.com/items?itemName=damms005.devdb)                                                   | `damms005.devdb`                              |
 | [markdownlint](https://marketplace.visualstudio.com/items?itemName=davidanson.vscode-markdownlint)                            | `davidanson.vscode-markdownlint`              |
 | [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)                                          | `dbaeumer.vscode-eslint`                      |
 | [Composer](https://marketplace.visualstudio.com/items?itemName=devsense.composer-php-vscode)                                  | `devsense.composer-php-vscode`                |
