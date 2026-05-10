@@ -25,8 +25,8 @@ Welcome to the **HTCGSC-GORMS** documentation. This directory contains modulariz
 
 ### Deployment & Containerization
 
-- **[DOCKER.md](DOCKER.md)**: Guide for containerizing the application with Docker Compose.
-- **[RENDER.md](RENDER.md)**: Production deployment instructions for Render.com.
+- **[DOCKER.md](DOCKER.md)**: Comprehensive guide for containerizing the application with PHP 8.4-FPM, Nginx, and PostgreSQL using Docker Compose.
+- **[RENDER.md](RENDER.md)**: Production deployment instructions for Render.com using the Docker blueprint and IaC approach.
 
 ## 2. Setup Roadmap
 

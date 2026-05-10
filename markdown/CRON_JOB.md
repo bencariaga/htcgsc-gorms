@@ -19,7 +19,7 @@ In [https://console.cron-job.org/settings](https://console.cron-job.org/settings
 CRON_KEY=
 ```
 
-### 2.2. Apply to Configuration Folder (`config/`) and to Application Folder (`app/`)
+### 2.2. Apply to Configuration Folder (`config/`), Application Folder (`app/`), and Route Folder (`routes/`)
 
 Add this in `config/services.php`:
 
@@ -31,6 +31,14 @@ Add this somewhere in `app/` (like `app/Http/Controllers/SchedulerController.php
 
 ```php
 config('services.cron_key')
+```
+
+Add this in `routes/api.php`:
+
+```php
+use App\Http\Controllers\SchedulerController;
+
+Route::get('/system/run-scheduled-tasks', SchedulerController::class);
 ```
 
 ## 3. External Trigger Setup

@@ -36,8 +36,8 @@ The `hosts` file acts as a local DNS. It tells the operating system that a speci
 
 Once Windows knows where the domain points, Apache needs to know which folder to serve when it hears that domain name.
 
-* Navigate to the XAMPP configuration folder: `C:\xampp\apache\conf\extra\`.
-* Open `httpd-vhosts.conf`.
+* Go to the XAMPP's Apache configuration folder named `C:\xampp\apache\conf\extra\`.
+* In there, open `httpd-vhosts.conf`.
 * Ensure the generic localhost is defined first so the dashboard remains accessible, then append the specific project block:
 
 ```apache
@@ -49,7 +49,7 @@ Once Windows knows where the domain points, Apache needs to know which folder to
 <VirtualHost *:80>
     DocumentRoot "C:/xampp/htdocs/htcgsc-gorms/public"
     ServerName htcgsc-gorms.local
-    ServerAlias web-tunnel-name.ngrok-free.dev
+    ServerAlias your-ngrok-id.ngrok-free.dev
 
     <Directory "C:/xampp/htdocs/htcgsc-gorms/public">
         AllowOverride All

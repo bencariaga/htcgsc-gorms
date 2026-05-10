@@ -1,78 +1,121 @@
-# Docker Containerization Guide
+# Containerization Guide with Docker
 
-This document provides instructions for containerizing the HTCGSC-GORMS system using Docker and Docker Compose. This is ideal for ensuring consistent environments across development and production.
+This document provides comprehensive instructions for containerizing the **HTCGSC-GORMS** system using Docker and Docker Compose. Utilizing Docker ensures a consistent, isolated, and reproducible environment across development and production.
 
-## 1. Prerequisites
+---
 
-Before starting, ensure you have the following installed:
+## 1. Architecture Overview
 
-- **Docker Desktop**: [Download here](https://www.docker.com/products/docker-desktop/)
-- **Docker Compose**: Usually included with Docker Desktop.
+The system employs a multi-container architecture defined in `compose.yaml`:
 
-## 2. Docker Architecture
+1. **`htcgsc-gorms` (Application)**:
+    - **Base Image**: `php:8.4-fpm-alpine`.
+    - **Components**: Bundles **PHP 8.4-FPM**, **Nginx**, and **Node.js** into a single lightweight image.
+    - **Features**: Pre-configured with **Chromium** (for Browsershot/PDF generation), **ImageMagick**, and necessary PHP extensions (`pdo_pgsql`, `intl`, `gd`, etc.).
+    - **Port**: Maps host port `8080` to container port `80`.
 
-The project uses a multi-container setup:
+2. **`db` (Database)**:
+    - **Image**: `postgres:17-alpine`.
+    - **Purpose**: High-performance relational database storage.
+    - **Port**: Maps host port `5432` to container port `5432`.
 
-1. **htcgsc-gorms**: The main application container (PHP 8.4-FPM + Nginx + Node.js).
-2. **db**: The database container running PostgreSQL 17.
+---
 
-## 3. Getting Started
+## 2. Prerequisites
 
-### 3.1. Environment Configuration
+Ensure you have the following installed on your host system:
 
-Ensure your `.env` file is configured to connect to the Docker database container.
+- **Docker Desktop**: [Download and Install](https://www.docker.com/products/docker-desktop/)
+- **Docker Compose**: Included with Docker Desktop (Verify with `docker compose version`).
+- **Basic Knowledge**: Familiarity with [Docker Concepts](https://docs.docker.com/get-started/).
+
+---
+
+## 3. Configuration & Environment
+
+### 3.1. .dockerignore
+
+The project uses a `.dockerignore` file to prevent unnecessary files (like `node_modules`, `vendor`, and local `.env` files) from being copied into the container, keeping the image lean and secure.
+
+### 3.2. Environment Variables
+
+Docker Compose uses environment variables defined in the `services` section of `compose.yaml`. These settings will override any values in a local `.env` file for those specific keys.
+
+**Default Docker Credentials:**
 
 ```env
 DB_CONNECTION=pgsql
-DB_HOST=db
+DB_HOST= 
 DB_PORT=5432
 DB_DATABASE=htcgsc_gorms
-DB_USERNAME=sail
-DB_PASSWORD=password
+DB_USERNAME=htcgsc_gorms_user
+DB_PASSWORD= 
 ```
 
-### 3.2. Building and Running
+---
 
-To build the image and start the containers, run:
+## 4. Getting Started
+
+### 4.1. Build and Run
+
+To build the application image and start the services in detached mode:
 
 ```bash
 docker compose up -d --build
 ```
 
-The system will be accessible at [http://localhost:8080](http://localhost:8080).
+The system will be accessible at: **[http://localhost:8080](http://localhost:8080)**.
 
-### 3.3. Initializing the System
+### 4.2. First-Time System Initialization
 
-Once the containers are running, you need to run the migrations and set up the system:
+Once the containers are healthy, you must initialize the Laravel environment. We provide a custom setup script for this:
 
 ```bash
-# Run migrations
-docker compose exec htcgsc-gorms php artisan migrate
-
-# Seed the database (optional)
-docker compose exec htcgsc-gorms php artisan db:seed
-
-# Generate App Key (if not set)
-docker compose exec htcgsc-gorms php artisan key:generate
+# Run the complete automated setup
+docker compose exec htcgsc-gorms composer setup
 ```
 
-## 4. Common Commands
+**What this script does:**
 
-| Action                  | Command                               |
-| ----------------------- | ------------------------------------- |
-| Start Containers        | `docker compose up -d`                |
-| Stop Containers         | `docker compose stop`                 |
-| View Logs               | `docker compose logs -f`              |
-| Enter Application Shell | `docker compose exec htcgsc-gorms sh` |
-| Rebuild without Cache   | `docker compose build --no-cache`     |
+1. Copies `.env.example` to `.env`.
+2. Generates the `APP_KEY`.
+3. Runs database migrations (PostgreSQL).
+4. Seeds the database with initial data.
+5. Creates the symbolic link for storage (`public/storage`).
 
-## 5. Production Considerations
+---
 
-The provided `Dockerfile` is optimized for production by:
+## 5. Common Management Commands
 
-- Using a lightweight **Alpine Linux** base.
-- Bundling **Nginx** and **PHP-FPM** in a single image for simplicity.
-- Pre-installing system dependencies for **Browsershot** (Chromium) and **ImageMagick**.
-- Optimizing **Composer** and **NPM** dependencies.
+| Action                | Command                                               |
+| :-------------------- | :---------------------------------------------------- |
+| **Start Services**    | `docker compose up -d`                                |
+| **Stop Services**     | `docker compose stop`                                 |
+| **Remove Containers** | `docker compose down`                                 |
+| **View Live Logs**    | `docker compose logs -f`                              |
+| **Enter App Shell**   | `docker compose exec htcgsc-gorms sh`                 |
+| **Database Shell**    | `docker compose exec db psql -U sail -d htcgsc_gorms` |
 
-Refer to [RENDER.md](RENDER.md) for instructions on how this Docker configuration is utilized in the cloud.
+---
+
+## 6. System Dependencies
+
+- **Browsershot & Chromium**: The Dockerfile installs `chromium` and sets `PUPPETEER_EXECUTABLE_PATH`. This allows the system to generate PDFs and screenshots out-of-the-box.
+- **ImageMagick**: Used for advanced image processing and QR code handling.
+- **Composer & NPM**: The build process automatically optimizes PHP and Node.js dependencies for production.
+
+---
+
+## 7. Development vs. Production
+
+- **`compose.yaml`**: Standard configuration for local development and testing.
+- **`compose.debug.yaml`**: Can be used for specific debugging scenarios.
+- **`render.yaml`**: Used for automated production deployment to [Render](https://render.com/). See [RENDER.md](RENDER.md) for details.
+
+---
+
+## 8. References
+
+- [Official Docker Getting Started Guide](https://docs.docker.com/get-started/)
+- [Docker Compose Documentation](https://docs.docker.com/compose/)
+- [Laravel Deployment Documentation](https://laravel.com/docs/deployment)
