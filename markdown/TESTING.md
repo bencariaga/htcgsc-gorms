@@ -4,57 +4,40 @@ This document describes the testing architecture and how to run automated tests 
 
 ## 1. Running Tests
 
-To run the full suite of logic and browser tests (via Pest and Playwright), ensure your environment is running, then use:
+To run the full suite of logic and browser tests, ensure the environment is running, then use:
 
 ```powershell
 npm run test
+
 ```
 
-*(This triggers both `npm run test:vitest` and `npm run test:playwright` as defined in `package.json`)*
+Specific test types can be targeted directly:
 
-## 2. Test Types
+* **Logic Tests (Pest):** `php artisan test` or `vendor/bin/pest`
+* **Browser Tests (Playwright):** `npx playwright test`
 
-### Feature/Browser Tests
+## 2. Test Types and Best Practices
 
-These tests use Laravel Dusk and Playwright to imitate user browser interactions. They validate end-to-end workflows like CRUD operations and UI behavior.
-
-* **Location:** `tests/Feature/Browser/`
-* **Technology:** Laravel Dusk (PHP) and Playwright (JavaScript)
+Adopting the Laravel Daily philosophy, the focus is on practical CRUD testing and ensuring the "Happy Path" (success) and "Sad Path" (validation/failure) are covered.
 
 ### Feature/Logic Tests
 
-These tests use Pest to validate backend logic, models, and authentication without necessarily launching a browser.
+These tests validate backend logic and models using Pest.
 
-* **Location:** `tests/Feature/Logic/`
-* **Technology:** Pest PHP
+* **CRUD Operations:** Test that records are correctly saved, updated, and deleted in the database.
+* **Authentication:** Verify users can log in and that protected routes redirect guests.
+* **Validation:** Ensure Form Requests catch invalid data and return the correct error messages.
 
-## 3. Test Directory Map
+### Browser Tests
 
-```text
-tests/
-├─ Browser/
-│  ├─ console/
-│  ├─ screenshots/
-│  ├─ appointments.spec.js
-│  ├─ reports.spec.js
-│  ├─ students.spec.js
-│  └─ users.spec.js
-├─ Feature/
-│  ├─ Browser/
-│  │  ├─ AppointmentCrudTest.php
-│  │  ├─ AuditLogsTest.php
-│  │  ├─ DashboardTest.php
-│  │  ├─ ReportCrudTest.php
-│  │  ├─ StudentCrudTest.php
-│  │  ├─ SubmissionsTest.php
-│  │  ├─ UserCrudTest.php
-│  │  └─ UserProfileTest.php
-│  └─ Logic/
-│     ├─ AuthenticationTest.php
-│     └─ ModelTest.php
-├─ Unit/
-├─ DuskTestCase.php
-├─ Pest.php
-├─ TestCase.php
-└─ UnitTestCase.php 
-```
+These tests use Pest 4 and Playwright to imitate real user interactions within the browser.
+
+* **End-to-End Workflows:** Testing the full cycle of an appointment from creation to completion.
+* **UI Feedback:** Asserting that the correct success toast notifications or validation errors appear on the screen.
+
+## 3. Key Testing Rules
+
+* **Use Factories:** Do not hard-code IDs; write factory classes and always use them to generate fresh dummy data.
+* **Clean State:** Use the `RefreshDatabase` trait to ensure every test starts with a clean slate.
+* **No Extra Comments:** Tests should be self-documenting through clear description strings in Pest.
+* **Flattened Logic:** Keep tests concise by using Pest hooks (`beforeEach`) to refactor repeating code.

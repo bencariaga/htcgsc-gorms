@@ -6,10 +6,10 @@ This document provides step-by-step instructions for setting up the Holy Trinity
 
 Before installing the system, ensure your local machine has the following software installed:
 
-* **PHP:** 8.4 or higher
-* **Laravel:** 13 or higher
-* **Node.js:** 20.0 or higher
-* **Composer:** 2.0 or higher
+* **PHP:** v8.4 or higher
+* **Laravel:** v13.0 or higher
+* **Node.js:** v20.0 or higher
+* **Composer:** v2.0 or higher
 * **XAMPP:** Hosting for local development
 * **GitHub:** Do pull requests, or branch out from `main` by forking or cloning, in your preference.
 * **Visual Studio Code:** Recommended code editor, one used by the first developer of this project.

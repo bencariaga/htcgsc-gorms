@@ -7,7 +7,7 @@ This directory contains modularized documentation for the HTCGSC-GORMS project.
 - **[SETUP.md](SETUP.md)**: The primary guide for local installation and environment setup.
 - **[DIRECTORIES.md](DIRECTORIES.md)**: Detailed breakdown of the project architecture and folder structure.
 - **[TESTING.md](TESTING.md)**: Instructions for running automated logic and browser tests.
-- **[SCHEMA.md](SCHEMA.md)**: Database table definitions and relationship map.
+- **[DATABASE_SCHEMA.md](DATABASE_SCHEMA.md)**: Database table definitions and relationship map.
 - **[XAMPP.md](XAMPP.md)**: Specific instructions for hosting via XAMPP.
 - **[DEPLOYMENT.md](DEPLOYMENT.md)**: Guide for production deployment (Render).
 

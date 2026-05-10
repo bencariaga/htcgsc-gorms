@@ -1,7 +1,5 @@
 # Database Schema
 
-This document provides a detailed overview of the HTCGSC-GORMS database tables and relationships.
-
 ## 1. `persons` table
 
 Core table storing personal information for all system participants.
@@ -80,19 +78,22 @@ Logs generated system reports.
 
 ## 8. `all_activities` view
 
-Combines data from referrals and appointments for a unified activity log.
+Shows all the activities that have been made in the system, combining data from referrals and appointments.
 
-| Column               | Data Type                       | Nullable | Notes                                |
-| -------------------- | ------------------------------- | -------- | ------------------------------------ |
-| `referral_id`        | int(10) UNSIGNED                | no       | PK in referrals, FK in appointments  |
-| `student_id`         | decimal(10,0)                   | yes      | ID of the student involved           |
-| `referrer_id`        | decimal(10,0)                   | yes      | ID of the person making the referral |
-| `created_at`         | timestamp                       | yes      | Record creation timestamp            |
-| `updated_at`         | timestamp                       | yes      | Record last update timestamp         |
-| `appointment_id`     | decimal(10,0)                   | yes      | Unique ID for the appointment        |
-| `referral_type`      | enum('Yourself','Someone Else') | yes      | Type of referral made                |
-| `reason`             | varchar(255)                    | yes      | Reason for the activity              |
-| `appointment_date`   | date                            | yes      | Scheduled date for the appointment   |
-| `appointment_time`   | enum(...)                       | yes      | Time slot for the appointment        |
-| `appointment_status` | enum(...)                       | yes      | Current status of the appointment    |
-| `laravel_model`      | varchar(22)                     | no       | Polymorphic model class name         |
+| Column                 | Data Type                                                                                                                             | Nullable | Notes                                  |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | -------- | -------------------------------------- |
+| `referral_id`          | int(10) UNSIGNED                                                                                                                      | no       | PK in referrals, FK in appointments    |
+| `student_id`           | decimal(10,0)                                                                                                                         | yes      | ID of the student involved             |
+| `referrer_id`          | decimal(10,0)                                                                                                                         | yes      | ID of the person making the referral   |
+| `created_at`           | timestamp                                                                                                                             | yes      | Record creation timestamp              |
+| `updated_at`           | timestamp                                                                                                                             | yes      | Record last update timestamp           |
+| `appointment_id`       | decimal(10,0)                                                                                                                         | yes      | Unique ID for the appointment          |
+| `referral_type`        | enum('Yourself','Someone Else')                                                                                                       | yes      | Type of referral made                  |
+| `reason`               | varchar(255)                                                                                                                          | yes      | Reason for the activity                |
+| `appointment_date`     | date                                                                                                                                  | yes      | Scheduled date for the appointment     |
+| `appointment_time`     | enum('8:30 AM - 9:30 AM', '9:30 AM - 10:30 AM', '10:30 AM - 11:30 AM', '1:30 PM - 2:30 PM', '2:30 PM - 3:30 PM', '3:30 PM - 4:30 PM') | yes      | Time slot for the appointment          |
+| `appointment_status`   | enum('Scheduled','Done','Cancelled','Missed')                                                                                         | yes      | Current status of the appointment      |
+| `laravel_foreign_key`  | int(10) UNSIGNED                                                                                                                      | yes      | Internal key for Laravel relationships |
+| `laravel_model`        | varchar(22)                                                                                                                           | no       | Polymorphic model class name           |
+| `laravel_placeholders` | varchar(88)                                                                                                                           | yes      | Metadata for dynamic fields            |
+| `laravel_with`         | varchar(0)                                                                                                                            | yes      | Placeholder for eager loading strings  |
