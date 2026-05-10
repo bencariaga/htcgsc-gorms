@@ -23,7 +23,7 @@ The backend handles the "brain" and "nervous system" of the application, managin
 
 The core logic of the application. It is organized into specialized layers to ensure SOLID principles.
 > [!NOTE]
-> See the **[Backend Deep Dive](#backend-deep-dive-app)** for a detailed breakdown of its specialized directories.
+> Go to the **[Backend Deep Dive](#backend-deep-dive-app)** for a detailed breakdown of its specialized directories.
 
 ### 📂 `bootstrap/`
 
@@ -139,7 +139,7 @@ The only directory exposed to the web server. It contains compiled assets and th
 
 The source code for the frontend, following the Atomic Design pattern.
 > [!NOTE]
-> See the **[Frontend Deep Dive](#frontend-deep-dive-resources)** for a detailed breakdown of its view components.
+> Go to the **[Frontend Deep Dive](#frontend-deep-dive-resources)** for a detailed breakdown of its view components.
 
 ---
 

@@ -110,7 +110,7 @@ docker compose exec htcgsc-gorms composer setup
 
 - **`compose.yaml`**: Standard configuration for local development and testing.
 - **`compose.debug.yaml`**: Can be used for specific debugging scenarios.
-- **`render.yaml`**: Used for automated production deployment to [Render](https://render.com/). See [RENDER.md](RENDER.md) for details.
+- **`render.yaml`**: Used for automated production deployment to [Render](https://render.com/). Open [RENDER.md](RENDER.md) for details.
 
 ---
 

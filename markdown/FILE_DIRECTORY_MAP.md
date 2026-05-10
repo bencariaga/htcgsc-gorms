@@ -557,14 +557,17 @@ htcgsc-gorms/
 │  └─ nginx.conf
 ├─ markdown/
 │  ├─ CONTEXT.md
+│  ├─ CRON_JOB.md
+│  ├─ DATABASE_SCHEMA.md
 │  ├─ DIRECTORIES.md
 │  ├─ DOCKER.md
+│  ├─ FILE_DIRECTORY_MAP.md
+│  ├─ GOOGLE_APPS_SCRIPT.md
 │  ├─ INSTRUCTIONS.md
 │  ├─ LARAVEL_BEST_PRACTICES.md
 │  ├─ llms-full.txt
 │  ├─ NGROK.md
 │  ├─ RENDER.md
-│  ├─ SCHEMA.md
 │  ├─ SETUP.md
 │  ├─ TESTING.md
 │  ├─ TEXTBEE.md

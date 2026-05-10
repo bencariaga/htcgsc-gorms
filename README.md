@@ -81,9 +81,9 @@
 
 ## Before Everything Else
 
-- For further information about using the system, see [INSTRUCTIONS.md](markdown/INSTRUCTIONS.md).
-
-- HTCGSC-GORMS has been developed using **XAMPP** on a computer with **Windows 11**.
+- **NOTE:** HTCGSC-GORMS has been developed using **XAMPP** on a computer with **Windows 11**.
+- Open [INSTRUCTIONS.md](markdown/INSTRUCTIONS.md) for further information about using the system.
+- Open [CONTEXT.md](markdown/CONTEXT.md) for the context of HTCGSC-GORMS and for the guidelines on using AI chatbots and agents as coding tools such as [Laravel Boost](https://laravel.com/ai/boost), [Windsurf](https://windsurf.com/), and [Google Antigravity](https://antigravity.google/).
 
 - Make sure to study, install, and integrate each of the following needed to set up the system:
   - [Visual Studio Code](https://code.visualstudio.com/download)
