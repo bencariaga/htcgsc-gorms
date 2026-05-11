@@ -68,10 +68,6 @@ document.addEventListener('alpine:init', () => {
             const { first_name, middle_name, last_name, suffix } = this.form;
             const personName = [first_name, middle_name, last_name, suffix].filter(Boolean).join(' ');
 
-            if (this.modal) {
-                window.dispatchEvent(new CustomEvent('close-modal', { detail: { id: config.formId } }));
-            }
-
             window.showLoading(true, 'Updating student profile...', personName);
 
             try {
@@ -89,6 +85,10 @@ document.addEventListener('alpine:init', () => {
 
                 if (!response.ok) {
                     throw new Error(window.extractErrorMessage(data, response.status));
+                }
+
+                if (this.modal) {
+                    window.dispatchEvent(new CustomEvent('close-modal', { detail: { id: config.formId } }));
                 }
 
                 this.original = { ...this.form };

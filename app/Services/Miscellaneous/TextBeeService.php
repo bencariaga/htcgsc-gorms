@@ -36,7 +36,7 @@ class TextBeeService
 
             $url = "{$this->baseUrl}/gateway/devices/{$this->deviceId}/send-sms";
 
-            return Http::withHeaders(['x-api-key' => $this->apiKey, 'Accept' => 'application/json'])->timeout(3)->withoutVerifying()->post($url, compact('recipients', 'message'));
+            return Http::withHeaders(['x-api-key' => $this->apiKey, 'Accept' => 'application/json'])->timeout(15)->withoutVerifying()->post($url, compact('recipients', 'message'));
         } catch (ConnectionException) {
             throw new NoInternetConnectionException;
         }
