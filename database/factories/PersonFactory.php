@@ -36,11 +36,11 @@ class PersonFactory extends Factory
     public function administrator(): self
     {
         return $this->state(fn (): array => [
-            'first_name' => 'Benhur',
-            'last_name' => 'Cariaga',
-            'middle_name' => 'Leproso',
+            'first_name' => 'Sarahme',
+            'last_name' => 'Galabin',
+            'middle_name' => '',
             'phone_number' => '09939597683',
-            'email_address' => 'bencariaga13@gmail.com',
+            'email_address' => 'htcgsc.gtc@gmail.com',
         ]);
     }
 }
