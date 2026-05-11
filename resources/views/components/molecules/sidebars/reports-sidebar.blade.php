@@ -7,7 +7,7 @@
         <div class="flex-1 space-y-[6px]">
             @php $isCreateSelected = $selectedFile === null; @endphp
 
-            <button wire:click="createNewReport" @class(AuditLogsStyling::getContainerClasses($isCreateSelected)) @disabled($isCreateSelected)>
+            <button wire:click="createNewReport" @click="window.showLoading(true, 'Preparing fresh form...')" wire:loading.attr="disabled" wire:target="createNewReport" @class(AuditLogsStyling::getContainerClasses($isCreateSelected)) @disabled($isCreateSelected)>
                 <div class="flex items-center overflow-hidden">
                     <i @class([...AuditLogsStyling::getIconClasses($isCreateSelected), 'fa-pen-to-square text-[30px] max-w-[23px] ml-[9.5px] mr-[1.5px]'])></i>
 
@@ -26,7 +26,7 @@
                 @endphp
 
                 <div class="relative group">
-                    <button wire:click="selectReport({{ $report->report_id }})" @class(AuditLogsStyling::getContainerClasses($isSelected)) @disabled($isSelected)>
+                    <button wire:click="selectReport({{ $report->report_id }})" @click="window.showLoading(true, 'Fetching report...', '{{ $report->title }}')" wire:loading.attr="disabled" wire:target="selectReport" @class(AuditLogsStyling::getContainerClasses($isSelected)) @disabled($isSelected)>
                         <div class="flex items-center overflow-hidden">
                             <i @class(AuditLogsStyling::getIconClasses($isSelected))></i>
 

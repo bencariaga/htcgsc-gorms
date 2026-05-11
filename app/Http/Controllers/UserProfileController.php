@@ -50,10 +50,10 @@ class UserProfileController extends Controller
                 $request->session()->invalidate();
                 $request->session()->regenerateToken();
 
-                return redirect()->to('/')->with('success', 'Password updated successfully! Please log in again.');
+                return redirect()->to('/')->with('success', 'Password has been <strong>updated</strong> successfully! Please log in again.');
             }
 
-            return redirect()->back()->with('success', 'Password updated successfully!');
+            return redirect()->back()->with('success', 'Password has been <strong>updated</strong> successfully!');
         } catch (Exception $e) {
             return redirect()->back()->withErrors(['newPassword' => $e->getMessage()])->withInput();
         }

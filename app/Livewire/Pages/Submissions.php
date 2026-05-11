@@ -47,21 +47,17 @@ class Submissions extends Component
     {
         $this->downloadType = $label;
         $this->loadingAction = "download.{$type}";
-
+        $this->dispatch('hide-loading-accounts');
         $service = app(GoogleFormService::class);
-        $fileName = $service->generateFileName($submission, $extension);
-
-        $this->dispatch('notify', type: 'success', message: "{$label} file \"<strong>{$fileName}</strong>\" has been <strong>downloaded</strong> successfully.");
 
         return $service->downloadSubmission($submission, $type);
     }
 
     public function downloadFile(string $fileName = '')
     {
-        $this->loadingAction = 'downloadFile';
         $path = storage_path("logs/google-forms/{$fileName}");
 
-        $this->dispatch('notify', type: 'success', message: "Log file \"<strong>{$fileName}</strong>\" has been <strong>downloaded</strong> successfully.");
+        $this->dispatch('hide-loading-accounts');
 
         return response()->download($path);
     }
@@ -70,6 +66,8 @@ class Submissions extends Component
     {
         $this->loadingAction = 'fetchFile';
         $this->selectedFileName = $name;
+
+        $this->dispatch('hide-loading-accounts');
     }
 
     public function render(GoogleFormService $service)

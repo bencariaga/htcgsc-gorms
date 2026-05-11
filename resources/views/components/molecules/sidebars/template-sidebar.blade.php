@@ -1,3 +1,5 @@
+@props(['items' => [], 'files' => [], 'selectedFile' => null, 'fetchMessage' => 'Fetching file...'])
+
 @use('App\Enums\NonDB\AuditLogsStyling')
 
 <aside class="w-72 bg-white dark:bg-slate-800 border-r-2 border-gray-300 dark:border-slate-700 flex flex-col h-full">
@@ -23,7 +25,7 @@
     <nav class="flex-1 flex flex-col {{ request()->routeIs('reports.index') ? 'overflow-y-auto' : 'overflow-hidden' }} px-4 py-2 space-y-2 [scrollbar-width:thin] [scrollbar-color:rgba(107,114,128,0.8)_transparent] [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-500/80">
         <div class="flex-1 space-y-[6px]">
             @if($createNewAction)
-                <button wire:click="{{ $createNewAction }}" @class(AuditLogsStyling::getContainerClasses($isCreateSelected)) @disabled($isCreateSelected)>
+                <button wire:click="{{ $createNewAction }}" @click="window.showLoading(true, 'Preparing fresh form...')" wire:loading.attr="disabled" wire:target="{{ $createNewAction }}" @class(AuditLogsStyling::getContainerClasses($isCreateSelected)) @disabled($isCreateSelected)>
                     <div class="flex items-center overflow-hidden">
                         <i @class([...AuditLogsStyling::getIconClasses($isCreateSelected), 'fa-pen-to-square text-[30px] max-w-[23px] ml-[9.5px] mr-[1.5px]'])></i>
 
@@ -38,7 +40,7 @@
 
             @foreach($mappedFiles as $data)
                 <div class="relative group">
-                    <button @if($onFetch) @click="{{ $onFetch }}('{{ $data['id'] }}'); $store.formPreview.activeSubmission = null;" @else wire:click="{{ $fetchAction }}('{{ $data['id'] }}')" @endif @class(AuditLogsStyling::getContainerClasses($data['isSelected'])) @disabled($data['isSelected'])>
+                    <button @if($onFetch) @click="window.showLoading(true, '{{ $fetchMessage }}'); {{ $onFetch }}('{{ $data['id'] }}'); $store.formPreview.activeSubmission = null;" @else wire:click="{{ $fetchAction }}('{{ $data['id'] }}')" @endif wire:loading.attr="disabled" wire:target="{{ $onFetch ? 'fetchFile' : $fetchAction }}" @class(AuditLogsStyling::getContainerClasses($data['isSelected'])) @disabled($data['isSelected'])>
                         <div class="flex items-center overflow-hidden">
                             <i @class(AuditLogsStyling::getIconClasses($data['isSelected']))></i>
 
@@ -65,7 +67,7 @@
                                 <i class="fa-solid fa-trash-alt text-2xl"></i>
                             </div>
                         @else
-                            <div @if($onFetch) @click.stop="$wire.set('loadingAction', 'downloadFile'); $wire.downloadFile('{{ $data['id'] }}')" @else wire:click.stop="{{ $downloadAction }}('{{ $data['id'] }}')" @endif class="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-500 mr-[13.5px] transition-colors cursor-pointer" title="Download">
+                            <div @if($onFetch) @click.stop="window.showLoading(true, 'Downloading log file...'); $wire.set('loadingAction', 'downloadFile'); $wire.downloadFile('{{ $data['id'] }}')" @else wire:click.stop="{{ $downloadAction }}('{{ $data['id'] }}')" @endif wire:loading.attr="disabled" wire:target="{{ $onFetch ? 'downloadFile' : $downloadAction }}" class="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-500 mr-[13.5px] transition-colors cursor-pointer disabled:opacity-50" title="Download">
                                 <i class="fa-solid fa-download text-2xl"></i>
                             </div>
                         @endif

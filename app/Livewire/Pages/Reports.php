@@ -38,6 +38,7 @@ class Reports extends Component
         if ($report) {
             $this->reportData = $service->render($report);
             $this->dispatch('report-loaded', data: $service->getFormattedReport($report));
+            $this->dispatch('hide-loading-accounts');
         }
     }
 
@@ -50,6 +51,7 @@ class Reports extends Component
         $this->selectReport($reportId, $service);
 
         $this->dispatch('notify', type: 'success', message: "Report \"<strong>{$title}</strong>\" has been saved successfully!");
+        $this->dispatch('hide-loading-accounts');
     }
 
     public function deleteReport(int $id, ReportService $service): void
@@ -68,12 +70,14 @@ class Reports extends Component
         }
 
         $this->dispatch('notify', type: 'success', message: "Report \"<strong>{$title}</strong>\" has been deleted successfully!");
+        $this->dispatch('hide-loading-accounts');
     }
 
     public function createNewReport(): void
     {
         $this->reset(['selectedReportId', 'activeId', 'reportData']);
         $this->dispatch('report-loaded', data: null);
+        $this->dispatch('hide-loading-accounts');
     }
 
     public function download(Report $report, ReportService $service)

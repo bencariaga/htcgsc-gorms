@@ -2,9 +2,9 @@
 
 namespace App\Actions\Report;
 
-use App\Actions\Data\RenderStatisticalData;
+use App\{Actions\Data\RenderStatisticalData, Models\Report};
 use App\Enums\{DataCategory, FileOutputFormat};
-use App\{Exports\Report\Format, Models\Report};
+use App\{Exports\Report\Format, Support\BinaryFinder};
 use Carbon\CarbonInterface;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
@@ -81,7 +81,7 @@ class DownloadReport
 
     private function browser(string $html): Browsershot
     {
-        $browser = Browsershot::html($html)->setChromePath('/usr/bin/chromium-browser')->setNodeBinary('/usr/bin/node')->setNpmBinary('/usr/bin/npm');
+        $browser = Browsershot::html($html)->setChromePath(BinaryFinder::chrome())->setNodeBinary(BinaryFinder::node())->setNpmBinary(BinaryFinder::npm());
 
         if ($args = config('browsershot.chromium_arguments')) {
             $browser->addChromiumArguments($args);

@@ -7,6 +7,7 @@
         </div>
     @endforeach
 
+    <x-molecules.loading-screens.ls-list-type />
     <x-molecules.sidebars.reports-sidebar :files="$files ?? []" :selectedFile="$selectedFile" />
     <x-molecules.forms.report-form :$initialState :$preloadedData :$selectedFile :$jsFields :$jsFormats :$actionHeader :$fields :$categories :$today :$formats :$actions />
 </div>

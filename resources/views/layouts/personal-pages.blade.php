@@ -10,6 +10,7 @@
         <script src="{{ asset('js/theme-init.js') }}"></script>
         <script src="https://cdn.tailwindcss.com"></script>
         <script src="{{ asset('js/global.js') }}"></script>
+        <script src="{{ asset('js/list-type.js') }}"></script>
 
         <link rel="stylesheet" href="{{ asset('css/personal-pages.css') }}">
         <link rel="icon" type="image/png" href="{{ asset('images/HTCGSC-GORMS-logo.png') }}">

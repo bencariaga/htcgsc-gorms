@@ -25,7 +25,7 @@ abstract class BaseOTPType extends Component
         $targetUserId = $this->updatePendingProfile($this->updateField);
         $readableField = str($this->updateField)->replace('_', ' ')->ucfirst();
 
-        redirect()->route('user-profile.index', ['user' => $targetUserId])->with('success', "{$readableField} updated successfully!");
+        redirect()->route('user-profile.index', ['user' => $targetUserId])->with('success', "{$readableField} has been <strong>updated</strong> successfully!");
     }
 
     public function mount()

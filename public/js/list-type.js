@@ -19,4 +19,8 @@ document.addEventListener('livewire:init', () => {
     window.addEventListener('hide-loading-accounts', () => {
         getScreen()?.classList.replace('flex', 'hidden');
     });
+
+    window.addEventListener('notify', () => {
+        getScreen()?.classList.replace('flex', 'hidden');
+    });
 });

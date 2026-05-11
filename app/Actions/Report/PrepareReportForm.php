@@ -53,6 +53,16 @@ class PrepareReportForm
                 default => $action['click'] ?? '',
             };
 
+            $loadingMessage = match ($actionKey) {
+                'download_report' => 'Downloading report...',
+                'generate_report' => 'Generating report...',
+                default => '',
+            };
+
+            if ($loadingMessage) {
+                $clickAction = "window.showLoading(true, '{$loadingMessage}'); " . $clickAction;
+            }
+
             return collect($action)->merge(compact('actionKey', 'displayText', 'clickAction'))->toArray();
         });
     }

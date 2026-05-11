@@ -43,7 +43,13 @@ enum ReportFormStyling
             $color = "bg-{$color}-600 hover:bg-{$color}-700";
             $type = ($label === 'Generate Report') ? 'submit' : 'button';
 
-            return compact('label', 'icon', 'color', 'type');
+            $clickAction = match ($label) {
+                'Reset to Default' => 'resetToDefault()',
+                'Download Report' => "window.showLoading(true, 'Downloading report...', form.title); \$wire.download(form.report_id)",
+                default => null,
+            };
+
+            return compact('label', 'icon', 'color', 'type', 'clickAction');
         })->values()->all();
     }
 
@@ -71,12 +77,12 @@ enum ReportFormStyling
 
     public static function loadingTargets(): array
     {
-        $save = 'Generating and saving report...';
-        $selectReport = 'Loading report...';
-        $createNewReport = 'Preparing fresh form...';
-        $download = 'Downloading report...';
-        $deleteReport = 'Deleting report...';
-
-        return compact('save', 'selectReport', 'createNewReport', 'download', 'deleteReport');
+        return [
+            'save' => 'Generating report...',
+            'selectReport' => 'Fetching report...',
+            'createNewReport' => 'Preparing fresh form...',
+            'download' => 'Downloading report...',
+            'deleteReport' => 'Deleting report...',
+        ];
     }
 }

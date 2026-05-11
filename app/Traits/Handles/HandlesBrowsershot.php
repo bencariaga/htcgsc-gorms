@@ -2,7 +2,7 @@
 
 namespace App\Traits\Handles;
 
-use App\{Enums\NonDB\GoogleFormsStyling, Services\Miscellaneous\GoogleFormService};
+use App\{Enums\NonDB\GoogleFormsStyling, Services\Miscellaneous\GoogleFormService, Support\BinaryFinder};
 use Illuminate\Support\Carbon;
 use Spatie\Browsershot\Browsershot;
 
@@ -26,7 +26,7 @@ trait HandlesBrowsershot
 
     protected function browser(string $html): Browsershot
     {
-        $browser = Browsershot::html($html)->setChromePath('/usr/bin/chromium-browser')->setNodeBinary('/usr/bin/node')->setNpmBinary('/usr/bin/npm');
+        $browser = Browsershot::html($html)->setChromePath(BinaryFinder::chrome())->setNodeBinary(BinaryFinder::node())->setNpmBinary(BinaryFinder::npm());
 
         if ($args = config('browsershot.chromium_arguments')) {
             $browser->addChromiumArguments($args);

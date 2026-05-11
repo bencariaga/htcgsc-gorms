@@ -9,6 +9,8 @@
         </div>
     @endforeach
 
+    <x-molecules.loading-screens.ls-list-type />
+
     <x-molecules.sidebars.submissions-sidebar :$items :$files :$selectedFile />
     <x-molecules.forms.google-form :$gfs :$selectedFileName :$submissions :$contactReferrer :$newTab />
     <x-organisms.main.submissions-body :$sbms :$submissions :$renderedSubmissions :$selectedFileName />

@@ -56,6 +56,8 @@ document.addEventListener('alpine:init', () => {
 
         resetToDefault() {
             this.form = JSON.parse(JSON.stringify(this.initialForm));
+            window.notify('success', 'Form has been reset to its default values.');
+            window.showLoading(false);
         },
 
         handleReportLoaded(data) {

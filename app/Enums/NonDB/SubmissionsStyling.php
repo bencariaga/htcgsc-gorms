@@ -32,20 +32,13 @@ enum SubmissionsStyling: string
 
     public static function loadingTargets(): array
     {
-        $actions = ['fetch', 'download'];
-        $types = ['log', 'pdf', 'image'];
-        $targets = [];
-
-        foreach ($actions as $type) {
-            $targets["{$type}File"] = str($type)->ucfirst() . 'ing log file...';
-        }
-
-        foreach ($types as $type) {
-            $label = ($type === 'pdf') ? 'PDF' : $type;
-            $targets['download' . str($type)->ucfirst()] = "Downloading as {$label} file...";
-        }
-
-        return $targets;
+        return [
+            'fetchFile' => 'Fetching submission...',
+            'downloadLog' => 'Downloading as log...',
+            'downloadPdf' => 'Downloading as PDF...',
+            'downloadImage' => 'Downloading as image...',
+            'downloadFile' => 'Downloading as log...',
+        ];
     }
 
     public static function variables(array|Collection $submissions): array

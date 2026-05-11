@@ -35,7 +35,12 @@ class BinaryFinder
     private static function resolve(string $key, array $osPaths, string $suffix = 'binary'): string
     {
         $config = "services.binaries.{$key}_{$suffix}";
+        $configuredPath = config($config);
 
-        return config($config) ?: ($osPaths[PHP_OS_FAMILY] ?? $osPaths['default'] ?? "/usr/bin/{$key}");
+        if ($configuredPath && file_exists($configuredPath)) {
+            return $configuredPath;
+        }
+
+        return $osPaths[PHP_OS_FAMILY] ?? $osPaths['default'] ?? "/usr/bin/{$key}";
     }
 }
