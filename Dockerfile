@@ -29,7 +29,7 @@ RUN apk add --no-cache \
 RUN pecl install imagick \
     && docker-php-ext-enable imagick
 
-RUN docker-php-ext-install pdo_pgsql mbstring exif pcntl bcmath gd zip intl
+RUN docker-php-ext-install pdo_pgsql mbstring exif pcntl bcmath gd zip intl sockets
 
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
@@ -42,7 +42,7 @@ WORKDIR /var/www
 
 COPY . /var/www
 
-RUN composer update --no-dev --optimize-autoloader --no-interaction
+RUN composer install --no-dev --optimize-autoloader --no-interaction
 
 RUN npm install
 
