@@ -2,13 +2,16 @@
 
 namespace App\Actions\Profile;
 
-use App\Models\User;
+use App\Models\{Person, User};
 
 class PrepareProfileUpdatedEvent
 {
     public function handle(User $user): array
     {
-        $user->refresh()->load('person');
+        if (!$user->relationLoaded('person')) {
+            $user->setRelation('person', Person::find($user->person_id));
+        }
+
         $person = $user->person;
 
         return [

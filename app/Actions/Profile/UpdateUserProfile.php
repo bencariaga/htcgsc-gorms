@@ -2,7 +2,8 @@
 
 namespace App\Actions\Profile;
 
-use App\{Actions\Person\UpdatePersonInfo, Models\User, Traits\Miscellaneous\ManagesTransactions};
+use App\{Actions\Person\UpdatePersonInfo, Traits\Miscellaneous\ManagesTransactions};
+use App\Models\{Person, User};
 use Illuminate\Support\Facades\Log;
 
 class UpdateUserProfile
@@ -12,6 +13,10 @@ class UpdateUserProfile
     public function handle(User $user, array $data): void
     {
         $this->executeTransaction(function () use ($user, $data) {
+            if (!$user->relationLoaded('person')) {
+                $user->setRelation('person', Person::find($user->person_id));
+            }
+
             $person = $user->person;
 
             if (!$person) {

@@ -2,8 +2,9 @@
 
 namespace App\Livewire\Pages;
 
-use App\{Actions\Auth\LogoutUser, Data\PasswordResetData, Models\Person, Models\User};
+use App\{Actions\Auth\LogoutUser, Data\PasswordResetData};
 use App\Livewire\Forms\{PasswordChangeForm, UserProfileForm};
+use App\Models\{Person, User};
 use App\Services\Miscellaneous\{OTPService, ProfileService};
 use Exception;
 use Illuminate\Support\Facades\{Auth, Log};
@@ -34,8 +35,12 @@ class UserProfile extends Component
 
     public function mount(?User $user = null): void
     {
-        $this->user = $user ?? Auth::user();
-        $this->user->load('person');
+        $this->user = $user ?? User::find(Auth::id());
+
+        if (!$this->user->relationLoaded('person')) {
+            $this->user->setRelation('person', Person::find($this->user->person_id));
+        }
+
         $this->person = $this->user->person;
         $this->fullName = $this->person->full_name;
         $this->form->setValues($this->user);

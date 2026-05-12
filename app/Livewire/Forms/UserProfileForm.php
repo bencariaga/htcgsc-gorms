@@ -2,13 +2,15 @@
 
 namespace App\Livewire\Forms;
 
-use App\{Http\Requests\UpdateUserProfile, Models\User};
+use App\{Http\Requests\UpdateUserProfile, Models\Person, Models\User};
 use Livewire\Form;
 
 class UserProfileForm extends Form
 {
     public ?User $user = null;
+
     public ?int $user_id = null;
+
     public ?string $last_name = '';
 
     public ?string $first_name = '';
@@ -29,7 +31,11 @@ class UserProfileForm extends Form
     {
         $this->user = $user;
         $this->user_id = $user->user_id;
-        $user->loadMissing('person');
+
+        if (!$user->relationLoaded('person')) {
+            $user->setRelation('person', Person::find($user->person_id));
+        }
+
         $person = $user->person;
 
         $this->last_name = $person->last_name;

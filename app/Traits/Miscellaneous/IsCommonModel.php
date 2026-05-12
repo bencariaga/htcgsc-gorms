@@ -2,13 +2,11 @@
 
 namespace App\Traits\Miscellaneous;
 
-use App\Actions\Data\GenerateDatabaseTableRowId;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Staudenmeir\EloquentEagerLimit\HasEagerLimit;
-use Staudenmeir\EloquentHasManyDeep\HasRelationships;
+use App\{Actions\Data\GenerateDatabaseTableRowId, Builders\CommonBuilder, Services\Miscellaneous\ModelInstanceCache};
+use Illuminate\{Database\Eloquent\Factories\HasFactory};
+use Staudenmeir\{EloquentEagerLimit\HasEagerLimit, EloquentHasManyDeep\HasRelationships};
 use Staudenmeir\EloquentParamLimitFixXLaravelAdjacencyList\Eloquent\HasParamLimitFixAndRecursiveRelationships;
-use Staudenmeir\LaravelCte\Eloquent\QueriesExpressions;
-use Staudenmeir\LaravelMergedRelations\Eloquent\HasMergedRelationships;
+use Staudenmeir\{LaravelCte\Eloquent\QueriesExpressions, LaravelMergedRelations\Eloquent\HasMergedRelationships};
 use Znck\Eloquent\Traits\BelongsToThrough;
 
 /**
@@ -38,6 +36,12 @@ trait IsCommonModel
         $this->primaryKey = $cache[$class]['key'];
         $this->keyType = 'int';
         $this->incrementing = false;
+    }
+
+    /** @param mixed $query */
+    public function newEloquentBuilder($query)
+    {
+        return new CommonBuilder($query);
     }
 
     protected static function bootIsCommonModel(): void

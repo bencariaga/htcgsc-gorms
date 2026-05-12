@@ -16,6 +16,8 @@ use Staudenmeir\LaravelMergedRelations\Eloquent\Relations\MergedRelation;
  * @property-read string $formatted_student_id
  * @property Person $person
  * @property mixed $referrals
+ * @property-read Referral|null $latestReferral
+ * @property-read mixed $latestActivity
  */
 class Student extends Model implements CommonModel
 {

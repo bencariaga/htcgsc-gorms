@@ -2,7 +2,8 @@
 
 namespace App\Actions\Profile;
 
-use App\{Models\User, Services\Miscellaneous\OTPService};
+use App\Models\{Person, User};
+use App\Services\Miscellaneous\OTPService;
 use Illuminate\Http\UploadedFile;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
@@ -10,7 +11,10 @@ class HandleProfileUpdate
 {
     public function handle(User $user, array $validated, OTPService $otpService, UploadedFile|TemporaryUploadedFile|null $profilePicture = null, bool $removePicture = false): ?string
     {
-        $user->loadMissing('person');
+        if (!$user->relationLoaded('person')) {
+            $user->setRelation('person', Person::find($user->person_id));
+        }
+
         $person = $user->person;
 
         foreach (['email_address' => 'otp_email', 'phone_number' => 'otp_phone'] as $field => $type) {

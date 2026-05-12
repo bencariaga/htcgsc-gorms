@@ -32,10 +32,14 @@ class StudentData extends Data
 
     public static function fromId(int $student_id): self
     {
-        $student = Student::with('person')->find($student_id);
+        $student = Student::find($student_id);
 
         if (!$student) {
             return new self(student_id: $student_id, person: PersonData::fromModel(null), profile_picture: null, formatted_student_id: 'Unknown', is_admin: false, referrer: 'Unknown', latest_appointment: null);
+        }
+
+        if (!$student->relationLoaded('person')) {
+            $student->setRelation('person', Person::find($student->person_id));
         }
 
         return self::fromModel($student);
