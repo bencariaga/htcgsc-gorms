@@ -22,7 +22,6 @@
             <div class="container">
                 <div class="content">
                     <h2 class="greetings">Greetings, {{ $referral->student->person->full_name }}!</h2>
-                    <div class="status-icon">📅</div>
                     <p class="main-text">This is a reminder <strong>{{ $reminder }}</strong> before your scheduled referral appointment at HTCGSC — Guidance and Testing Center.</p>
 
                     <div class="appointment-card">
