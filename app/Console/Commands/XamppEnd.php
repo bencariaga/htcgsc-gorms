@@ -11,7 +11,7 @@ class XamppEnd extends BaseCommand
     public function handle()
     {
         if ($this->areServicesStopped()) {
-            $this->components->info('XAMPP services (Apache and MySQL) are already stopped.');
+            $this->notifyAlreadyStopped();
 
             return;
         }
@@ -28,10 +28,7 @@ class XamppEnd extends BaseCommand
 
         $this->components->info('XAMPP stop commands have been executed.');
 
-        if (!$this->option('skip-repair')) {
-            $this->components->info('Initiating automated repair...');
-            $this->call('xampp:repair', ['--no-restart' => true, '--no-interaction' => true]);
-        }
+        $this->runRepairProcedure();
     }
 
     protected function stopOnWindows(): void
@@ -51,13 +48,32 @@ class XamppEnd extends BaseCommand
 
     protected function areServicesStopped(): bool
     {
-        if (PHP_OS_FAMILY === 'Windows') {
-            $apache = Process::run('powershell.exe -Command "Get-Process httpd -ErrorAction SilentlyContinue"')->successful();
-            $mysql = Process::run('powershell.exe -Command "Get-Process mysqld -ErrorAction SilentlyContinue"')->successful();
-
-            return !$apache && !$mysql;
+        if (PHP_OS_FAMILY !== 'Windows') {
+            return true;
         }
 
-        return true;
+        $apache = Process::run('powershell.exe -Command "Get-Process httpd -ErrorAction SilentlyContinue"')->successful();
+        $mysql = Process::run('powershell.exe -Command "Get-Process mysqld -ErrorAction SilentlyContinue"')->successful();
+
+        return !$apache && !$mysql;
+    }
+
+    private function notifyAlreadyStopped(): void
+    {
+        if ($this->option('skip-repair')) {
+            return;
+        }
+
+        $this->components->info('XAMPP services (Apache and MySQL) are already stopped.');
+    }
+
+    private function runRepairProcedure(): void
+    {
+        if ($this->option('skip-repair')) {
+            return;
+        }
+
+        $this->components->info('Initiating automated repair...');
+        $this->call('xampp:repair', ['--no-restart' => true, '--no-interaction' => true]);
     }
 }
