@@ -10,6 +10,12 @@ class XamppEnd extends BaseCommand
 
     public function handle()
     {
+        if ($this->areServicesStopped()) {
+            $this->components->info('XAMPP services (Apache and MySQL) are already stopped.');
+
+            return;
+        }
+
         $this->components->info('Stopping XAMPP services...');
 
         if (PHP_OS_FAMILY !== 'Windows') {
@@ -41,5 +47,17 @@ class XamppEnd extends BaseCommand
         $this->components->warn('Non-Windows OS detected. Attempting to stop XAMPP via /opt/lampp/lampp...');
 
         Process::run('sudo /opt/lampp/lampp stop');
+    }
+
+    protected function areServicesStopped(): bool
+    {
+        if (PHP_OS_FAMILY === 'Windows') {
+            $apache = Process::run('powershell.exe -Command "Get-Process httpd -ErrorAction SilentlyContinue"')->successful();
+            $mysql = Process::run('powershell.exe -Command "Get-Process mysqld -ErrorAction SilentlyContinue"')->successful();
+
+            return !$apache && !$mysql;
+        }
+
+        return true;
     }
 }

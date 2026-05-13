@@ -10,6 +10,12 @@ class XamppStart extends BaseCommand
 
     public function handle()
     {
+        if ($this->areServicesRunning()) {
+            $this->components->info('XAMPP services (Apache and MySQL) are already running.');
+
+            return;
+        }
+
         $this->components->info('Starting XAMPP services...');
 
         if (PHP_OS_FAMILY !== 'Windows') {
@@ -35,5 +41,17 @@ class XamppStart extends BaseCommand
     {
         $this->components->warn('Non-Windows OS detected. Attempting to start XAMPP via /opt/lampp/lampp...');
         Process::run('sudo /opt/lampp/lampp start');
+    }
+
+    protected function areServicesRunning(): bool
+    {
+        if (PHP_OS_FAMILY === 'Windows') {
+            $apache = Process::run('powershell.exe -Command "Get-Process httpd -ErrorAction SilentlyContinue"')->successful();
+            $mysql = Process::run('powershell.exe -Command "Get-Process mysqld -ErrorAction SilentlyContinue"')->successful();
+
+            return $apache && $mysql;
+        }
+
+        return false;
     }
 }
