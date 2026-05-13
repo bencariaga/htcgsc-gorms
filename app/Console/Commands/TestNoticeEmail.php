@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\{Mail\NoticeReferralAppointment, Models\Referral};
+use Exception;
 use Illuminate\Support\Facades\Mail;
 
 class TestNoticeEmail extends BaseCommand
@@ -35,9 +36,9 @@ class TestNoticeEmail extends BaseCommand
         $this->components->info("Sending test email to {$email}...");
 
         try {
-            Mail::to($email)->send(new NoticeReferralAppointment($referral, $appointment, '1 day'));
+            Mail::to($email)->send(new NoticeReferralAppointment($referral, $appointment, '12 hours'));
             $this->components->info('Email sent successfully!');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->components->error("Failed to send email: {$e->getMessage()}");
 
             return 1;
