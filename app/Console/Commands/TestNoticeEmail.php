@@ -11,6 +11,10 @@ class TestNoticeEmail extends BaseCommand
 
     public function handle()
     {
+        if ($this->call('internet:check') !== 0) {
+            return 1;
+        }
+
         $email = $this->argument('email');
         $referral = Referral::with(['student.person'])->first();
 

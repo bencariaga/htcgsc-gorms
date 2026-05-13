@@ -21,7 +21,7 @@ class InternetCheck extends BaseCommand
                 $formattedDuration = Number::format($duration, precision: 0);
 
                 $this->components->info('Online! Internet connection detected.');
-                $this->newLine();
+
                 $this->components->info("Ping: {$formattedDuration} milliseconds.");
 
                 return 0;

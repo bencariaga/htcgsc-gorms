@@ -20,6 +20,6 @@ class NoticeReferralAppointment extends Mailable implements ShouldQueue
 
     public function content(): Content
     {
-        return new Content(view: 'emails.notice-referral-appointment', with: ['referral' => $this->referral, 'appointment' => $this->appointment, 'reminder' => $this->reminderType, 'date' => $this->appointment->appointment_date->format('F j, Y') . ' at ' . $this->appointment->appointment_time->value]);
+        return new Content(view: 'emails.notice-referral-appointment', with: ['referral' => $this->referral, 'appointment' => $this->appointment, 'reminder' => $this->reminderType, 'date' => $this->appointment->appointment_date->format('F j, Y') . ' | ' . str($this->appointment->appointment_time->value)->replace('-', '–')]);
     }
 }
