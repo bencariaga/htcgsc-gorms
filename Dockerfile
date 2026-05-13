@@ -24,7 +24,8 @@ RUN apk add --no-cache \
     autoconf \
     g++ \
     make \
-    icu-dev
+    icu-dev \
+    linux-headers
 
 RUN pecl install imagick \
     && docker-php-ext-enable imagick
