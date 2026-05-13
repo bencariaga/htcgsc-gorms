@@ -15,7 +15,7 @@ class NoticeReferralAppointment extends Mailable implements ShouldQueue
 
     public function envelope(): Envelope
     {
-        return new Envelope(subject: "Appointment Reminder: {$this->reminderType}", using: $this->highPriorityHeaders());
+        return new Envelope(subject: "HTCGSC – Guidance and Testing Center Reminder: Your most recent appointment will happen {$this->reminderType} from now.", using: $this->highPriorityHeaders());
     }
 
     public function content(): Content
