@@ -26,5 +26,4 @@ Artisan::command('appointments:remind', function (MailService $mailService) {
 })->purpose('Send scheduled appointment reminders to referrals.');
 
 Schedule::command('appointments:remind')->everyMinute();
-
 Schedule::call(fn (MarkMissedAppointments $action) => $action->handle())->hourly();
