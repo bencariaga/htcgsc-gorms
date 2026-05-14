@@ -42,7 +42,7 @@
                             </div>
                         </div>
 
-                        <div wire:click.stop="deleteReport({{ $report->report_id }})" wire:confirm="{{ $delConfirmMsg }}" class="text-slate-600 dark:text-slate-400 hover:text-red-600 dark:hover:text-red-500 mr-[13.5px] transition-colors cursor-pointer" title="Delete report">
+                        <div @click.stop="if(confirm('{{ str($delConfirmMsg)->replace("\n", '\n') }}')) { window.showLoading(true, 'Deleting report...', '{{ $report->title }}'); $wire.deleteReport({{ $report->report_id }}) }" class="text-slate-600 dark:text-slate-400 hover:text-red-600 dark:hover:text-red-500 mr-[13.5px] transition-colors cursor-pointer" title="Delete report">
                             <i class="fa-solid fa-trash-alt text-2xl"></i>
                         </div>
                     </button>

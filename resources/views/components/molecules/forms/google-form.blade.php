@@ -3,7 +3,7 @@
         @foreach($gfs->headerButtons as $group => $buttons)
             <div class="{{ $group === 'navigation' ? 'flex items-center gap-4' : 'flex gap-6' }}">
                 @foreach($buttons as $button)
-                    <button @click="{{ $button['click'] ?? '$wire.' . $button['method'] . '($store.formPreview.activeSubmission)' }}" class="flex items-center gap-2 text-slate-800 hover:text-black font-bold transition-colors">
+                    <button @click="{{ $button['click'] ?? 'window.triggerSubmissionLoading(\'' . $button['label'] . '\'); $wire.' . $button['method'] . '($store.formPreview.activeSubmission)' }}" class="flex items-center gap-2 text-slate-800 hover:text-black font-bold transition-colors">
                         <i class="fas {{ $button['icon'] }}"></i>
                         <span>{{ $button['label'] }}</span>
                     </button>

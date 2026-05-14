@@ -40,7 +40,7 @@
 
             @foreach($mappedFiles as $data)
                 <div class="relative group">
-                    <button @if($onFetch) @click="window.showLoading(true, '{{ $fetchMessage }}'); {{ $onFetch }}('{{ $data['id'] }}'); $store.formPreview.activeSubmission = null;" @else wire:click="{{ $fetchAction }}('{{ $data['id'] }}')" @endif wire:loading.attr="disabled" wire:target="{{ $onFetch ? 'fetchFile' : $fetchAction }}" @class(AuditLogsStyling::getContainerClasses($data['isSelected'])) @disabled($data['isSelected'])>
+                    <button @if($onFetch) @click="window.showLoading(true, '{{ $fetchMessage }}'); {{ $onFetch }}('{{ $data['id'] }}'); $store.formPreview.activeSubmission = null;" @else wire:click="{{ $fetchAction }}('{{ $data['id'] }}')" @click="window.showLoading(true, 'Fetching file...', '{{ $data['displayName'] }}')" @endif wire:loading.attr="disabled" wire:target="{{ $onFetch ? 'fetchFile' : $fetchAction }}" @class(AuditLogsStyling::getContainerClasses($data['isSelected'])) @disabled($data['isSelected'])>
                         <div class="flex items-center overflow-hidden">
                             <i @class(AuditLogsStyling::getIconClasses($data['isSelected']))></i>
 
@@ -63,11 +63,11 @@
                         </div>
 
                         @if($deleteAction)
-                            <div wire:click.stop="{{ $deleteAction }}({{ $data['id'] }})" wire:confirm="{{ $data['delConfirmMsg'] }}" class="text-slate-600 dark:text-slate-400 hover:text-red-600 dark:hover:text-red-500 mr-[13.5px] transition-colors cursor-pointer" title="Delete">
+                            <div @click.stop="if(confirm('{{ str($data['delConfirmMsg'])->replace("\n", '\n') }}')) { window.showLoading(true, 'Deleting file...', '{{ $data['displayName'] }}'); $wire.{{ $deleteAction }}({{ $data['id'] }}) }" class="text-slate-600 dark:text-slate-400 hover:text-red-600 dark:hover:text-red-500 mr-[13.5px] transition-colors cursor-pointer" title="Delete">
                                 <i class="fa-solid fa-trash-alt text-2xl"></i>
                             </div>
                         @else
-                            <div @if($onFetch) @click.stop="window.showLoading(true, 'Downloading log file...'); $wire.set('loadingAction', 'downloadFile'); $wire.downloadFile('{{ $data['id'] }}')" @else wire:click.stop="{{ $downloadAction }}('{{ $data['id'] }}')" @endif wire:loading.attr="disabled" wire:target="{{ $onFetch ? 'downloadFile' : $downloadAction }}" class="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-500 mr-[13.5px] transition-colors cursor-pointer disabled:opacity-50" title="Download">
+                            <div @if($onFetch) @click.stop="window.showLoading(true, 'Downloading log file...'); $wire.set('loadingAction', 'downloadFile'); $wire.downloadFile('{{ $data['id'] }}')" @else wire:click.stop="{{ $downloadAction }}('{{ $data['id'] }}')" @click.stop="window.showLoading(true, 'Downloading file...', '{{ $data['displayName'] }}')" @endif wire:loading.attr="disabled" wire:target="{{ $onFetch ? 'downloadFile' : $downloadAction }}" class="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-500 mr-[13.5px] transition-colors cursor-pointer disabled:opacity-50" title="Download">
                                 <i class="fa-solid fa-download text-2xl"></i>
                             </div>
                         @endif
