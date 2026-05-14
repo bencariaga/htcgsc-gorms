@@ -16,6 +16,7 @@
 
         <form id="optimizeForm" action="{{ route('cache.clear') }}" method="POST" class="inline" x-data @submit="$el.querySelector('button[type=submit]').disabled = true; document.getElementById('loadingOptimize').classList.replace('hidden', 'flex')">
             @csrf
+
             <button type="submit" class="text-lg w-[140px] flex justify-between items-center px-4 py-2 font-semibold hover:text-blue-700 dark:hover:text-blue-500 hover:bg-blue-100 dark:hover:bg-slate-700 rounded-xl transition-all group">
                 <i class="fas fa-broom mr-2.5 text-slate-400 group-hover:scale-110 group-hover:text-blue-500"></i>
                 <span>Optimize</span>
@@ -24,6 +25,7 @@
 
         <form method="POST" action="{{ route('logout') }}" class="inline">
             @csrf
+
             <button type="submit" class="text-lg w-[140px] flex justify-between items-center px-4 py-2 font-bold text-red-600 dark:text-red-500 hover:bg-red-100 dark:hover:bg-red-900/40 rounded-xl transition-all group">
                 <i class="fas fa-sign-out mr-2.5 opacity-80 group-hover:scale-110 transition-transform"></i>
                 <span>Sign Out</span>

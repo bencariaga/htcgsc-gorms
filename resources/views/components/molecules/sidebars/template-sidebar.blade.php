@@ -3,7 +3,7 @@
 @use('App\Enums\NonDB\AuditLogsStyling')
 
 <aside class="w-72 bg-white dark:bg-slate-800 border-r-2 border-gray-300 dark:border-slate-700 flex flex-col h-full">
-    @if(!request()->routeIs('audit-logs.index'))
+    @if($bladeViewName !== 'livewire.pages.audit-logs')
         <div class="flex justify-center font-bold text-black dark:text-white py-[15.75px] border-b-2 border-gray-300 dark:border-slate-700">
             <span class="text-xl">{{ $title }}</span>
         </div>
@@ -22,7 +22,7 @@
         </div>
     @endif
 
-    <nav class="flex-1 flex flex-col {{ request()->routeIs('reports.index') ? 'overflow-y-auto' : 'overflow-hidden' }} px-4 py-2 space-y-2 [scrollbar-width:thin] [scrollbar-color:rgba(107,114,128,0.8)_transparent] [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-500/80">
+    <nav class="flex-1 flex flex-col overflow-y-auto px-4 py-2 space-y-2 [scrollbar-width:thin] [scrollbar-color:rgba(107,114,128,0.8)_transparent] [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-500/80">
         <div class="flex-1 space-y-[6px]">
             @if($createNewAction)
                 <button wire:click="{{ $createNewAction }}" @click="window.showLoading(true, 'Preparing fresh form...')" wire:loading.attr="disabled" wire:target="{{ $createNewAction }}" @class(AuditLogsStyling::getContainerClasses($isCreateSelected)) @disabled($isCreateSelected)>
@@ -45,7 +45,7 @@
                             <i @class(AuditLogsStyling::getIconClasses($data['isSelected']))></i>
 
                             <div class="ml-[13.5px] overflow-hidden text-left w-[11rem]">
-                                <p @class(['text-[14px] tracking-normal tabular-nums font-semibold', ...AuditLogsStyling::getTextClasses($data['isSelected'])]) title="{{ $data['displayName'] }}">
+                                <p @class(['text-[14px] tracking-normal tabular-nums font-semibold w-[7.5rem]', ...AuditLogsStyling::getTextClasses($data['isSelected'])]) title="{{ $data['displayName'] }}">
                                     {{ $data['displayName'] }}
                                 </p>
 
@@ -80,7 +80,7 @@
     @if($message = AuditLogsStyling::getLoggingMessage())
         <div class="mx-4 mb-4 pt-3 pl-[2px]">
             <span class="font-medium text-[13px] text-black dark:text-white">
-                <strong>NOTE</strong>: {{ request()->routeIs('reports.index') ? "You can only create 99 items." : $message }}
+                <strong>NOTE</strong>: {{ ($bladeViewName === 'livewire.pages.reports') ? "You can only create 99 items." : $message }}
             </span>
         </div>
     @endif

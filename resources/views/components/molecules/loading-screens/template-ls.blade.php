@@ -3,8 +3,8 @@
         <x-atoms.utility.spinner :dark-mode="$darkMode" />
 
         @if($bladeViewName === 'components.molecules.loading-screens.ls-list-type')
-            <p id="loading-message" class="mt-4 text-lg font-semibold text-indigo-700 {{ $darkMode ? 'dark:text-indigo-500' : '' }}"></p>
-            <p id="loading-person" class="mt-4 text-2xl font-bold text-slate-800 {{ $darkMode ? 'dark:text-white' : '' }} text-center px-4"></p>
+            <div id="loading-message" class="mt-4 text-lg bg-white/60 {{ $darkMode ? 'dark:bg-slate-800' : '' }} px-5 py-3 rounded-xl font-semibold text-indigo-700 {{ $darkMode ? 'dark:text-indigo-500' : '' }}"></div>
+            <div id="loading-person" class="mt-4 text-2xl font-bold text-slate-800 {{ $darkMode ? 'dark:text-white' : '' }} text-center px-4"></div>
         @else
             @if($message)
                 <div class="mt-4 text-lg bg-white/60 {{ $darkMode ? 'dark:bg-slate-800' : '' }} px-5 py-3 rounded-xl font-semibold text-indigo-700 {{ $darkMode ? 'dark:text-indigo-500' : '' }}">
